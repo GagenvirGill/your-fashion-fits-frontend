@@ -9,8 +9,8 @@ const Navbar = () => {
         <img src="../../public/house_icon.png" alt="Home" className="nav-logo"></img>
       </Link>
       <div className="blank"></div>
-      <Link to="#">
-        <img src="../../public/closet_icon.png" alt="Home" className="nav-logo"></img>
+      <Link to="/closet">
+        <img src="../../public/closet_icon.png" alt="closet" className="nav-logo"></img>
       </Link>
     </nav>
   );

@@ -1,10 +1,10 @@
 import React from "react";
-import "../styles/HomeSidePanel.css";
+import "../styles/ClosetSidePanel.css";
 
-const HomeSidePanel = () => {
+const ClosetSidePanel = () => {
   return (
-    <div className="test1">
-      <h1>hello</h1>
+    <div className="test3">
+      <h1>closet</h1>
       <h1>hello</h1>
       <h1>hello</h1>
       <h1>hello</h1>
@@ -32,4 +32,4 @@ const HomeSidePanel = () => {
   );
 };
 
-export default HomeSidePanel;
+export default ClosetSidePanel;
