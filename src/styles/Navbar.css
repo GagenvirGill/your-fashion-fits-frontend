@@ -1,0 +1,28 @@
+.navbar {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 20vw;
+    height: 8vh;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.nav-logo:hover {
+    transform: scale(1.1);
+}
+
+.blank {
+    width: 40px;
+}

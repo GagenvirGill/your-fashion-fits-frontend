@@ -1,10 +1,14 @@
 import React from "react";
+import HomeSidePanel from "../components/HomeSidePanel";
+import HomeMainPanel from "../components/HomeMainPanel";
+
+import "../styles/Home.css";
 
 const Home = () => {
     return (
-        <div>
-            <h1>Test Title!</h1>
-            <p>Test Text</p>
+        <div className="homePage">
+            <HomeSidePanel />
+            <HomeMainPanel />
         </div>
     );
 };
