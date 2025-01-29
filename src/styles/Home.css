@@ -1,7 +1,8 @@
 .homePage {
     position: fixed;
-    height: 100vh;
-    top: 0px;
+    height: 92vh;
+    width: 100vw;
+    top: 8vh;
     left: 0px;
     right: 0px;
 }

@@ -2,9 +2,8 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    width: 20vw;
+    width: 100vw;
     height: 8vh;
-    background-color: whitesmoke;
     display: flex;
     justify-content: center;
     align-items: center;

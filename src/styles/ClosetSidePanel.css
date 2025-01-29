@@ -1,9 +1,0 @@
-.test3 {
-    position: fixed;
-    overflow-y: scroll;
-    background-color: whitesmoke;
-    border-top: 2px solid rgba(0, 0, 0, 0.1);
-    margin-top: 8vh;
-    width: 20vw;
-    height: 92vh;
-}
