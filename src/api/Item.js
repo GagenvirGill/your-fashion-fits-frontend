@@ -55,3 +55,7 @@ export const deleteItem = async (itemId) => {
     }
 }
 
+export const filterItemsByCategories = async (categories) => {
+    console.log(`it worked, W's in the console, selected categories: ${categories}`)
+}
+

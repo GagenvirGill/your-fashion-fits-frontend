@@ -1,0 +1,10 @@
+.filter-items-form {
+    display: inline-block;
+    overflow: scroll;
+    text-align: center;
+    padding: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 300px;
+    background-color: white;
+}
