@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { filterItemsByCategories } from "../api/Item";
 import CategoriesButtonList from "./CategoriesButtonList";
+import Button from "./Button";
 import "../styles/FilterItemsForm.css"
 
 const FilterItemsForm = () => {
@@ -29,9 +30,10 @@ const FilterItemsForm = () => {
     return (
         <form className="filter-items-form" onSubmit={handleSubmit}>
             <CategoriesButtonList onCheckboxChange={handleCheckboxChange} />
-            <button type="submit">Submit</button>
+            <br />
+            <Button type={"submit"} text={"Submit"} diabled={loading}/>
         </form>
-    );// create a custom button for submit that looks like checkbox button but is an actual button
+    );
 };
 
 export default FilterItemsForm;

@@ -1,0 +1,21 @@
+.custom-button {
+    display: inline-block;
+    padding: 6px 15px;
+    border: 1px solid black;
+    background-color: black;
+    margin: 2px;
+
+    color: white;
+    font-family: Courier, 'Courier New', monospace;
+    font-size: 12px;
+    text-align: center;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    transition: transform 0.3s;
+}
+
+.custom-button:hover {
+    transform: scale(1.1);
+}
