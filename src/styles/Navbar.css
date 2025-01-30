@@ -1,13 +1,17 @@
 .navbar {
     position: fixed;
     top: 0px;
-    left: 0px;
-    width: 100vw;
+    left: 15vw;
+    right: 15vw;
+    width: 70vw;
     height: 8vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    background-color: rgb(245, 245, 245);
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .nav-logo {

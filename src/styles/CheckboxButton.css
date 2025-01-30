@@ -15,6 +15,10 @@
     user-select: none;
 }
 
+.checkbox-button:hover {
+    background-color: rgb(235, 235, 235);
+}
+
 .checkbox-button input {
     display: none;
 }

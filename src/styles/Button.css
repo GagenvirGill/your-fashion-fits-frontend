@@ -7,15 +7,14 @@
 
     color: white;
     font-family: Courier, 'Courier New', monospace;
-    font-size: 12px;
+    font-size: 15px;
     text-align: center;
 
     cursor: pointer;
-    transition: all 0.2s ease;
     user-select: none;
-    transition: transform 0.3s;
 }
 
 .custom-button:hover {
-    transform: scale(1.1);
+    background-color: white;
+    color: black;
 }
