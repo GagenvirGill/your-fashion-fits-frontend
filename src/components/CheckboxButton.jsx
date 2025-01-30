@@ -1,11 +1,14 @@
 import React from "react";
 
+import "../styles/CheckboxButton.css"
+
 const CheckboxButton = ({ text, buttonId }) => {
     return (
         <>
-            <input type="checkbox" id={buttonId} />
-            <label htmlFor={buttonId}>{text}</label>
-            <br />
+            <label className="checkbox-button" htmlFor={buttonId}>
+                <input type="checkbox" id={buttonId} />
+                <span>{text}</span>
+            </label>
         </>
     );
 };

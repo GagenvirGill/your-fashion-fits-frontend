@@ -1,0 +1,24 @@
+.checkbox-button {
+    display: inline-block;
+    padding: 6px 15px;
+    border: 1px solid black;
+    background-color: white;
+
+    color: black;
+    font-family: Courier, 'Courier New', monospace;
+    font-size: 12px;
+    text-align: center;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.checkbox-button input {
+    display: none;
+}
+
+.checkbox-button:has(input:checked) {
+    background-color: black;
+    color: white;
+}
