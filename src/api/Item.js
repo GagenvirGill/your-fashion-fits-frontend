@@ -16,12 +16,18 @@ export const getAllItems = async () => {
     }
 };
 
-export const createItem = async (image, description) => {
+export const createItem = async (imageFile, description) => {
     try {
-        const response = await ax.post('/item', {
-            "image": image,
-            "description": description,
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('description', description);
+
+        const response = await ax.post('/item', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
         });
+        
         if (response.data.success === true) {
             console.log(response.data.message);
             alert(response.data.message);
