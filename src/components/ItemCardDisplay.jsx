@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAllItems } from "../api/Item";
 import ItemCard from "./ItemCard";
+import styles from "../styles/ItemCardDisplay.module.css"
 
 const AllItemDisplay = () => {
     const [items, setItems] = useState([]);
@@ -15,7 +16,7 @@ const AllItemDisplay = () => {
     }, []);
 
     return (
-        <div className="item-card-display">  
+        <div className={styles.itemCardDisplay}>  
             {items.map(item => (
                 <ItemCard key={item.itemId} itemId={item.itemId} imagePath={item.imagePath} />
             ))}

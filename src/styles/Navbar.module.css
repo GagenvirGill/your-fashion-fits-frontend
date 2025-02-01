@@ -9,9 +9,10 @@
     justify-content: center;
     align-items: center;
     background-color: rgb(240, 240, 240);
+    z-index: 1000;
 }
 
-.nav-logo {
+.navLogo {
     width: 40px;
     height: 40px;
     object-fit: cover;
@@ -19,7 +20,7 @@
     transition: transform 0.3s;
 }
 
-.nav-logo:hover {
+.navLogo:hover {
     transform: scale(1.1);
 }
 

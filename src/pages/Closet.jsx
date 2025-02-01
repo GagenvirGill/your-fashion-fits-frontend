@@ -5,11 +5,11 @@ import ItemCardDisplay from "../components/ItemCardDisplay";
 import AddCategoryForm from "../components/AddCategoryForm";
 import AddItemForm from "../components/AddItemForm";
 
-import "../styles/Closet.css";
+import styles from "../styles/Closet.module.css";
 
 const Closet = () => {
     return (
-        <div className="closetPage">
+        <div className={styles.closetPage}>
             <FilterItemsForm />
             <br />
             <br />

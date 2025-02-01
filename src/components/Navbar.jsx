@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/Navbar.css";
+import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
   return (
-    <nav className="navbar">
+    <nav className={styles.navbar}>
       <Link to="/">
-        <img src="../../public/house_icon.png" alt="Home" className="nav-logo"></img>
+        <img src="/house_icon.png" alt="Home" className={styles.navLogo}></img>
       </Link>
-      <div className="blank"></div>
+      <div className={styles.blank}></div>
       <Link to="/closet">
-        <img src="../../public/closet_icon.png" alt="closet" className="nav-logo"></img>
+        <img src="/closet_icon.png" alt="closet" className={styles.navLogo}></img>
       </Link>
     </nav>
   );

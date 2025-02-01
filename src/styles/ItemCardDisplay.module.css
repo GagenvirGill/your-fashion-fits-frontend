@@ -1,5 +1,4 @@
-.item-card-display {
-    position: fixed;
+.itemCardDisplay {
     display: inline-block;
     text-align: center;
     left: 10vw;

@@ -1,4 +1,4 @@
-.item-card {
+.itemCard {
     display: inline-block;
     width: 120px;
     height: 150px;
@@ -8,8 +8,8 @@
     margin: 2px;
 }
 
-.item-card img {
-    height: 99%;
-    width: 99%;
+.itemCard img {
+    height: 100%;
+    width: 100%;
     object-fit: contain;
 }

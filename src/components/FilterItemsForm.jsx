@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { filterItemsByCategories } from "../api/Item";
 import CategoriesButtonList from "./CategoriesButtonList";
 import Button from "./Button";
-import "../styles/FilterItemsForm.css"
+import styles from "../styles/FilterItemsForm.module.css"
 
 const FilterItemsForm = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -28,7 +28,7 @@ const FilterItemsForm = () => {
     };
 
     return (
-        <form className="filter-items-form" onSubmit={handleSubmit}>
+        <form className={styles.filterItemsForm} onSubmit={handleSubmit}>
             <CategoriesButtonList onCheckboxChange={handleCheckboxChange} />
             <br />
             <Button type={"submit"} text={"Submit"} diabled={loading}/>

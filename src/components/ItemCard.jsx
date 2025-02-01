@@ -1,10 +1,10 @@
 import React from "react";
-import "../styles/ItemCard.css"
+import styles from "../styles/ItemCard.module.css"
 
 const ItemCard = ({ itemId, imagePath }) => {
     console.log(`${'http://localhost:5001'}${imagePath}`);
     return (
-        <div className="item-card">
+        <div className={styles.itemCard}>
             <img 
                 src={`${'http://localhost:5001'}${imagePath}`} 
                 alt="Preview" 

@@ -1,4 +1,4 @@
-.custom-button {
+.customButton {
     display: inline-block;
     padding: 6px 15px;
     border: 1px solid black;
@@ -14,7 +14,7 @@
     user-select: none;
 }
 
-.custom-button:hover {
+.customButton:hover {
     background-color: white;
     color: black;
 }

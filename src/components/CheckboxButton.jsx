@@ -1,11 +1,11 @@
 import React from "react";
 
-import "../styles/CheckboxButton.css"
+import styles from "../styles/CheckboxButton.module.css"
 
 const CheckboxButton = ({ text, buttonId, onChange }) => {
     return (
         <>
-            <label className="checkbox-button" htmlFor={buttonId}>
+            <label className={styles.checkboxButton} htmlFor={buttonId}>
                 <input type="checkbox" id={buttonId} onChange={onChange}/>
                 <span>{text}</span>
             </label>
