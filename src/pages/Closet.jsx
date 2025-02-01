@@ -1,7 +1,7 @@
 import React from "react";
 
 import FilterItemsForm from "../components/FilterItemsForm";
-import AllItemDisplay from "../components/AllItemDisplay";
+import ItemCardDisplay from "../components/ItemCardDisplay";
 import AddCategoryForm from "../components/AddCategoryForm";
 import AddItemForm from "../components/AddItemForm";
 
@@ -12,12 +12,15 @@ const Closet = () => {
         <div className="closetPage">
             <FilterItemsForm />
             <br />
+            <br />
+            <br />
+            <br />
+            <ItemCardDisplay />
+            <br />
             <p>???</p>
             <AddCategoryForm />
             <p>???</p>
             <AddItemForm />
-            <p>???</p>
-            <AllItemDisplay />
         </div>
     );
 };

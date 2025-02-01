@@ -1,0 +1,8 @@
+.item-card-display {
+    position: fixed;
+    display: inline-block;
+    text-align: center;
+    left: 10vw;
+    right: 10vw;
+    width: 80vw;
+}

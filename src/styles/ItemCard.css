@@ -1,0 +1,15 @@
+.item-card {
+    display: inline-block;
+    width: 120px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    margin: 2px;
+}
+
+.item-card img {
+    height: 99%;
+    width: 99%;
+    object-fit: contain;
+}
