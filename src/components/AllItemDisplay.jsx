@@ -20,7 +20,7 @@ const AllItemDisplay = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
-    console.log(items[0].imagePath);
+    //console.log(items[0].imagePath);
 
     return (
         <>

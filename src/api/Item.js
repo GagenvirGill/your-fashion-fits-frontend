@@ -1,4 +1,5 @@
 import ax from "./axiosConfig";
+import { imgBackgroundRemoval } from "./Img";
 
 export const getAllItems = async () => {
     try {
@@ -18,8 +19,9 @@ export const getAllItems = async () => {
 
 export const createItem = async (imageFile, description) => {
     try {
+        const imgBgRem = await imgBackgroundRemoval(imageFile); 
         const formData = new FormData();
-        formData.append('image', imageFile);
+        formData.append('image', imgBgRem);
         formData.append('description', description);
 
         const response = await ax.post('/item', formData, {
