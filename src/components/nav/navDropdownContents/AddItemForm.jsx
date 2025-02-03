@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { createItem } from "../api/Item";
+import { createItem } from "../../../api/Item";
 
 const AddItemForm = () => {
     const [image, setImage] = useState(null);

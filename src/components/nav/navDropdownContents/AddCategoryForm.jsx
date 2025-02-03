@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { createCategory } from "../api/Category";
+import { createCategory } from "../../../api/Category";
 
 const AddCategoryForm = () => {
     const [name, setName] = useState('');

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import styles from "../styles/Button.module.css"
+import styles from "../../styles/Button.module.css"
 
 const Button = ({ type, text, disable, onClick}) => {
     return (

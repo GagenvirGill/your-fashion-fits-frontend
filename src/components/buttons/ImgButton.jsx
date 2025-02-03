@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/ImgButton.module.css"
+import styles from "../../styles/ImgButton.module.css"
 
 const ImgButton = ({ buttonId, imgFileName, onClick }) => {
     return (

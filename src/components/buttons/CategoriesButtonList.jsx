@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import { getAllCategories } from "../api/Category";
+import { getAllCategories } from "../../api/Category";
 import CheckboxButton from "./CheckboxButton";
 
 const CategoriesButtonList = ({ onCheckboxChange}) => {

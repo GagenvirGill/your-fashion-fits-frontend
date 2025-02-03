@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-
-import { filterItemsByCategories } from "../api/Item";
-import CategoriesButtonList from "./CategoriesButtonList";
-import Button from "./Button";
-import styles from "../styles/FilterItemsForm.module.css"
+import { filterItemsByCategories } from "../../../api/Item";
+import CategoriesButtonList from "../../buttons/CategoriesButtonList";
+import Button from "../../buttons/Button";
+import styles from "../../../styles/FilterItemsForm.module.css"
 
 const FilterItemsForm = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);

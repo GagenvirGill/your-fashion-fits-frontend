@@ -1,5 +1,5 @@
 import React from "react";
-import RadioButton from "./RadioButton";
+import RadioButton from "../../buttons/RadioButton";
 
 const NavDropdownRadioForm = ({ renderComponent, selectedOption, setSelectedOption }) => {
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import NavDropdown from "./NavDropdown";
-import ImgButton from "./ImgButton";
+import NavDropdown from "./navDropdownContents/NavDropdown";
+import ImgButton from "../buttons/ImgButton";
 
 const NavDropdownButton = ({ buttonId, imgFileName }) => {
     const [isOpen, setIsOpen] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getAllItems } from "../api/Item";
+import { getAllItems } from "../../api/Item";
 import ItemCard from "./ItemCard";
-import styles from "../styles/ItemCardDisplay.module.css"
+import styles from "../../styles/ItemCardDisplay.module.css"
 
 const AllItemDisplay = () => {
     const [items, setItems] = useState([]);

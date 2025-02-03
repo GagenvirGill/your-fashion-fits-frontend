@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NavDropdownButton from "./NavDropdownButton";
-import styles from "../styles/Navbar.module.css";
+import styles from "../../styles/Navbar.module.css";
 
 const Navbar = () => {
   return (

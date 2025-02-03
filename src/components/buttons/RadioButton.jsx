@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/RadioButton.module.css";
+import styles from "../../styles/RadioButton.module.css";
 
 const RadioButton = ({ text, buttonId, value, checked, onChange }) => {
     return (
