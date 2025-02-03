@@ -8,19 +8,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(245, 245, 245);
     z-index: 1000;
 }
 
 .navLogo {
     width: 40px;
     height: 40px;
+    border-radius: 50px;
     object-fit: cover;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: 0.3s;
 }
 
 .navLogo:hover {
+    background-color: rgb(200, 200, 200);
     transform: scale(1.1);
 }
 

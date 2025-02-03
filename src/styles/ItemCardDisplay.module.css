@@ -1,6 +1,7 @@
 .itemCardDisplay {
     display: inline-block;
     text-align: center;
+    top: 15vh;
     left: 10vw;
     right: 10vw;
     width: 80vw;

@@ -7,7 +7,7 @@ const CheckboxButton = ({ text, buttonId, onChange }) => {
         <>
             <label className={styles.checkboxButton} htmlFor={buttonId}>
                 <input type="checkbox" id={buttonId} onChange={onChange}/>
-                <span>{text}</span>
+                {text}
             </label>
         </>
     );

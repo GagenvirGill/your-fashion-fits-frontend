@@ -1,29 +1,31 @@
-.checkboxButton {
+.radioButton {
     display: inline-block;
     padding: 6px 15px;
     border: 1px solid black;
     background-color: white;
-    margin: 2px;
+    margin: 8px;
 
     color: black;
     font-family: Courier, 'Courier New', monospace;
-    font-size: 12px;
+    font-size: 15px;
     text-align: center;
 
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
+    transition: 0.3s;
 }
 
-.checkboxButton:hover {
+.radioButton:hover {
     background-color: rgb(235, 235, 235);
+    transform: scale(1.05);
 }
 
-.checkboxButton input {
+.radioButton input {
     display: none;
 }
 
-.checkboxButton:has(input:checked) {
-    background-color: rgb(40, 167, 69);
+.radioButton:has(input:checked) {
+    background-color: rgb(108, 52, 131);
     color: white;
 }

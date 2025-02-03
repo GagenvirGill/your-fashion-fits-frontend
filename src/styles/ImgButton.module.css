@@ -1,0 +1,22 @@
+.imgBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.imgBtn:hover {
+    background-color: rgb(200, 200, 200);
+    transform: scale(1.1);
+}
+
+.imgBtn input {
+    display: none;
+}
+
+.imgIcon {
+    width: 40px;
+    height: 40px;
+}
