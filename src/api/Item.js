@@ -1,5 +1,5 @@
 import ax from "./axiosConfig";
-import { workerPool } from "./WorkerPool";
+import { workerPool } from "../worker/WorkerPool";
 
 export const getAllItems = async () => {
     try {

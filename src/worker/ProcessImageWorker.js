@@ -1,5 +1,5 @@
-// public/worker/ProcessImageWorker.js
-import { imgBackgroundRemoval } from "../../src/api/Img";
+// src/worker/ProcessImageWorker.js
+import { imgBackgroundRemoval } from "../api/Img";
 
 self.onmessage = async (event) => {
     const { taskId, imageFile } = event.data
