@@ -1,5 +1,5 @@
 import ax from "./axiosConfig";
-import { imgBackgroundRemoval } from "./Img";
+import { workerPool } from "./WorkerPool";
 
 export const getAllItems = async () => {
     try {
@@ -19,9 +19,13 @@ export const getAllItems = async () => {
 
 export const createItem = async (imageFile, description) => {
     try {
-        const imgBgRem = await imgBackgroundRemoval(imageFile); 
+        const { success, data, message } = await workerPool.processImage(imageFile);
+        if (!success) {
+            throw new Error(message);
+        }
+
         const formData = new FormData();
-        formData.append('image', imgBgRem);
+        formData.append('image', data);
         formData.append('description', description);
 
         const response = await ax.post('/item', formData, {
@@ -40,7 +44,7 @@ export const createItem = async (imageFile, description) => {
         }
     } catch (err) {
         console.error(err);
-        alert("Something went wrong when creating an item");
+        alert(`Something went wrong when creating an item: ${err}`);
     }
 };
 

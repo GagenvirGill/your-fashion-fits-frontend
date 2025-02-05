@@ -15,7 +15,7 @@ const NavDropdownButton = ({ buttonId, imgFileName }) => {
 
     return (
         <>  
-            <ImgButton buttonId="dropdownButton" imgFileName="/dropdown_icon.png" onClick={handleDropdown}/>
+            <ImgButton buttonId="dropdownButton" imgFileName="/dropdown_icon.png" onChange={handleDropdown}/>
             {isOpen && <NavDropdown />}
         </>
     );

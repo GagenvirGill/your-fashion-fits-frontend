@@ -5,6 +5,7 @@
     object-fit: cover;
     cursor: pointer;
     transition: 0.3s;
+    margin-inline: 20px;
 }
 
 .imgBtn:hover {
@@ -19,4 +20,8 @@
 .imgIcon {
     width: 40px;
     height: 40px;
+}
+
+.imgBtn:has(input:checked) {
+    background-color: rgb(0, 123, 255);
 }

@@ -9,11 +9,9 @@ const Navbar = () => {
       <Link to="/">
         <img src="/house_icon.png" alt="Home" className={styles.navLogo}></img>
       </Link>
-      <div className={styles.blank}></div>
       <Link to="/closet">
         <img src="/hanger_icon.png" alt="closet" className={styles.navLogo}></img>
       </Link>
-      <div className={styles.blank}></div>
       <NavDropdownButton buttonId="dropdownButton" imgFileName="/dropdown_icon.png" />
     </nav>
   );
