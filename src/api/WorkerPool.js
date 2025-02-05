@@ -1,13 +1,14 @@
 // api/WorkerPool.js
 
 class WorkerPool {
-    constructor(workerPath, poolSize) {
+    constructor(workerPath) {
+        this.poolSize = Math.max(1, Math.min(navigator.hardwareConcurrency || 2, 8));
         this.workers = [];
         this.taskQueue = [];
         this.taskIdCounter = 0;
         this.callbacks = new Map();
 
-        for (let i = 0; i < poolSize; i++) {
+        for (let i = 0; i < this.poolSize; i++) {
             const worker = new Worker(workerPath, { type: 'module' });
             worker.onmessage = (event) => {
                 this.handleWorkerMessage(worker, event);
@@ -69,4 +70,4 @@ class WorkerPool {
     }
 }
 
-export const workerPool = new WorkerPool("/worker/ProcessImageWorker.js", 4)
+export const workerPool = new WorkerPool("/worker/ProcessImageWorker.js")
