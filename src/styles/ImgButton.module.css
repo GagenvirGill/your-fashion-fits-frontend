@@ -1,4 +1,7 @@
 .imgBtn {
+    position: fixed;
+    left: -1vw;
+    top: 1vh;
     width: 40px;
     height: 40px;
     border-radius: 50px;
@@ -6,6 +9,7 @@
     cursor: pointer;
     transition: 0.3s;
     margin-inline: 20px;
+    z-index: 1002;
 }
 
 .imgBtn:hover {
@@ -14,12 +18,14 @@
 }
 
 .imgBtn input {
+    z-index: 1;
     display: none;
 }
 
 .imgIcon {
     width: 40px;
     height: 40px;
+    z-index: 1002;
 }
 
 .imgBtn:has(input:checked) {

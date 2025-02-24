@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import FilterItemsForm from "./FilterItemsForm"
 import AddCategoryForm from "./AddCategoryForm";
 import AddItemForm from "./AddItemForm";
-import NavDropdownRadioForm from "./NavDropdownRadioForm";
-import styles from "../../../styles/NavDropdown.module.css";
+import ClosetSidePanelRadioForm from "./ClosetSidePanelRadioForm";
+import styles from "../../../styles/ClosetSidePanel.module.css";
 
-const NavDropdown = () => {
+const ClosetSidePanel = () => {
     const [selectedOption, setSelectedOption] = useState("filter");
 
     const renderComponent = (selectedOption) => {
@@ -20,7 +20,8 @@ const NavDropdown = () => {
 
     return (
         <div className={styles.dropdownPanel}>
-            <NavDropdownRadioForm 
+			<br />
+            <ClosetSidePanelRadioForm 
                 renderComponent={renderComponent} 
                 selectedOption={selectedOption} 
                 setSelectedOption={setSelectedOption} 
@@ -31,4 +32,4 @@ const NavDropdown = () => {
 };
 
 
-export default NavDropdown;
+export default ClosetSidePanel;

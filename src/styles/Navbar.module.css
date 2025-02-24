@@ -1,14 +1,11 @@
 .navbar {
     position: fixed;
     top: 0px;
-    left: 15vw;
-    right: 15vw;
-    width: 70vw;
+    width: 100vw;
     height: 8vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(245, 245, 245);
     z-index: 1000;
 }
 

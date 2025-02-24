@@ -17,6 +17,7 @@ const NavDropdownRadioForm = ({ renderComponent, selectedOption, setSelectedOpti
                 checked={selectedOption === "filter"}
                 onChange={handleRadioChange}
             />
+			<br />
             <RadioButton
                 text="Add new Items"
                 buttonId="navDropdownAddItem"
@@ -24,6 +25,7 @@ const NavDropdownRadioForm = ({ renderComponent, selectedOption, setSelectedOpti
                 checked={selectedOption === "addItem"}
                 onChange={handleRadioChange}
             />
+			<br />
             <RadioButton
                 text="Add new Categories"
                 buttonId="navDropdownAddCategory"

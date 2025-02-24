@@ -1,0 +1,5 @@
+.farRight {
+    position: relative;
+    left: 90vw;
+    z-index: 2000;
+}

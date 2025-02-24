@@ -1,14 +1,13 @@
 .dropdownPanel {
     position: fixed;
-    top: 8vh;
-    left: 15vw;
-    right: 15vw;
-    width: 70vw;
-    max-height: 42vh;
+    top: 0px;
+    left: 0px;
+    width: 30vw;
+    height: 100vh;
     justify-content: center;
     align-items: center;
     text-align: center;
     background-color: rgb(245, 245, 245);
-    z-index: 999;
+    z-index: 1001;
     overflow: scroll;
 }

@@ -1,9 +1,8 @@
 .closetPage {
-    position: absolute;
+    position: relative;
     width: 100vw;
-    top: 8vh;
-    left: 0px;
-    right: 0px;
+    top: 6vh;
     text-align: center;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
