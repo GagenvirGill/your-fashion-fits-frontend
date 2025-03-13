@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { filterItemsByCategories } from "../../../api/Item";
-import { useItems } from "../../../context/ItemContext";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setItems } from "../../../store/reducers/itemsReducer";
+
+import { filterItemsByCategories } from "../../../api/Item"
+
 import CategoriesButtonList from "../../buttons/CategoriesButtonList";
 import Button from "../../buttons/Button";
 import styles from "../../../styles/FilterItemsForm.module.css"
 
 const FilterItemsForm = () => {
-	const { setFilteredItems } = useItems();
+	const dispatch = useDispatch();
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -25,8 +28,8 @@ const FilterItemsForm = () => {
 
         setLoading(true);
         const filteredItems = await filterItemsByCategories(selectedCategories);
+		dispatch(setItems(filteredItems));
         setLoading(false);
-		setFilteredItems(filteredItems);
     };
 
     return (

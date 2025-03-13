@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { getAllItems } from "../../api/Item";
-import { useItems } from "../../context/ItemContext";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setItems } from "../../store/reducers/itemsReducer"
+
+import { getAllItems } from "../../api/Item"
+
 import ItemCard from "./ItemCard";
 import styles from "../../styles/ItemCardDisplay.module.css"
 
 const ItemCardDisplay = ({ isSidePanelCollapsed }) => {
-	const { filteredItems } = useItems();
-    const [items, setItems] = useState([]);
+	const dispatch = useDispatch();
+	const { items } = useSelector((state) => state.items);
 
     useEffect(() => {
         getAllItems().then((fetchedItems) => {
-            setItems(fetchedItems);
+            dispatch(setItems(fetchedItems));
         }).catch((err) => {
             console.log(`Error loading items: ${err}`)
         });
-    }, []);
-
-	useEffect(() => {
-		setItems(filteredItems);
-	}, [filteredItems]);
+    }, [dispatch]);
 
 	let itemCardDisplayStyle;
 	if (isSidePanelCollapsed) {
