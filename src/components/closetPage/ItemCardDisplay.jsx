@@ -4,7 +4,7 @@ import { setItems } from "../../store/reducers/itemsReducer"
 
 import { getAllItems } from "../../api/Item"
 
-import ItemCard from "./ItemCard";
+import ItemCard from "../card/ItemCard";
 import styles from "../../styles/ItemCardDisplay.module.css"
 
 const ItemCardDisplay = ({ isSidePanelCollapsed }) => {
