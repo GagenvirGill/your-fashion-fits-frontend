@@ -3,7 +3,7 @@ import React from "react";
 import ClosetSidePanel from "./closetSidePanel/ClosetSidePanel";
 import ImgButton from "../buttons/ImgButton";
 
-import styles from "../../styles/CollapsibleSidePanel.module.css"
+import styles from "./CollapsibleSidePanel.module.css";
 
 const CollapsibleSidePanel = ({ isCollapsed, togglePanel}) => {
 	return (

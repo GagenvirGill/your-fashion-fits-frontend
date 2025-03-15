@@ -6,7 +6,7 @@ import { filterItemsByCategories } from "../../../api/Item"
 
 import CategoriesButtonList from "../../buttons/CategoriesButtonList";
 import Button from "../../buttons/Button";
-import styles from "../../../styles/FilterItemsForm.module.css"
+import styles from "./FilterItemsForm.module.css"
 
 const FilterItemsForm = () => {
 	const dispatch = useDispatch();

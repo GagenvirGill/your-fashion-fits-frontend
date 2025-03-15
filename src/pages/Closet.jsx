@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ItemCardDisplay from "../components/closetPage/ItemCardDisplay";
 import CollapsibleSidePanel from "../components/closetPage/CollapsibleSidePanel";
 
-import styles from "../styles/Closet.module.css";
+import styles from "./Closet.module.css";
 
 const Closet = () => {
 	const [isCollapsed, setIsCollapsed] = useState(true);

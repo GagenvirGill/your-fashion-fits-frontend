@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../../styles/Card.module.css";
+import styles from "./Card.module.css";
 
 const Card = ({ id, onDelete, className, children }) => {
 	const [showMenu, setShowMenu] = useState(false);

@@ -3,7 +3,7 @@ import FilterItemsForm from "./FilterItemsForm"
 import AddCategoryForm from "./AddCategoryForm";
 import AddItemForm from "./AddItemForm";
 import ClosetSidePanelRadioForm from "./ClosetSidePanelRadioForm";
-import styles from "../../../styles/ClosetSidePanel.module.css";
+import styles from "./ClosetSidePanel.module.css";
 
 const ClosetSidePanel = () => {
     const [selectedOption, setSelectedOption] = useState("filter");

@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "./Card";
-import styles from "../../styles/ItemCard.module.css";
+import styles from "./ItemCard.module.css";
 
 const ItemCard = ({ itemId, imagePath }) => {
 	const onDelete = () => {
