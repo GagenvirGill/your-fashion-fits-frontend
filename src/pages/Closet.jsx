@@ -1,22 +1,14 @@
 import React, { useState } from "react";
 
 import ItemCardDisplay from "../components/closetPage/ItemCardDisplay";
-import CollapsibleSidePanel from "../components/closetPage/CollapsibleSidePanel";
 
 import styles from "./Closet.module.css";
 
 const Closet = () => {
-	const [isCollapsed, setIsCollapsed] = useState(true);
-
-	const togglePanel = () => {
-		setIsCollapsed(!isCollapsed);
-	};
-
-    return (
-        <div className={styles.closetPage}>
-            <br />
-			<CollapsibleSidePanel isCollapsed={isCollapsed} togglePanel={togglePanel}/>
-			<ItemCardDisplay isSidePanelCollapsed={isCollapsed}/>
+	return (
+		<div className={styles.closetPage}>
+			<br />
+			<ItemCardDisplay />
 			<br />
 			<br />
 			<br />
@@ -27,8 +19,8 @@ const Closet = () => {
 			<br />
 			<br />
 			<br />
-        </div>
-    );
+		</div>
+	);
 };
 
 export default Closet;

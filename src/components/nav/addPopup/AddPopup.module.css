@@ -1,0 +1,40 @@
+.popupContent {
+	position: fixed;
+	top: 8vh;
+	left: 20vw;
+	width: 60vw;
+	height: 40vh;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgb(0, 0, 0);
+	z-index: 1002;
+	overflow: scroll;
+}
+
+.rotate {
+	transform: rotate(45deg);
+	transition: transform 0.3s ease;
+}
+
+.rotateOpen {
+	transform: rotate(45deg);
+	transition: transform 0.3s ease;
+}
+
+.rotateClose {
+	transform: rotate(0deg);
+	transition: transform 0.3s ease;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 1000;
+	pointer-events: none;
+}

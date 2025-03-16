@@ -1,25 +1,24 @@
 .navbar {
-    position: fixed;
-    top: 0px;
-    width: 100vw;
-    height: 8vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+	position: fixed;
+	top: 0px;
+	width: 100vw;
+	height: 8vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
 }
 
 .navLogo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50px;
-    object-fit: cover;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-inline: 20px;
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+	object-fit: cover;
+	cursor: pointer;
+	transition: 0.3s;
+	margin-inline: 20px;
 }
 
 .navLogo:hover {
-    background-color: rgb(200, 200, 200);
-    transform: scale(1.1);
+	background-color: rgb(200, 200, 200);
 }

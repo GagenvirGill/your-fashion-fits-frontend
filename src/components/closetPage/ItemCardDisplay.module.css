@@ -1,20 +1,8 @@
 .itemCardDisplay {
-    display: inline-block;
-    position: relative;
-    text-align: center;
-    width: 90vw;
-    overflow-y: auto;
-    overflow-x: hidden;
+	display: inline-block;
+	position: relative;
+	text-align: center;
+	width: 90vw;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
-
-.itemCardDisplayCollapsed {
-    display: inline-block;
-    position: sticky;
-    text-align: center;
-    overflow-y: auto;
-    overflow-x: hidden;
-    width: 64vw;
-    left: 33vw;
-    right: 3vw;
-}
-

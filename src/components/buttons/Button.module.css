@@ -1,21 +1,20 @@
 .customButton {
-    display: inline-block;
-    padding: 6px 15px;
-    border: 1px solid black;
-    background-color: rgb(255, 193, 7);
-    margin: 2px;
+	display: inline-block;
+	padding: 6px 15px;
+	background-color: rgb(255, 193, 7);
+	margin: 2px;
 
-    color: black;
-    font-family: Courier, 'Courier New', monospace;
-    font-size: 15px;
-    text-align: center;
+	color: black;
+	font-family: Courier, "Courier New", monospace;
+	font-size: 15px;
+	text-align: center;
 
-    cursor: pointer;
-    user-select: none;
-    transition: 0.3s;
+	cursor: pointer;
+	user-select: none;
+	transition: 0.3s;
+	border-width: 0px;
 }
 
 .customButton:hover {
-    background-color: rgb(230, 173, 6);
-    transform: scale(1.05);
+	background-color: rgb(230, 173, 6);
 }
