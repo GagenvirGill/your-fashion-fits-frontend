@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { createItem } from "../../../api/Item";
 import { refreshState } from "../../../store/reducers/itemsReducer";
 
-const AddItemForm = () => {
+const AddItemForm = ({ handleClose }) => {
 	const [image, setImage] = useState(null);
 	const dispatch = useDispatch();
 
@@ -18,6 +18,7 @@ const AddItemForm = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
+		handleClose();
 		await createItem(image);
 		dispatch(refreshState());
 	};

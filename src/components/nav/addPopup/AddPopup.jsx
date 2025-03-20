@@ -14,11 +14,15 @@ const AddPopup = () => {
 		setPopupVisibility(!isPopupVisible);
 	};
 
+	const closePopup = () => {
+		setPopupVisibility(false);
+	};
+
 	const renderForm = (selectedOption) => {
 		if (selectedOption === "addItem") {
-			return <AddItemForm />;
+			return <AddItemForm handleClose={closePopup} />;
 		} else if (selectedOption === "addCategory") {
-			return <AddCategoryForm />;
+			return <AddCategoryForm handleClose={closePopup} />;
 		}
 	};
 
