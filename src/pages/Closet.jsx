@@ -7,7 +7,6 @@ import styles from "./Closet.module.css";
 const Closet = () => {
 	return (
 		<div className={styles.closetPage}>
-			<br />
 			<ItemCardDisplay />
 			<br />
 			<br />

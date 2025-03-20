@@ -52,11 +52,7 @@ export const createItem = async (imageFile, description) => {
 
 export const deleteItem = async (itemId) => {
 	try {
-		const response = await ax.delete("/item", {
-			params: {
-				itemId: itemId,
-			},
-		});
+		const response = await ax.delete(`/item/${itemId}`);
 		if (response.data.success === true) {
 			console.log(response.data.message);
 		} else {
