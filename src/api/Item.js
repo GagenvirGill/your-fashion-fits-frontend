@@ -83,3 +83,21 @@ export const filterItemsByCategories = async (categories) => {
 		alert("Something went wrong when getting filtered items");
 	}
 };
+
+export const addItemToCategories = async (itemId, categories) => {
+	try {
+		const response = await ax.post(`/item/${itemId}/categories`, {
+			categories: categories,
+		});
+
+		if (response.data.success === true) {
+			console.log(response.data.message);
+		} else {
+			console.error(response.data.message);
+			alert(response.data.message);
+		}
+	} catch (err) {
+		console.error(err);
+		alert("Something went wrong when adding item to categories");
+	}
+};

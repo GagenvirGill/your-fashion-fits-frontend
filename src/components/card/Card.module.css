@@ -1,0 +1,8 @@
+.contextMenu {
+	position: fixed;
+	background-color: white;
+	border: 1px solid #ccc;
+	z-index: 99999;
+	width: 100px;
+	height: 150px;
+}

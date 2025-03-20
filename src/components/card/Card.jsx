@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Card.module.css";
 
-const Card = ({ id, onDelete, className, children }) => {
+const Card = ({ id, onDelete, className, children, customContextMenu }) => {
 	const [showMenu, setShowMenu] = useState(false);
 	const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
@@ -23,18 +23,19 @@ const Card = ({ id, onDelete, className, children }) => {
 	};
 
 	return (
-		<div 
+		<div
 			className={`${styles.card} ${className || ""}`}
-			onContextMenu={handleContextMenu} 
+			onContextMenu={handleContextMenu}
 			onClick={handleClickOutside}
 		>
 			{children}
 			{showMenu && (
-				<div 
-					className={styles.contextMenu} 
+				<div
+					className={styles.contextMenu}
 					style={{ top: menuPosition.y, left: menuPosition.x }}
 				>
 					<button onClick={handleDelete}>Delete</button>
+					{customContextMenu}
 				</div>
 			)}
 		</div>
