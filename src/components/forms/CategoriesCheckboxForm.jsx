@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "../../store/reducers/categoriesReducer";
 import { getAllCategories } from "../../api/Category";
-import CheckboxButton from "./CheckboxButton";
-import Button from "./Button";
+import CheckboxButton from "../buttons/CheckboxButton";
+import Button from "../buttons/Button";
 import styles from "./CategoriesCheckboxForm.module.css";
 
 const CategoriesCheckboxForm = ({ handleSubmit }) => {
