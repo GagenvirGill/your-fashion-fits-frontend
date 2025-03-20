@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { refreshState } from "../../../store/reducers/categoriesReducer";
 import { createCategory } from "../../../api/Category";
 
 const AddCategoryForm = () => {
+	const dispatch = useDispatch();
 	const [name, setName] = useState("");
 	const [loading, setLoading] = useState(false);
 
@@ -11,6 +13,7 @@ const AddCategoryForm = () => {
 
 		setLoading(true);
 		await createCategory(name);
+		dispatch(refreshState());
 		setLoading(false);
 	};
 

@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategories } from "../../store/reducers/categoriesReducer";
 import { getAllCategories } from "../../api/Category";
 import CheckboxButton from "../buttons/CheckboxButton";
 
 const CategoriesButtonList = ({ onCheckboxChange }) => {
-	const [categories, setCategories] = useState([]);
+	const dispatch = useDispatch();
+	const { categories, refresh } = useSelector((state) => state.categories);
 
 	useEffect(() => {
-		getAllCategories().then(setCategories);
-	}, []);
+		getAllCategories()
+			.then((fetchedCategories) => {
+				dispatch(setCategories(fetchedCategories));
+			})
+			.catch((err) => {
+				console.log(`Error loading categories: ${err}`);
+			});
+	}, [dispatch, refresh]);
 
 	const handleCheckboxChange = (categoryId, checked) => {
 		onCheckboxChange(categoryId, checked);

@@ -1,11 +1,18 @@
 import React from "react";
 import Card from "./Card";
-import { deleteCategory } from "../../api/category";
+import { deleteCategory } from "../../api/Category";
 import styles from "./CategoryCard.module.css";
 
+import { useDispatch } from "react-redux";
+import { refreshState } from "../../store/reducers/categoriesReducer";
+
 const CategoryCard = ({ categoryId, imagePath, categoryName }) => {
+	const dispatch = useDispatch();
+
 	const onDelete = () => {
-		deleteCategory(categoryId);
+		deleteCategory(categoryId).then(() => {
+			dispatch(refreshState());
+		});
 	};
 
 	return (

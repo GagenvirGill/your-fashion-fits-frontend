@@ -23,7 +23,6 @@ export const createCategory = async (name) => {
 		});
 		if (response.data.success === true) {
 			console.log(response.data.message);
-			alert(response.data.message);
 			return response.data.data;
 		} else {
 			console.error(response.data.message);
@@ -42,8 +41,8 @@ export const deleteCategory = async (categoryId) => {
 			console.log(response.data.message);
 		} else {
 			console.error(response.data.message);
+			alert(response.data.message);
 		}
-		alert(response.data.message);
 	} catch (err) {
 		console.error(err);
 		alert("Something went wrong when deleting a category");
