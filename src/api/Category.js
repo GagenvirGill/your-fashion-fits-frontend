@@ -38,11 +38,7 @@ export const createCategory = async (name, description) => {
 
 export const deleteCategory = async (categoryId) => {
 	try {
-		const response = await ax.delete("/category", {
-			params: {
-				categoryId: categoryId,
-			},
-		});
+		const response = await ax.delete(`/category/${categoryId}`);
 		if (response.data.success === true) {
 			console.log(response.data.message);
 		} else {
