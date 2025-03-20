@@ -1,44 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { setItems } from "../../store/reducers/itemsReducer";
-
 import { filterItemsByCategories } from "../../api/Item";
-
-import CategoriesButtonList from "./CategoriesButtonList";
-import Button from "../buttons/Button";
-import styles from "./FilterItemsForm.module.css";
+import CategoriesCheckboxForm from "../buttons/CategoriesCheckboxForm";
 
 const FilterItemsForm = () => {
 	const dispatch = useDispatch();
-	const [selectedCategories, setSelectedCategories] = useState([]);
-	const [loading, setLoading] = useState(false);
 
-	const handleCheckboxChange = (categoryId, checked) => {
-		setSelectedCategories((prevState) => {
-			if (checked) {
-				return [...prevState, categoryId];
-			} else {
-				return prevState.filter((idVal) => idVal !== categoryId);
-			}
-		});
-	};
-
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-
-		setLoading(true);
+	const handleSubmit = async (selectedCategories) => {
 		const filteredItems = await filterItemsByCategories(selectedCategories);
 		dispatch(setItems(filteredItems));
-		setLoading(false);
 	};
 
-	return (
-		<form className={styles.filterItemsForm} onSubmit={handleSubmit}>
-			<CategoriesButtonList onCheckboxChange={handleCheckboxChange} />
-			<br />
-			<Button type={"submit"} text={"Submit"} disabled={loading} />
-		</form>
-	);
+	return <CategoriesCheckboxForm handleSubmit={handleSubmit} />;
 };
 
 export default FilterItemsForm;
