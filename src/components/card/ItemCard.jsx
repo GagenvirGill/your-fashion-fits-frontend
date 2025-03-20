@@ -3,9 +3,16 @@ import { deleteItem } from "../../api/Item";
 import Card from "./Card";
 import styles from "./ItemCard.module.css";
 
+import { useDispatch } from "react-redux";
+import { refreshState } from "../../store/reducers/itemsReducer";
+
 const ItemCard = ({ itemId, imagePath }) => {
+	const dispatch = useDispatch();
+
 	const onDelete = () => {
-		deleteItem(itemId);
+		deleteItem(itemId).then(() => {
+			dispatch(refreshState());
+		});
 	};
 
 	return (

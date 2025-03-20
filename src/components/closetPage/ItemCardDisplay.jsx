@@ -10,7 +10,7 @@ import FilterItemsForm from "./FilterItemsForm";
 
 const ItemCardDisplay = () => {
 	const dispatch = useDispatch();
-	const { items } = useSelector((state) => state.items);
+	const { items, refresh } = useSelector((state) => state.items);
 
 	useEffect(() => {
 		getAllItems()
@@ -20,7 +20,7 @@ const ItemCardDisplay = () => {
 			.catch((err) => {
 				console.log(`Error loading items: ${err}`);
 			});
-	}, [dispatch]);
+	}, [dispatch, refresh]);
 
 	return (
 		<>

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	items: [],
-	loading: false,
+	refresh: 0,
 };
 
 const itemsSlice = createSlice({
@@ -13,11 +13,11 @@ const itemsSlice = createSlice({
 		setItems: (state, action) => {
 			state.items = action.payload;
 		},
-		setLoading: (state, action) => {
-			state.loading = action.payload;
+		refreshState: (state) => {
+			state.refresh += 1;
 		},
 	},
 });
 
-export const { setItems, setLoading } = itemsSlice.actions;
+export const { setItems, refreshState } = itemsSlice.actions;
 export default itemsSlice.reducer;

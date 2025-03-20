@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
 import { createItem } from "../../../api/Item";
+import { refreshState } from "../../../store/reducers/itemsReducer";
 
 const AddItemForm = () => {
 	const [image, setImage] = useState(null);
+	const dispatch = useDispatch();
 
 	const handleImage = async (event) => {
 		const file = event.target.files[0];
@@ -17,6 +19,7 @@ const AddItemForm = () => {
 		event.preventDefault();
 
 		await createItem(image);
+		dispatch(refreshState());
 	};
 
 	return (
