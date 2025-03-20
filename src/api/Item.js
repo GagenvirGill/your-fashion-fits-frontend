@@ -17,7 +17,7 @@ export const getAllItems = async () => {
 	}
 };
 
-export const createItem = async (imageFile, description) => {
+export const createItem = async (imageFile) => {
 	try {
 		const { success, data, message } = await workerPool.processImage(
 			imageFile
@@ -28,7 +28,6 @@ export const createItem = async (imageFile, description) => {
 
 		const formData = new FormData();
 		formData.append("image", data);
-		formData.append("description", description);
 
 		const response = await ax.post("/item", formData, {
 			headers: {

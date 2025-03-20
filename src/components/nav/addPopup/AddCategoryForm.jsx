@@ -4,14 +4,13 @@ import { createCategory } from "../../../api/Category";
 
 const AddCategoryForm = () => {
 	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
 	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		setLoading(true);
-		await createCategory(name, description);
+		await createCategory(name);
 		setLoading(false);
 	};
 
@@ -26,14 +25,6 @@ const AddCategoryForm = () => {
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 					required
-				/>
-				<br />
-				<label htmlFor="description">Description: </label>
-				<input
-					type="description"
-					id="description"
-					value={description}
-					onChange={(e) => setDescription(e.target.value)}
 				/>
 				<br />
 				<button type="submit" disabled={loading}>

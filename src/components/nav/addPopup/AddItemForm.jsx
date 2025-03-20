@@ -4,7 +4,6 @@ import { createItem } from "../../../api/Item";
 
 const AddItemForm = () => {
 	const [image, setImage] = useState(null);
-	const [description, setDescription] = useState("");
 
 	const handleImage = async (event) => {
 		const file = event.target.files[0];
@@ -17,7 +16,7 @@ const AddItemForm = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		await createItem(image, description);
+		await createItem(image);
 	};
 
 	return (
@@ -31,14 +30,6 @@ const AddItemForm = () => {
 					accept="image/*"
 					onChange={handleImage}
 					required
-				/>
-				<br />
-				<label htmlFor="description">Description: </label>
-				<input
-					type="description"
-					id="description"
-					value={description}
-					onChange={(event) => setDescription(event.target.value)}
 				/>
 				<br />
 				<button type="submit">Create</button>

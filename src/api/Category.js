@@ -16,11 +16,10 @@ export const getAllCategories = async () => {
 	}
 };
 
-export const createCategory = async (name, description) => {
+export const createCategory = async (name) => {
 	try {
 		const response = await ax.post("/category", {
 			name: name,
-			description: description,
 		});
 		if (response.data.success === true) {
 			console.log(response.data.message);
