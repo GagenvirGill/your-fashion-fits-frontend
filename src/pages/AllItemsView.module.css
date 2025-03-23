@@ -1,0 +1,16 @@
+.allItemsView {
+	position: relative;
+	width: 100vw;
+	top: 6vh;
+	text-align: center;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.allTitle {
+	color: black;
+	font-family: Courier, "Courier New", monospace;
+	font-size: 20px;
+	text-align: center;
+	font-weight: bolder;
+}

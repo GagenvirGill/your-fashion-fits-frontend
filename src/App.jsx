@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Home from "./pages/Home";
 import Closet from "./pages/Closet";
 import CategoryView from "./pages/CategoryView";
+import AllItemsView from "./pages/AllItemsView";
 
 import Navbar from "./components/nav/Navbar";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +31,7 @@ const App = () => {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/closet" element={<Closet />} />
+				<Route path="/closet/all" element={<AllItemsView />} />
 				{categories.map((category) => (
 					<Route
 						key={category.categoryId}

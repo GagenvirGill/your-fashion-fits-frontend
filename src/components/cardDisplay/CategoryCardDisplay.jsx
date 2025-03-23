@@ -10,6 +10,14 @@ const CategoryCardDisplay = () => {
 
 	return (
 		<div className={styles.categoryCardDisplay}>
+			<Link key={`all.link`} to={`/closet/all`}>
+				<CategoryCard
+					key={`all.card`}
+					categoryId={0}
+					categoryName={"All"}
+					imagePath={"/uploads/image-1742079245241-160798446.png"}
+				/>
+			</Link>
 			{categories.map((category) => (
 				<Link
 					key={`${category.categoryId}.link`}
