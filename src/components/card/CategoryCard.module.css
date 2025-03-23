@@ -1,3 +1,38 @@
 .categoryCard {
-    
+	display: inline-block;
+	position: relative;
+	width: 120px;
+	height: 150px;
+	justify-content: center;
+	align-items: center;
+	margin: 2px;
+}
+
+.categoryCard img {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+	display: block;
+}
+
+.categoryCardText {
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: rgb(0, 0, 0);
+	font-family: Courier, "Courier New", monospace;
+	font-size: 15px;
+	text-align: center;
+
+	background-color: rgba(255, 255, 255, 0.8);
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	transition: 0.3s;
+}
+
+.categoryCardText:hover {
+	background-color: rgba(0, 255, 247, 0.8);
 }

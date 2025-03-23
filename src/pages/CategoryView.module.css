@@ -1,4 +1,4 @@
-.closetPage {
+.categoryView {
 	position: relative;
 	width: 100vw;
 	top: 6vh;
@@ -7,12 +7,10 @@
 	overflow-x: hidden;
 }
 
-.closetTitle {
+.categoryTitle {
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 25px;
+	font-size: 20px;
 	text-align: center;
-	font-weight: normal;
-	margin-bottom: 10px;
-	margin-top: 30px;
+	font-weight: bolder;
 }

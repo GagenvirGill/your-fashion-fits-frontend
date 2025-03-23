@@ -1,0 +1,8 @@
+.categoryCardDisplay {
+	display: inline-block;
+	position: relative;
+	text-align: center;
+	width: 90vw;
+	overflow-y: auto;
+	overflow-x: hidden;
+}

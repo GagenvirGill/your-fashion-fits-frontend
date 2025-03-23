@@ -26,9 +26,9 @@ const CategoryCard = ({ categoryId, imagePath, categoryName }) => {
 				alt="Preview"
 				id={categoryId}
 			/>
-			<p>{categoryName}</p>
+			<p className={styles.categoryCardText}>{categoryName}</p>
 		</Card>
 	);
 };
 
-export default ItemCard;
+export default CategoryCard;

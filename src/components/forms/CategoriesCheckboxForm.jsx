@@ -1,26 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setCategories } from "../../store/reducers/categoriesReducer";
-import { getAllCategories } from "../../api/Category";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import CheckboxButton from "../buttons/CheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./CategoriesCheckboxForm.module.css";
 
 const CategoriesCheckboxForm = ({ handleSubmit }) => {
-	const dispatch = useDispatch();
 	const [selectedCategories, setSelectedCategories] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const { categories, refresh } = useSelector((state) => state.categories);
-
-	useEffect(() => {
-		getAllCategories()
-			.then((fetchedCategories) => {
-				dispatch(setCategories(fetchedCategories));
-			})
-			.catch((err) => {
-				console.log(`Error loading categories: ${err}`);
-			});
-	}, [dispatch, refresh]);
+	const { categories } = useSelector((state) => state.categories);
 
 	const handleCheckboxChange = (categoryId, checked) => {
 		setSelectedCategories((prevState) => {

@@ -4,28 +4,36 @@ import { setItems } from "../../store/reducers/itemsReducer";
 import styles from "./ItemCardDisplay.module.css";
 
 import { getAllItems } from "../../api/Item";
+import { filterItemsByCategories } from "../../api/Item";
 
 import ItemCard from "../card/ItemCard";
-import FilterItemsForm from "./FilterItemsForm";
 
-const ItemCardDisplay = () => {
+const ItemCardDisplay = ({ categoryIdFilter }) => {
 	const dispatch = useDispatch();
 	const { items, refresh } = useSelector((state) => state.items);
 
 	useEffect(() => {
-		getAllItems()
-			.then((fetchedItems) => {
-				dispatch(setItems(fetchedItems));
-			})
-			.catch((err) => {
-				console.log(`Error loading items: ${err}`);
-			});
+		if (categoryIdFilter) {
+			filterItemsByCategories([categoryIdFilter])
+				.then((fetchedItems) => {
+					dispatch(setItems(fetchedItems));
+				})
+				.catch((err) => {
+					console.log(`Error loading items: ${err}`);
+				});
+		} else {
+			getAllItems()
+				.then((fetchedItems) => {
+					dispatch(setItems(fetchedItems));
+				})
+				.catch((err) => {
+					console.log(`Error loading items: ${err}`);
+				});
+		}
 	}, [dispatch, refresh]);
 
 	return (
 		<>
-			<FilterItemsForm />
-			<br />
 			<div className={styles.itemCardDisplay}>
 				{items.map((item) => (
 					<ItemCard
