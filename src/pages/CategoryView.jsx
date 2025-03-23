@@ -1,6 +1,6 @@
 import React from "react";
 
-import ItemCardDisplay from "../components/closetPage/ItemCardDisplay";
+import ItemCardDisplay from "../components/cardDisplay/ItemCardDisplay";
 
 import styles from "./CategoryView.module.css";
 

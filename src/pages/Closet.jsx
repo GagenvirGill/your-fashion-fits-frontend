@@ -1,8 +1,8 @@
 import React from "react";
 
-import ItemCardDisplay from "../components/closetPage/ItemCardDisplay";
-import FilterItemsForm from "../components/closetPage/FilterItemsForm";
-import CategoryCardDisplay from "../components/closetPage/CategoryCardDisplay";
+import ItemCardDisplay from "../components/cardDisplay/ItemCardDisplay";
+import FilterItemsForm from "../components/forms/FilterItemsForm";
+import CategoryCardDisplay from "../components/cardDisplay/CategoryCardDisplay";
 
 import styles from "./Closet.module.css";
 

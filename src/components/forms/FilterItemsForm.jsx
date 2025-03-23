@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setItems } from "../../store/reducers/itemsReducer";
 import { filterItemsByCategories } from "../../api/Item";
-import CategoriesCheckboxForm from "../forms/CategoriesCheckboxForm";
+import CategoriesCheckboxForm from "./CategoriesCheckboxForm";
 
 const FilterItemsForm = () => {
 	const dispatch = useDispatch();

@@ -12,12 +12,13 @@ const CategoryCardDisplay = () => {
 		<div className={styles.categoryCardDisplay}>
 			{categories.map((category) => (
 				<Link
-					to={`/closet/${encodeURIComponent(
-						category.name.toLowerCase()
-					)}`}
+					key={`${category.categoryId}.link`}
+					to={`/closet/${category.name
+						.toLowerCase()
+						.replace(/\s+/g, "")}`}
 				>
 					<CategoryCard
-						key={`${category.categoryId}.link`}
+						key={`${category.categoryId}.card`}
 						categoryId={category.categoryId}
 						categoryName={category.name}
 						imagePath={"/uploads/image-1742079245241-160798446.png"}

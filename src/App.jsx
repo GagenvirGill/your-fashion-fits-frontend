@@ -33,9 +33,9 @@ const App = () => {
 				{categories.map((category) => (
 					<Route
 						key={category.categoryId}
-						path={`/closet/${encodeURIComponent(
-							category.name.toLowerCase()
-						)}`}
+						path={`/closet/${category.name
+							.toLowerCase()
+							.replace(/\s+/g, "")}`}
 						element={
 							<CategoryView
 								categoryId={category.categoryId}
