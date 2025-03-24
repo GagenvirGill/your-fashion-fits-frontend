@@ -48,3 +48,39 @@ export const deleteCategory = async (categoryId) => {
 		alert("Something went wrong when deleting a category");
 	}
 };
+
+export const addCategoryToItems = async (categoryId, items) => {
+	try {
+		const response = await ax.post(`/category/${categoryId}/items`, {
+			items: items,
+		});
+
+		if (response.data.success === true) {
+			console.log(response.data.message);
+		} else {
+			console.error(response.data.message);
+			alert(response.data.message);
+		}
+	} catch (err) {
+		console.error(err);
+		alert("Something went wrong when adding category to items");
+	}
+};
+
+export const removeCategoryFromItems = async (categoryId, items) => {
+	try {
+		const response = await ax.delete(`/category/${categoryId}/items`, {
+			items: items,
+		});
+
+		if (response.data.success === true) {
+			console.log(response.data.message);
+		} else {
+			console.error(response.data.message);
+			alert(response.data.message);
+		}
+	} catch (err) {
+		console.error(err);
+		alert("Something went wrong when removing category from items");
+	}
+};
