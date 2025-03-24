@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import styles from "./AddPopup.module.css";
+import styles from "./NavAddMenu.module.css";
 
 import ImgButton from "../../buttons/ImgButton";
 import AddItemForm from "./AddItemForm";
 import AddCategoryForm from "./AddCategoryForm";
 import PopupRadioForm from "./PopupRadioForm";
 
-const AddPopup = () => {
+const NavAddMenu = () => {
 	const [isPopupVisible, setPopupVisibility] = useState(false);
 	const [selectedForm, setSelectedForm] = useState("addItem");
 
@@ -54,4 +54,4 @@ const AddPopup = () => {
 	);
 };
 
-export default AddPopup;
+export default NavAddMenu;

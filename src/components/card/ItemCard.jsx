@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { deleteItem } from "../../api/Item";
-import Card from "./Card";
-import AddItemToCategoriesForm from "./itemForms/AddItemToCategoriesForm";
-import styles from "./ItemCard.module.css";
-
 import { useDispatch } from "react-redux";
 import { refreshState } from "../../store/reducers/itemsReducer";
+
+import styles from "./ItemCard.module.css";
+import { deleteItem } from "../../api/Item";
+
+import Card from "./Card";
+import ItemContextMenuForms from "../popupForms/itemContextMenu/ItemContextMenuForms";
 
 const ItemCard = ({ itemId, imagePath }) => {
 	const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const ItemCard = ({ itemId, imagePath }) => {
 				/>
 			</Card>
 			{showForm && (
-				<AddItemToCategoriesForm
+				<ItemContextMenuForms
 					itemId={itemId}
 					imagePath={imagePath}
 					handleClose={handleCloseForm}

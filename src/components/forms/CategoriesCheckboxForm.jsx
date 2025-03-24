@@ -4,10 +4,17 @@ import CheckboxButton from "../buttons/CheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./CategoriesCheckboxForm.module.css";
 
-const CategoriesCheckboxForm = ({ handleSubmit }) => {
+const CategoriesCheckboxForm = ({ handleSubmit, displayCategories }) => {
+	let display_categories;
+	if (displayCategories) {
+		display_categories = displayCategories;
+	} else {
+		const { categories } = useSelector((state) => state.categories);
+		display_categories = categories;
+	}
+
 	const [selectedCategories, setSelectedCategories] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const { categories } = useSelector((state) => state.categories);
 
 	const handleCheckboxChange = (categoryId, checked) => {
 		setSelectedCategories((prevState) => {
@@ -31,7 +38,7 @@ const CategoriesCheckboxForm = ({ handleSubmit }) => {
 			className={styles.filterItemsForm}
 			onSubmit={handleCheckboxSubmit}
 		>
-			{categories.map((category) => (
+			{display_categories.map((category) => (
 				<CheckboxButton
 					key={category.categoryId}
 					text={category.name}

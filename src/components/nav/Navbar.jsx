@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import AddPopup from "./addPopup/AddPopup";
+import NavAddMenu from "../popupForms/navAddMenu/NavAddMenu";
 
 const Navbar = () => {
 	return (
@@ -20,7 +20,7 @@ const Navbar = () => {
 					className={styles.navLogo}
 				></img>
 			</Link>
-			<AddPopup />
+			<NavAddMenu />
 		</nav>
 	);
 };

@@ -9,12 +9,8 @@
 	text-align: center;
 	background-color: rgb(255, 255, 255);
 	border: 1px solid rgb(0, 0, 0);
-	z-index: 1001;
+	z-index: 10000;
 	overflow: scroll;
-
-	color: black;
-	font-family: Courier, "Courier New", monospace;
-	font-size: 15px;
 }
 
 .popupForm img {
@@ -30,6 +26,5 @@
 	width: 100vw;
 	height: 100vh;
 	background-color: rgba(0, 0, 0, 0.3);
-	z-index: 1000;
-	pointer-events: none;
+	z-index: 2000;
 }
