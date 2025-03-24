@@ -20,23 +20,21 @@ const Card = ({ id, onDelete, className, children, customContextMenu }) => {
 		}
 	};
 
-	const handleClickOutside = (e) => {
+	const handleClick = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		if (showMenu) {
-			setShowMenu(false);
-		}
+		setShowMenu(false);
 	};
 
 	useEffect(() => {
 		if (showMenu) {
-			document.addEventListener("click", handleClickOutside);
+			document.addEventListener("click", handleClick);
 		} else {
-			document.removeEventListener("click", handleClickOutside);
+			document.removeEventListener("click", handleClick);
 		}
 
 		return () => {
-			document.removeEventListener("click", handleClickOutside);
+			document.removeEventListener("click", handleClick);
 		};
 	}, [showMenu]);
 
@@ -44,20 +42,20 @@ const Card = ({ id, onDelete, className, children, customContextMenu }) => {
 		<div
 			className={`${styles.card} ${className || ""}`}
 			onContextMenu={handleContextMenu}
-			onClick={(e) => e.stopPropagation()}
+			onClick={handleClick}
 		>
 			{children}
 			{showMenu && (
 				<div
 					className={styles.contextMenu}
 					style={{ top: menuPosition.y, left: menuPosition.x }}
-					onClick={(e) => e.stopPropagation()}
+					onClick={handleClick}
 				>
 					<button onClick={handleDelete}>Delete</button>
 					{customContextMenu}
 					<br />
 					<br />
-					<button onClick={handleClickOutside}>Close</button>
+					<button onClick={handleClick}>Close</button>
 				</div>
 			)}
 		</div>
