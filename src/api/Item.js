@@ -63,6 +63,22 @@ export const deleteItem = async (itemId) => {
 	}
 };
 
+export const getCategoriesForItem = async (itemId) => {
+	try {
+		const response = await ax.get(`/item/${itemId}/categories`);
+		if (response.data.success === true) {
+			console.log(response.data.message);
+			return response.data.data;
+		} else {
+			console.error(response.data.message);
+			alert(response.data.message);
+		}
+	} catch (err) {
+		console.error(err);
+		alert("Something went wrong when geting the categories for an item");
+	}
+};
+
 export const filterItemsByCategories = async (categories) => {
 	try {
 		const response = await ax.get("/item", {
@@ -99,5 +115,23 @@ export const addItemToCategories = async (itemId, categories) => {
 	} catch (err) {
 		console.error(err);
 		alert("Something went wrong when adding item to categories");
+	}
+};
+
+export const removeItemFromCategories = async (itemId, categories) => {
+	try {
+		const response = await ax.delete(`/item/${itemId}/categories`, {
+			categories: categories,
+		});
+
+		if (response.data.success === true) {
+			console.log(response.data.message);
+		} else {
+			console.error(response.data.message);
+			alert(response.data.message);
+		}
+	} catch (err) {
+		console.error(err);
+		alert("Something went wrong when removing item from categories");
 	}
 };

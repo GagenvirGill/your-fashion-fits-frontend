@@ -2,7 +2,7 @@
 
 class WorkerPool {
 	constructor(workerPath, idleTimeout) {
-		this.poolSize = Math.max(1, Math.min(navigator.hardwareConcurrency, 8));
+		this.poolSize = Math.max(1, navigator.hardwareConcurrency);
 		this.numWorkers = 0;
 		this.taskQueue = [];
 		this.taskIdCounter = 1;

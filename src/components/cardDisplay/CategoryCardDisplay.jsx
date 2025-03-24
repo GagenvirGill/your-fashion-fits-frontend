@@ -15,7 +15,7 @@ const CategoryCardDisplay = () => {
 					key={`all.card`}
 					categoryId={0}
 					categoryName={"All"}
-					imagePath={"/uploads/image-1742079245241-160798446.png"}
+					imagePath={"/uploads/image-1742793403720-792415603.png"}
 				/>
 			</Link>
 			{categories.map((category) => (
@@ -29,7 +29,7 @@ const CategoryCardDisplay = () => {
 						key={`${category.categoryId}.card`}
 						categoryId={category.categoryId}
 						categoryName={category.name}
-						imagePath={"/uploads/image-1742079245241-160798446.png"}
+						imagePath={"/uploads/image-1742793403720-792415603.png"}
 					/>
 				</Link>
 			))}
