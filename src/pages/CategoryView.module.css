@@ -12,5 +12,6 @@
 	font-family: Courier, "Courier New", monospace;
 	font-size: 20px;
 	text-align: center;
-	font-weight: bolder;
+	font-weight: normal;
+	margin-bottom: 5px;
 }

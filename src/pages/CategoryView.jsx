@@ -7,7 +7,7 @@ import styles from "./CategoryView.module.css";
 const CategoryView = ({ categoryId, categoryName }) => {
 	return (
 		<div className={styles.categoryView}>
-			<h3 className={styles.categoryTitle}>{categoryName}</h3>
+			<p className={styles.categoryTitle}>{categoryName}</p>
 			<ItemCardDisplay categoryIdFilter={categoryId} />
 		</div>
 	);

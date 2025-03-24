@@ -8,7 +8,7 @@ import styles from "./AllItemsView.module.css";
 const AllItemsView = () => {
 	return (
 		<div className={styles.allItemsView}>
-			<h3 className={styles.allTitle}>All Items</h3>
+			<p className={styles.allTitle}>All Items</p>
 			<FilterItemsForm />
 			<ItemCardDisplay />
 		</div>
