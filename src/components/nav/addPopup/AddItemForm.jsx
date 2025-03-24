@@ -17,7 +17,17 @@ const AddItemForm = ({ handleClose }) => {
 		event.preventDefault();
 
 		handleClose();
-		await Promise.all(images.map((image) => createItem(image)));
+
+		images.forEach((image) => {
+			createItem(image)
+				.then(() => {
+					dispatch(refreshState());
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		});
+
 		dispatch(refreshState());
 	};
 
