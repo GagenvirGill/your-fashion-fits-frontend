@@ -2,14 +2,10 @@
 
 class WorkerPool {
 	constructor(workerPath, idleTimeout) {
-		this.poolSize = 2;
-		// this.poolSize = Math.max(
-		// 	1,
-		// 	Math.min(navigator.hardwareConcurrency || 2, 8)
-		// );
+		this.poolSize = Math.max(1, Math.min(navigator.hardwareConcurrency, 8));
 		this.numWorkers = 0;
 		this.taskQueue = [];
-		this.taskIdCounter = 0;
+		this.taskIdCounter = 1;
 		this.callbacks = new Map();
 		this.idleTimeout = idleTimeout;
 		this.workerPath = new URL(workerPath, import.meta.url);
@@ -41,46 +37,46 @@ class WorkerPool {
 			} else {
 				reject({ success, message });
 			}
+
 			this.callbacks.delete(taskId);
 		}
-
-		console.log("Worker Task Completed Assigning New Task");
-		this.assignTask(worker);
+		if (this.taskQueue.length === 0) {
+			worker.terminate();
+			this.numWorkers--;
+			if (this.numWorkers === 0) {
+				console.log("All Workers Terminated");
+			}
+		} else {
+			this.assignTask(worker);
+		}
 	}
 
 	assignTask(oldWorker) {
 		let availWorker;
 		if (oldWorker === null) {
-			console.log("Creating New Worker for Task");
 			availWorker = this.createNewWorker();
 		} else {
-			console.log("Using Old Worker for Task");
 			availWorker = oldWorker;
 		}
 
 		if (availWorker && this.taskQueue.length > 0) {
-			console.log("Assigning Worker a Task");
 			const { taskId, imageFile, resolve, reject } =
 				this.taskQueue.shift();
 			this.callbacks.set(taskId, { resolve, reject });
 
 			availWorker.postMessage({ taskId, imageFile });
 		} else if (availWorker && this.taskQueue.length === 0) {
-			console.log("No Task in the Queue, Terminating Worker");
 			availWorker.terminate();
 			this.numWorkers--;
 			if (this.numWorkers === 0) {
 				console.log("All Workers Terminated");
 			}
-		} else if (availWorker === null && this.taskQueue.length > 0) {
-			setTimeout(() => this.assignTask(null), 1000);
 		}
 	}
 
 	processImage(imageFile) {
 		return new Promise((resolve, reject) => {
 			const taskId = this.taskIdCounter++;
-			console.log(`Task ${taskId} added to the queue`);
 			this.taskQueue.push({ taskId, imageFile, resolve, reject });
 			this.assignTask(null);
 		});
