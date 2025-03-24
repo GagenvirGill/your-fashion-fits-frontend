@@ -2,24 +2,22 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createItem } from "../../../api/Item";
 import { refreshState } from "../../../store/reducers/itemsReducer";
+import styles from "./AddItemForm.module.css";
 
 const AddItemForm = ({ handleClose }) => {
-	const [image, setImage] = useState(null);
+	const [images, setImages] = useState([]);
 	const dispatch = useDispatch();
 
 	const handleImage = async (event) => {
-		const file = event.target.files[0];
-
-		if (file) {
-			setImage(file);
-		}
+		const files = Array.from(event.target.files);
+		setImages(files);
 	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
 		handleClose();
-		await createItem(image);
+		await Promise.all(images.map((image) => createItem(image)));
 		dispatch(refreshState());
 	};
 
@@ -33,18 +31,22 @@ const AddItemForm = ({ handleClose }) => {
 					id="image"
 					accept="image/*"
 					onChange={handleImage}
+					multiple
 					required
 				/>
 				<br />
 				<button type="submit">Create</button>
 				<br />
-				{image && (
-					<img
-						src={URL.createObjectURL(image)}
-						alt="Preview"
-						style={{ maxWidth: "200px", marginTop: "10px" }}
-					/>
-				)}
+				<div className={styles.imagesDisplay}>
+					{images.map((image, index) => (
+						<img
+							key={index}
+							src={URL.createObjectURL(image)}
+							alt={`Preview ${index}`}
+							style={{ maxWidth: "100px" }}
+						/>
+					))}
+				</div>
 			</form>
 		</div>
 	);
