@@ -121,7 +121,7 @@ export const addItemToCategories = async (itemId, categories) => {
 export const removeItemFromCategories = async (itemId, categories) => {
 	try {
 		const response = await ax.delete(`/item/${itemId}/categories`, {
-			categories: categories,
+			data: { categories: categories },
 		});
 
 		if (response.data.success === true) {

@@ -33,7 +33,9 @@ const ItemCard = ({ itemId, imagePath }) => {
 				onDelete={onDelete}
 				className={styles.itemCard}
 				customContextMenu={
-					<button onClick={handleShowForm}>Add to Categories</button>
+					<button onClick={handleShowForm}>
+						Manage Item's Categories
+					</button>
 				}
 			>
 				<img

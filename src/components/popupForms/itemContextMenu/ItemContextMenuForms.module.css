@@ -3,14 +3,14 @@
 	top: 8vh;
 	left: 20vw;
 	width: 60vw;
-	height: 40vh;
+	max-height: 80vh;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	background-color: rgb(255, 255, 255);
 	border: 1px solid rgb(0, 0, 0);
 	z-index: 10000;
-	overflow: scroll;
+	overflow-y: auto;
 }
 
 .popupForm img {
