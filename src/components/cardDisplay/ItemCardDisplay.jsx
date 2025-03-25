@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../../store/reducers/itemsReducer";
 import styles from "./ItemCardDisplay.module.css";
@@ -8,15 +8,16 @@ import { filterItemsByCategories } from "../../api/Item";
 
 import ItemCard from "../card/ItemCard";
 
-const ItemCardDisplay = ({ categoryIdFilter }) => {
+const ItemCardDisplay = ({ selectedCategories }) => {
 	const dispatch = useDispatch();
-	const { items, refresh } = useSelector((state) => state.items);
+	const { refresh } = useSelector((state) => state.items);
+	const [displayItems, setDisplayItems] = useState([]);
 
 	useEffect(() => {
-		if (categoryIdFilter) {
-			filterItemsByCategories([categoryIdFilter])
+		if (selectedCategories) {
+			filterItemsByCategories(selectedCategories)
 				.then((fetchedItems) => {
-					dispatch(setItems(fetchedItems));
+					setDisplayItems(fetchedItems);
 				})
 				.catch((err) => {
 					console.log(`Error loading items: ${err}`);
@@ -24,20 +25,21 @@ const ItemCardDisplay = ({ categoryIdFilter }) => {
 		} else {
 			getAllItems()
 				.then((fetchedItems) => {
-					dispatch(setItems(fetchedItems));
+					setDisplayItems(fetchedItems);
+					setItems(fetchedItems);
 				})
 				.catch((err) => {
 					console.log(`Error loading items: ${err}`);
 				});
 		}
-	}, [dispatch, refresh]);
+	}, [dispatch, refresh, selectedCategories]);
 
 	return (
 		<>
 			<div className={styles.itemCardDisplay}>
-				{items.map((item) => (
+				{displayItems.map((item) => (
 					<ItemCard
-						key={item.itemId}
+						key={`${item.itemId}-${selectedCategories}`}
 						itemId={item.itemId}
 						imagePath={item.imagePath}
 					/>
