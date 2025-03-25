@@ -10,28 +10,23 @@ const CategoryCardDisplay = () => {
 
 	return (
 		<div className={styles.categoryCardDisplay}>
-			<Link key={`all.link`} to={`/closet/all`}>
-				<CategoryCard
-					key={`all.card`}
-					categoryId={0}
-					categoryName={"All"}
-					imagePath={"/uploads/image-1742793403720-792415603.png"}
-				/>
-			</Link>
+			<CategoryCard
+				key={`all.card`}
+				categoryId={null}
+				categoryName={"All"}
+				imagePath={"/uploads/image-1742793403720-792415603.png"}
+				urlRoute={`/closet/all`}
+			/>
 			{categories.map((category) => (
-				<Link
-					key={`${category.categoryId}.link`}
-					to={`/closet/${category.name
+				<CategoryCard
+					key={`${category.categoryId}.card`}
+					categoryId={category.categoryId}
+					categoryName={category.name}
+					imagePath={"/uploads/image-1742793403720-792415603.png"}
+					urlRoute={`/closet/${category.name
 						.toLowerCase()
 						.replace(/\s+/g, "")}`}
-				>
-					<CategoryCard
-						key={`${category.categoryId}.card`}
-						categoryId={category.categoryId}
-						categoryName={category.name}
-						imagePath={"/uploads/image-1742793403720-792415603.png"}
-					/>
-				</Link>
+				/>
 			))}
 		</div>
 	);
