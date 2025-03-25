@@ -8,7 +8,7 @@ const CategoryView = ({ categoryId, categoryName }) => {
 	return (
 		<div className={styles.categoryView}>
 			<p className={styles.categoryTitle}>{categoryName}</p>
-			<ItemCardDisplay categoryIdFilter={categoryId} />
+			<ItemCardDisplay selectedCategories={[categoryId]} />
 		</div>
 	);
 };

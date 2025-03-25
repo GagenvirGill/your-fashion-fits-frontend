@@ -70,7 +70,7 @@ export const addCategoryToItems = async (categoryId, items) => {
 export const removeCategoryFromItems = async (categoryId, items) => {
 	try {
 		const response = await ax.delete(`/category/${categoryId}/items`, {
-			items: items,
+			data: { items: items },
 		});
 
 		if (response.data.success === true) {

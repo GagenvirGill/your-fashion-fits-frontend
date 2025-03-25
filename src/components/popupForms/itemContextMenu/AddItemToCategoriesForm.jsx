@@ -22,11 +22,11 @@ const AddItemToCategoriesForm = ({
 			currCategories.add(category.categoryId);
 		});
 
-		const filteredCategories = categories.filter((category) => {
+		const filtCategories = categories.filter((category) => {
 			return !currCategories.has(category.categoryId);
 		});
 
-		setFilteredCategories(filteredCategories);
+		setFilteredCategories(filtCategories);
 	}, [dispatch, itemsCurrCategories, refresh]);
 
 	const handleSubmit = async (selectedCategories) => {

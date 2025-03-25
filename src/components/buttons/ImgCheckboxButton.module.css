@@ -1,0 +1,30 @@
+.imgCheckboxButton {
+	display: inline-block;
+	padding: 6px 15px;
+	background-color: white;
+	margin: 2px;
+	height: 75px;
+	width: 60px;
+
+	cursor: pointer;
+	transition: all 0.2s ease;
+	user-select: none;
+}
+
+.imgCheckboxButton img {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+.imgCheckboxButton:hover {
+	background-color: rgb(235, 235, 235);
+}
+
+.imgCheckboxButton input {
+	display: none;
+}
+
+.imgCheckboxButton:has(input:checked) {
+	background-color: rgb(40, 167, 69);
+}

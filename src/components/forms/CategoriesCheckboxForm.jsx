@@ -34,10 +34,7 @@ const CategoriesCheckboxForm = ({ handleSubmit, displayCategories }) => {
 	};
 
 	return (
-		<form
-			className={styles.filterItemsForm}
-			onSubmit={handleCheckboxSubmit}
-		>
+		<form className={styles.form} onSubmit={handleCheckboxSubmit}>
 			{display_categories.map((category) => (
 				<CheckboxButton
 					key={category.categoryId}

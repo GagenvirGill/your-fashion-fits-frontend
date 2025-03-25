@@ -26,7 +26,7 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 			getAllItems()
 				.then((fetchedItems) => {
 					setDisplayItems(fetchedItems);
-					setItems(fetchedItems);
+					dispatch(setItems(fetchedItems));
 				})
 				.catch((err) => {
 					console.log(`Error loading items: ${err}`);
