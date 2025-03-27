@@ -84,3 +84,23 @@ export const removeCategoryFromItems = async (categoryId, items) => {
 		alert("Something went wrong when removing category from items");
 	}
 };
+
+export const setCategoriesFavItem = async (categoryId, itemId) => {
+	try {
+		const response = await ax.post(
+			`/category/${categoryId}/fav-item/${itemId}`
+		);
+
+		if (response.data.success === true) {
+			console.log(response.data.message);
+		} else {
+			console.error(response.data.message);
+			alert(response.data.message);
+		}
+	} catch (err) {
+		console.error(err);
+		alert(
+			"Something went wrong when setting this categories favourite item"
+		);
+	}
+};
