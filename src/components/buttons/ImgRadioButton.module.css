@@ -1,0 +1,30 @@
+.imgRadioButton {
+	display: inline-block;
+	padding: 6px 15px;
+	background-color: white;
+	margin: 2px;
+	height: 75px;
+	width: 60px;
+
+	cursor: pointer;
+	transition: all 0.2s ease;
+	user-select: none;
+}
+
+.imgRadioButton img {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+.imgRadioButton:hover {
+	background-color: rgb(235, 235, 235);
+}
+
+.imgRadioButton input {
+	display: none;
+}
+
+.imgRadioButton:has(input:checked) {
+	background-color: rgb(40, 167, 69);
+}

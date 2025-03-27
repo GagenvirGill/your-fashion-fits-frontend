@@ -7,11 +7,19 @@ import styles from "./CategoryCard.module.css";
 import { deleteCategory } from "../../api/Category";
 
 import Card from "./Card";
-import CategoryContextMenuForms from "../popupForms/categoryContextMenu/CategoryContextMenuForms";
+import HandleACategoriesItemsForms from "../popupForms/categoryContextMenu/HandleACategoriesItemsForms";
+import SetCategoriesFavItemForm from "../popupForms/categoryContextMenu/SetCategoriesFavItemForm";
 
-const CategoryCard = ({ categoryId, imagePath, categoryName, urlRoute }) => {
+const CategoryCard = ({
+	categoryId,
+	imagePath,
+	categoryName,
+	urlRoute,
+	favItemId,
+}) => {
 	const dispatch = useDispatch();
-	const [showForm, setShowForm] = useState(false);
+	const [showCategoryItemsForm, setShowCategoryItemsForm] = useState(false);
+	const [showCategFavItemForm, setShowCategoryFavItemForm] = useState(false);
 
 	const onDelete = () => {
 		deleteCategory(categoryId).then(() => {
@@ -19,12 +27,17 @@ const CategoryCard = ({ categoryId, imagePath, categoryName, urlRoute }) => {
 		});
 	};
 
-	const handleShowForm = () => {
-		setShowForm(true);
+	const handleShowCategoryItemsForm = () => {
+		setShowCategoryItemsForm(true);
+	};
+
+	const handleShowCategoryFavItemForm = () => {
+		setShowCategoryFavItemForm(true);
 	};
 
 	const handleCloseForm = () => {
-		setShowForm(false);
+		setShowCategoryItemsForm(false);
+		setShowCategoryFavItemForm(false);
 	};
 
 	return (
@@ -35,26 +48,35 @@ const CategoryCard = ({ categoryId, imagePath, categoryName, urlRoute }) => {
 				className={styles.categoryCard}
 				customContextMenu={
 					categoryId !== null && (
-						<button onClick={handleShowForm}>
-							Manage Categories Item's
-						</button>
+						<>
+							<button onClick={handleShowCategoryItemsForm}>
+								Manage Categories Item's
+							</button>
+							<button onClick={handleShowCategoryFavItemForm}>
+								Edit a Categories Fav Item
+							</button>
+						</>
 					)
 				}
 			>
 				<Link key={`${categoryId}-link`} to={urlRoute}>
-					<img
-						src={`${"http://localhost:5001"}${imagePath}`}
-						alt="Preview"
-						id={categoryId}
-					/>
+					<img src={imagePath} alt="Preview" id={categoryId} />
 					<p className={styles.categoryCardText}>{categoryName}</p>
 				</Link>
 			</Card>
-			{showForm && (
-				<CategoryContextMenuForms
+			{showCategoryItemsForm && (
+				<HandleACategoriesItemsForms
 					categoryId={categoryId}
 					categoryName={categoryName}
 					handleClose={handleCloseForm}
+				/>
+			)}
+			{showCategFavItemForm && (
+				<SetCategoriesFavItemForm
+					categoryId={categoryId}
+					categoryName={categoryName}
+					handleClose={handleCloseForm}
+					currFavItem={favItemId}
 				/>
 			)}
 		</>

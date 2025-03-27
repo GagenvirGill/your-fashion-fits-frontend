@@ -10,6 +10,8 @@ import Navbar from "./components/nav/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "./store/reducers/categoriesReducer";
 import { getAllCategories } from "./api/Category";
+import { setItems } from "./store/reducers/itemsReducer";
+import { getAllItems } from "./api/Item";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -24,6 +26,16 @@ const App = () => {
 				console.log(`Error loading categories: ${err}`);
 			});
 	}, [dispatch, refresh]);
+
+	useEffect(() => {
+		getAllItems()
+			.then((fetchedItems) => {
+				dispatch(setItems(fetchedItems));
+			})
+			.catch((err) => {
+				console.log(`Error loading items: ${err}`);
+			});
+	}, [dispatch]);
 
 	return (
 		<Router>

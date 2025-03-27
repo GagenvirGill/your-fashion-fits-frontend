@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import styles from "./CategoryCardDisplay.module.css";
 
 import CategoryCard from "../card/CategoryCard";
-import { Link } from "react-router-dom";
+
+// `${"http://localhost:5001"}${imagePath}`
 
 const CategoryCardDisplay = () => {
 	const { categories } = useSelector((state) => state.categories);
+	const { items } = useSelector((state) => state.items);
 
 	return (
 		<div className={styles.categoryCardDisplay}>
@@ -14,20 +16,29 @@ const CategoryCardDisplay = () => {
 				key={`all.card`}
 				categoryId={null}
 				categoryName={"All"}
-				imagePath={"/uploads/image-1742793403720-792415603.png"}
 				urlRoute={`/closet/all`}
+				imagePath={"/search_browse_icon.png"}
 			/>
-			{categories.map((category) => (
-				<CategoryCard
-					key={`${category.categoryId}.card`}
-					categoryId={category.categoryId}
-					categoryName={category.name}
-					imagePath={"/uploads/image-1742793403720-792415603.png"}
-					urlRoute={`/closet/${category.name
-						.toLowerCase()
-						.replace(/\s+/g, "")}`}
-				/>
-			))}
+			{categories.map((category) => {
+				const item = items.find(
+					(item) => item.itemId === category.favoriteItem
+				);
+				return (
+					<CategoryCard
+						key={`${category.categoryId}.card`}
+						categoryId={category.categoryId}
+						categoryName={category.name}
+						urlRoute={`/closet/${category.name
+							.toLowerCase()
+							.replace(/\s+/g, "")}`}
+						imagePath={
+							item
+								? `${"http://localhost:5001"}${item.imagePath}`
+								: "/default_icon.png"
+						}
+					/>
+				);
+			})}
 		</div>
 	);
 };
