@@ -4,8 +4,6 @@ import styles from "./CategoryCardDisplay.module.css";
 
 import CategoryCard from "../card/CategoryCard";
 
-// `${"http://localhost:5001"}${imagePath}`
-
 const CategoryCardDisplay = () => {
 	const { categories } = useSelector((state) => state.categories);
 	const { items } = useSelector((state) => state.items);
@@ -36,6 +34,7 @@ const CategoryCardDisplay = () => {
 								? `${"http://localhost:5001"}${item.imagePath}`
 								: "/default_icon.png"
 						}
+						favItemId={item.itemId}
 					/>
 				);
 			})}

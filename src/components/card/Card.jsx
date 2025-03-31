@@ -44,7 +44,7 @@ const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 		<div
 			className={`${styles.card} ${className || ""}`}
 			onContextMenu={handleContextMenu}
-			onClick={(e) => e.stopPropagation()}
+			onClick={handleClick}
 		>
 			{children}
 			{showMenu && (
