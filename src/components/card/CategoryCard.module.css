@@ -1,8 +1,8 @@
 .categoryCard {
 	display: inline-block;
 	position: relative;
-	width: 120px;
-	height: 150px;
+	width: 140px;
+	height: 175px;
 	justify-content: center;
 	align-items: center;
 	margin: 10px;
@@ -36,5 +36,5 @@
 }
 
 .categoryCardText:hover {
-	background-color: rgba(200, 255, 255, 1);
+	background-color: rgba(225, 225, 225, 0.9);
 }
