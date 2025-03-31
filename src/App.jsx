@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Home from "./pages/Home";
 import Closet from "./pages/Closet";
@@ -21,6 +21,21 @@ const App = () => {
 	const { refresh: itemsRefresh } = useSelector((state) => state.items);
 
 	useEffect(() => {
+		const makeRequests = async () => {
+			try {
+				const fetchedCategories = await getAllCategories();
+				const fetchedItems = await getAllItems();
+				dispatch(setCategories(fetchedCategories));
+				dispatch(setItems(fetchedItems));
+			} catch (err) {
+				console.log(`Initial Loading Error: ${err}`);
+			}
+		};
+
+		makeRequests();
+	}, [dispatch]);
+
+	useEffect(() => {
 		getAllCategories()
 			.then((fetchedCategories) => {
 				dispatch(setCategories(fetchedCategories));
@@ -28,7 +43,7 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Error loading categories: ${err}`);
 			});
-	}, [dispatch, categoriesRefresh]);
+	}, [categoriesRefresh]);
 
 	useEffect(() => {
 		getAllItems()
@@ -38,7 +53,7 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Error loading items: ${err}`);
 			});
-	}, [dispatch, itemsRefresh]);
+	}, [itemsRefresh]);
 
 	return (
 		<Router>
