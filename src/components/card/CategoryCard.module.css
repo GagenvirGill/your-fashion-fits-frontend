@@ -24,17 +24,17 @@
 	transform: translate(-50%, -50%);
 	color: rgb(0, 0, 0);
 	font-family: Courier, "Courier New", monospace;
-	font-size: 15px;
+	font-size: 14px;
 	text-align: center;
 
 	background-color: rgba(255, 255, 255, 0.8);
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 2px;
-	padding-bottom: 2px;
+	padding-left: 12px;
+	padding-right: 12px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	transition: 0.3s;
 }
 
 .categoryCardText:hover {
-	background-color: rgba(0, 255, 247, 0.8);
+	background-color: rgba(200, 255, 255, 1);
 }
