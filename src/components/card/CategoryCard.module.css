@@ -5,8 +5,13 @@
 	height: 175px;
 	justify-content: center;
 	align-items: center;
-	margin: 10px;
+	padding: 10px;
 	pointer-events: fill;
+	border-radius: 2px;
+}
+
+.categoryCard:hover {
+	background-color: rgb(230, 230, 230);
 }
 
 .categoryCard img {
@@ -26,6 +31,7 @@
 	font-family: Courier, "Courier New", monospace;
 	font-size: 14px;
 	text-align: center;
+	border-radius: 1px;
 
 	background-color: rgba(255, 255, 255, 0.8);
 	padding-left: 12px;

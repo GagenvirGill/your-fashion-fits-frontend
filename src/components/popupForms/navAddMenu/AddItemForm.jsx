@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createItem } from "../../../api/Item";
 import { refreshState } from "../../../store/reducers/itemsReducer";
+
 import styles from "./AddItemForm.module.css";
+import Button from "../../buttons/Button";
 
 const AddItemForm = ({ handleClose }) => {
 	const [images, setImages] = useState([]);
@@ -33,19 +35,22 @@ const AddItemForm = ({ handleClose }) => {
 
 	return (
 		<div>
-			<p>Create a new Closet Item</p>
+			<p className={styles.formTitle}>Create a new Closet Item</p>
 			<form onSubmit={handleSubmit}>
-				<label htmlFor="image">Image: </label>
-				<input
-					type="file"
-					id="image"
-					accept="image/*"
-					onChange={handleImage}
-					multiple
-					required
-				/>
+				<label htmlFor="image" className={styles.addFileLabel}>
+					<div className={styles.addFile}>Select Item Image(s)</div>
+					<input
+						type="file"
+						id="image"
+						accept="image/*"
+						onChange={handleImage}
+						multiple
+						required
+					/>
+				</label>
 				<br />
-				<button type="submit">Create</button>
+				<br />
+				<Button type="submit" text={"Create"} />
 				<br />
 				<div className={styles.imagesDisplay}>
 					{images.map((image, index) => (

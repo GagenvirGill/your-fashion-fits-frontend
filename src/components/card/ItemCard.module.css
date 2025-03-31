@@ -4,7 +4,12 @@
 	height: 150px;
 	justify-content: center;
 	align-items: center;
-	margin: 2px;
+	padding: 5px;
+	border-radius: 1px;
+}
+
+.itemCard:hover {
+	background-color: rgb(230, 230, 230);
 }
 
 .itemCard img {

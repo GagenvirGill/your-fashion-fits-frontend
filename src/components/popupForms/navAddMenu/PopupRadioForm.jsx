@@ -1,5 +1,7 @@
 import React from "react";
+
 import RadioButton from "../../buttons/RadioButton";
+import styles from "./PopupRadioForm.module.css";
 
 const PopupRadioForm = ({
 	renderComponent,
@@ -12,7 +14,7 @@ const PopupRadioForm = ({
 	};
 
 	return (
-		<form>
+		<form className={styles.popupRadioForm}>
 			<RadioButton
 				text="Add new Items"
 				buttonId="AddItem"

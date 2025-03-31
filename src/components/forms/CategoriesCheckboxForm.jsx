@@ -49,6 +49,7 @@ const CategoriesCheckboxForm = ({ handleSubmit, displayCategories }) => {
 				/>
 			))}
 			<br />
+			<div className={styles.spacer}></div>
 			<Button type={"submit"} text={"Submit"} disabled={loading} />
 		</form>
 	);

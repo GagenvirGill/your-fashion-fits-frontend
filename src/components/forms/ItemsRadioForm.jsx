@@ -37,6 +37,7 @@ const ItemsRadioForm = ({ handleSubmit, preSelectedItemId, displayItems }) => {
 				/>
 			))}
 			<br />
+			<div className={styles.spacer}></div>
 			<Button type={"submit"} text={"Submit"} />
 		</form>
 	);

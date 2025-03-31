@@ -45,6 +45,7 @@ const ItemsCheckboxForm = ({ handleSubmit, displayItems }) => {
 				/>
 			))}
 			<br />
+			<div className={styles.spacer}></div>
 			<Button type={"submit"} text={"Submit"} disabled={loading} />
 		</form>
 	);
