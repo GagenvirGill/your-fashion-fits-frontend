@@ -1,0 +1,20 @@
+.contextMenuButton {
+	display: block;
+	background-color: rgb(255, 255, 255);
+	width: 100%;
+
+	color: rgb(0, 0, 0);
+	font-family: Courier, "Courier New", monospace;
+	font-size: 11px;
+	padding: 12px;
+	text-align: left;
+
+	cursor: pointer;
+	user-select: none;
+	transition: 0.3s;
+	border-width: 0px;
+}
+
+.contextMenuButton:hover {
+	background-color: rgb(225, 225, 225);
+}

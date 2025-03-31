@@ -9,6 +9,7 @@ import { deleteCategory } from "../../api/Category";
 import Card from "./Card";
 import HandleACategoriesItemsForms from "../popupForms/categoryContextMenu/HandleACategoriesItemsForms";
 import SetCategoriesFavItemForm from "../popupForms/categoryContextMenu/SetCategoriesFavItemForm";
+import ContextMenuButton from "../buttons/ContextMenuButton";
 
 const CategoryCard = ({
 	categoryId,
@@ -46,18 +47,21 @@ const CategoryCard = ({
 				id={categoryId}
 				onDelete={onDelete}
 				className={styles.categoryCard}
-				customContextMenu={
+				customConMenu={
 					categoryId !== null && (
 						<>
-							<button onClick={handleShowCategoryItemsForm}>
-								Manage Categories Item's
-							</button>
-							<button onClick={handleShowCategoryFavItemForm}>
-								Edit a Categories Fav Item
-							</button>
+							<ContextMenuButton
+								onClick={handleShowCategoryItemsForm}
+								text={`Manage '${categoryName}' Item's`}
+							/>
+							<ContextMenuButton
+								onClick={handleShowCategoryFavItemForm}
+								text={`Edit '${categoryName}' Favourite Item`}
+							/>
 						</>
 					)
 				}
+				type={`'${categoryName}' Category`}
 			>
 				<Link key={`${categoryId}-link`} to={urlRoute}>
 					<img src={imagePath} alt="Preview" id={categoryId} />

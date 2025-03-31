@@ -7,6 +7,7 @@ import { deleteItem } from "../../api/Item";
 
 import Card from "./Card";
 import ItemContextMenuForms from "../popupForms/itemContextMenu/ItemContextMenuForms";
+import ContextMenuButton from "../buttons/ContextMenuButton";
 
 const ItemCard = ({ itemId, imagePath }) => {
 	const dispatch = useDispatch();
@@ -32,11 +33,13 @@ const ItemCard = ({ itemId, imagePath }) => {
 				id={itemId}
 				onDelete={onDelete}
 				className={styles.itemCard}
-				customContextMenu={
-					<button onClick={handleShowForm}>
-						Manage Item's Categories
-					</button>
+				customConMenu={
+					<ContextMenuButton
+						onClick={handleShowForm}
+						text="Manage Item's Categories"
+					/>
 				}
+				type="Item"
 			>
 				<img
 					src={`${"http://localhost:5001"}${imagePath}`}
