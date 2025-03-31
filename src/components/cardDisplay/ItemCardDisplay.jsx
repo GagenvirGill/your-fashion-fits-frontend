@@ -8,10 +8,11 @@ import ItemCard from "../card/ItemCard";
 
 const ItemCardDisplay = ({ selectedCategories }) => {
 	const dispatch = useDispatch();
+	const { items } = useSelector((state) => state.items);
 	const [displayItems, setDisplayItems] = useState([]);
 
 	useEffect(() => {
-		if (selectedCategories) {
+		if (selectedCategories && selectedCategories.length > 0) {
 			filterItemsByCategories(selectedCategories)
 				.then((fetchedItems) => {
 					setDisplayItems(fetchedItems);
@@ -20,7 +21,6 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 					console.log(`Error loading items: ${err}`);
 				});
 		} else {
-			const { items } = useSelector((state) => state.items);
 			setDisplayItems(items);
 		}
 	}, [dispatch, selectedCategories]);
