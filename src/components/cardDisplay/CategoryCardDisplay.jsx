@@ -35,7 +35,7 @@ const CategoryCardDisplay = () => {
 								? `${"http://localhost:5001"}${item.imagePath}`
 								: "/default_icon.png"
 						}
-						favItemId={item.itemId}
+						{...(item && { favItemId: item.itemId })}
 					/>
 				);
 			})}
