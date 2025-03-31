@@ -54,12 +54,12 @@ const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 					onClick={handleClick}
 				>
 					<ContextMenuButton
-						oncClick={handleDelete}
+						onClick={handleDelete}
 						text={`Delete ${type}`}
 					/>
 					{customConMenu}
 					<ContextMenuButton
-						oncClick={handleClick}
+						onClick={handleClick}
 						text="Close Menu"
 					/>
 				</div>
