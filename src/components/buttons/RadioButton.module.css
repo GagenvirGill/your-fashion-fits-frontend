@@ -1,11 +1,11 @@
 .radioButton {
 	display: inline-block;
 	padding: 6px 15px;
-	background-color: rgb(0, 0, 0);
+	background-color: rgb(255, 255, 255);
 	margin: 5px;
 	width: 15vw;
 
-	color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
 	font-family: Courier, "Courier New", monospace;
 	font-size: 15px;
 	text-align: center;
@@ -17,7 +17,7 @@
 }
 
 .radioButton:hover {
-	background-color: rgb(50, 50, 50);
+	background-color: rgb(225, 225, 225);
 }
 
 .radioButton input {
@@ -25,6 +25,6 @@
 }
 
 .radioButton:has(input:checked) {
-	background-color: rgb(108, 52, 131);
+	background-color: rgb(0, 0, 0);
 	color: white;
 }
