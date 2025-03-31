@@ -15,7 +15,10 @@ import { getAllItems } from "./api/Item";
 
 const App = () => {
 	const dispatch = useDispatch();
-	const { categories, refresh } = useSelector((state) => state.categories);
+	const { categories, refresh: categoriesRefresh } = useSelector(
+		(state) => state.categories
+	);
+	const { refresh: itemsRefresh } = useSelector((state) => state.items);
 
 	useEffect(() => {
 		getAllCategories()
@@ -25,7 +28,7 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Error loading categories: ${err}`);
 			});
-	}, [dispatch, refresh]);
+	}, [dispatch, categoriesRefresh]);
 
 	useEffect(() => {
 		getAllItems()
@@ -35,7 +38,7 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Error loading items: ${err}`);
 			});
-	}, [dispatch]);
+	}, [dispatch, itemsRefresh]);
 
 	return (
 		<Router>

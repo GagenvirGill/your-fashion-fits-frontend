@@ -6,7 +6,7 @@ import CategoryCard from "../card/CategoryCard";
 
 const CategoryCardDisplay = () => {
 	const { categories } = useSelector((state) => state.categories);
-	const { items } = useSelector((state) => state.items);
+	const { items: currItems } = useSelector((state) => state.items);
 
 	return (
 		<div className={styles.categoryCardDisplay}>
@@ -18,9 +18,10 @@ const CategoryCardDisplay = () => {
 				imagePath={"/search_browse_icon.png"}
 			/>
 			{categories.map((category) => {
-				const item = items.find(
+				const item = currItems.find(
 					(item) => item.itemId === category.favoriteItem
 				);
+
 				return (
 					<CategoryCard
 						key={`${category.categoryId}.card`}

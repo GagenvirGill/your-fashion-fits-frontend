@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./SetCategoriesFavItemForm.module.css";
 import { useDispatch } from "react-redux";
 

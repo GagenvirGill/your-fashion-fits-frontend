@@ -3,9 +3,6 @@ import styles from "./AddCategoryToItemsForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshState } from "../../../store/reducers/categoriesReducer";
 
-import { setItems } from "../../../store/reducers/itemsReducer";
-import { getAllItems } from "../../../api/Item";
-
 import { addCategoryToItems } from "../../../api/Category";
 
 import ItemsCheckboxForm from "../../forms/ItemsCheckboxForm";
@@ -16,18 +13,8 @@ const AddCategoryToItemsForm = ({
 	categoriesCurrItems,
 }) => {
 	const dispatch = useDispatch();
-	const { items, refresh } = useSelector((state) => state.items);
+	const { items } = useSelector((state) => state.items);
 	const [filteredItems, setFilteredItems] = useState([]);
-
-	useEffect(() => {
-		getAllItems()
-			.then((fetchedItems) => {
-				dispatch(setItems(fetchedItems));
-			})
-			.catch((err) => {
-				console.log(`Error loading items: ${err}`);
-			});
-	}, [dispatch]);
 
 	useEffect(() => {
 		const currItems = new Set();
@@ -40,7 +27,7 @@ const AddCategoryToItemsForm = ({
 		});
 
 		setFilteredItems(filtItems);
-	}, [items, categoriesCurrItems, refresh]);
+	}, [items, categoriesCurrItems]);
 
 	const handleSubmit = async (selectedItems) => {
 		await addCategoryToItems(categoryId, selectedItems);

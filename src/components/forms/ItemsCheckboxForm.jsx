@@ -14,7 +14,6 @@ const ItemsCheckboxForm = ({ handleSubmit, displayItems }) => {
 	}
 
 	const [selectedItems, setSelectedItems] = useState([]);
-	const [loading, setLoading] = useState(false);
 
 	const handleCheckboxChange = (itemId, checked) => {
 		setSelectedItems((prevState) => {
@@ -26,10 +25,9 @@ const ItemsCheckboxForm = ({ handleSubmit, displayItems }) => {
 		});
 	};
 
-	const handleCheckboxSubmit = async (e) => {
-		setLoading(true);
+	const handleCheckboxSubmit = async (event) => {
+		event.preventDefault();
 		handleSubmit(selectedItems);
-		setLoading(false);
 	};
 
 	return (
@@ -46,7 +44,7 @@ const ItemsCheckboxForm = ({ handleSubmit, displayItems }) => {
 			))}
 			<br />
 			<div className={styles.spacer}></div>
-			<Button type={"submit"} text={"Submit"} disabled={loading} />
+			<Button type={"submit"} text={"Submit"} />
 		</form>
 	);
 };

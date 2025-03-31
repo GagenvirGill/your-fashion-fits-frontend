@@ -13,7 +13,7 @@ const AddItemToCategoriesForm = ({
 	itemsCurrCategories,
 }) => {
 	const dispatch = useDispatch();
-	const { categories, refresh } = useSelector((state) => state.categories);
+	const { categories } = useSelector((state) => state.categories);
 	const [filteredCategories, setFilteredCategories] = useState([]);
 
 	useEffect(() => {
@@ -27,7 +27,7 @@ const AddItemToCategoriesForm = ({
 		});
 
 		setFilteredCategories(filtCategories);
-	}, [dispatch, itemsCurrCategories, refresh]);
+	}, [dispatch, itemsCurrCategories]);
 
 	const handleSubmit = async (selectedCategories) => {
 		await addItemToCategories(itemId, selectedCategories);

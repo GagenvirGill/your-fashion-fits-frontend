@@ -29,8 +29,6 @@ const AddItemForm = ({ handleClose }) => {
 					console.error(error);
 				});
 		});
-
-		dispatch(refreshState());
 	};
 
 	return (
