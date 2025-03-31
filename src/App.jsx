@@ -19,26 +19,14 @@ const App = () => {
 		(state) => state.categories
 	);
 	const { refresh: itemsRefresh } = useSelector((state) => state.items);
-
-	useEffect(() => {
-		const makeRequests = async () => {
-			try {
-				const fetchedCategories = await getAllCategories();
-				const fetchedItems = await getAllItems();
-				dispatch(setCategories(fetchedCategories));
-				dispatch(setItems(fetchedItems));
-			} catch (err) {
-				console.log(`Initial Loading Error: ${err}`);
-			}
-		};
-
-		makeRequests();
-	}, [dispatch]);
+	const [initialItemsState, setInitialItemsState] = useState(false);
+	const [initialCategState, setInitialCategState] = useState(false);
 
 	useEffect(() => {
 		getAllCategories()
 			.then((fetchedCategories) => {
 				dispatch(setCategories(fetchedCategories));
+				setInitialCategState(true);
 			})
 			.catch((err) => {
 				console.log(`Error loading categories: ${err}`);
@@ -49,6 +37,7 @@ const App = () => {
 		getAllItems()
 			.then((fetchedItems) => {
 				dispatch(setItems(fetchedItems));
+				setInitialItemsState(true);
 			})
 			.catch((err) => {
 				console.log(`Error loading items: ${err}`);
@@ -57,27 +46,31 @@ const App = () => {
 
 	return (
 		<Router>
-			<Navbar />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="*" element={<Home />} />
-				<Route path="/closet" element={<Closet />} />
-				<Route path="/closet/all" element={<AllItemsView />} />
-				{categories.map((category) => (
-					<Route
-						key={category.categoryId}
-						path={`/closet/${category.name
-							.toLowerCase()
-							.replace(/\s+/g, "")}`}
-						element={
-							<CategoryView
-								categoryId={category.categoryId}
-								categoryName={category.name}
+			{initialItemsState && initialCategState && (
+				<>
+					<Navbar />
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="*" element={<Home />} />
+						<Route path="/closet" element={<Closet />} />
+						<Route path="/closet/all" element={<AllItemsView />} />
+						{categories.map((category) => (
+							<Route
+								key={category.categoryId}
+								path={`/closet/${category.name
+									.toLowerCase()
+									.replace(/\s+/g, "")}`}
+								element={
+									<CategoryView
+										categoryId={category.categoryId}
+										categoryName={category.name}
+									/>
+								}
 							/>
-						}
-					/>
-				))}
-			</Routes>
+						))}
+					</Routes>
+				</>
+			)}
 		</Router>
 	);
 };

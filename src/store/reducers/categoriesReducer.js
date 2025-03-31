@@ -17,12 +17,8 @@ const categoriesSlice = createSlice({
 		refreshState: (state) => {
 			state.refresh += 1;
 		},
-		reloadState: (state) => {
-			state.reload += 1;
-		},
 	},
 });
 
-export const { setCategories, refreshState, reloadState } =
-	categoriesSlice.actions;
+export const { setCategories, refreshState } = categoriesSlice.actions;
 export default categoriesSlice.reducer;
