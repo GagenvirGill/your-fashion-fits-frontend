@@ -23,7 +23,7 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 		} else {
 			setDisplayItems(items);
 		}
-	}, [dispatch, selectedCategories]);
+	}, [dispatch, selectedCategories, items]);
 
 	return (
 		<>
