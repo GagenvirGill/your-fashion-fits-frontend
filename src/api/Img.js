@@ -1,32 +1,56 @@
 import { removeBackground } from "@imgly/background-removal";
-import Image from "image-js";
+import { Image } from "image-js";
+import imageCompression from "browser-image-compression";
 
-export const imgBackgroundRemoval = async (imgPath) => {
+export const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
 	try {
-		const blob = await removeBackground(imgPath, {
+		let compressedImgFile;
+
+		if (maxEdgeSize) {
+			compressedImgFile = await imageCompression(imgFile, {
+				maxWidthOrHeight: maxEdgeSize,
+			});
+		} else {
+			compressedImgFile = await imageCompression(imgFile, {
+				maxSizeMB: maxMB,
+			});
+		}
+
+		return compressedImgFile;
+	} catch (err) {
+		console.log(`Error scaling image: ${err}`);
+	}
+};
+
+export const imgBackgroundRemoval = async (imgFile) => {
+	try {
+		const blob = await removeBackground(imgFile, {
 			output: {
 				format: "image/png",
+				quality: 1,
 			},
 		});
-		const croppedBuffer = await removeTransparentEdges(blob);
-		const file = new File([croppedBuffer], "img.png", {
-			type: "image/png",
-		});
-		return file;
+
+		return blob;
 	} catch (err) {
-		console.log(`Error removing background: ${err}`);
+		console.error(`Error removing background: ${err}`);
 		throw err;
 	}
 };
 
-const removeTransparentEdges = async (blob) => {
-	const arrayBuffer = await blob.arrayBuffer();
-	const img = await Image.load(arrayBuffer);
+export const removeTransparentEdges = async (blob) => {
+	try {
+		const arrayBuffer = await blob.arrayBuffer();
+		const img = await Image.load(arrayBuffer);
 
-	const croppedImg = img.cropAlpha({
-		threshold: 50,
-	});
+		const croppedImg = img.cropAlpha({
+			threshold: 50,
+		});
 
-	const croppedBuffer = croppedImg.toBuffer();
-	return croppedBuffer;
+		const croppedBuffer = croppedImg.toBuffer();
+		return croppedBuffer;
+	} catch (err) {
+		console.error(`Error removing edges: ${err}`);
+		throw err;
+	}
 };
