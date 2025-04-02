@@ -1,8 +1,8 @@
 .homePage {
-    position: fixed;
-    height: 92vh;
-    width: 100vw;
-    top: 8vh;
-    left: 0px;
-    right: 0px;
+	position: relative;
+	width: 100vw;
+	top: 8vh;
+	text-align: center;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }

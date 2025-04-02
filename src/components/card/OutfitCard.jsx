@@ -20,12 +20,14 @@ const OutfitCard = ({ outfitId, imagePath, dateWorn, description }) => {
 		<Card
 			id={outfitId}
 			onDelete={onDelete}
-			className={styles.OutfitCard}
+			className={styles.outfitCard}
 			type={`'${dateWorn}' Outfit`}
 		>
-			<img src={imagePath} alt="Preview" id={categoryId} />
+			<img src={imagePath} alt="Preview" id={outfitId} />
 			<p className={styles.outfitCardText}>{dateWorn}</p>
-			<p className={styles.outfitCardText}>{description}</p>
+			<p className={`${styles.outfitCardText} ${styles.outfitCardDesc}`}>
+				{description}
+			</p>
 		</Card>
 	);
 };
