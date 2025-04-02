@@ -1,0 +1,26 @@
+.formTitle {
+	color: black;
+	font-family: Courier, "Courier New", monospace;
+	font-size: 15px;
+}
+
+.formText {
+	color: black;
+	font-family: Courier, "Courier New", monospace;
+	font-size: 14px;
+}
+
+.textInput {
+	width: 80%;
+	padding: 8px 12px;
+	border: 1px solid rgb(200, 200, 200);
+	border-radius: 2px;
+	font-size: 13px;
+	font-family: Courier, "Courier New", monospace;
+	outline: none;
+	transition: border-color 0.2s ease-in-out;
+}
+
+.textInput:focus {
+	border-color: #007bff;
+}
