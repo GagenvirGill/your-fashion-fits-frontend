@@ -1,17 +1,20 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Home from "./pages/Home";
 import Closet from "./pages/Closet";
 import CategoryView from "./pages/CategoryView";
 import AllItemsView from "./pages/AllItemsView";
-
 import Navbar from "./components/nav/Navbar";
-import { useDispatch, useSelector } from "react-redux";
+
 import { setCategories } from "./store/reducers/categoriesReducer";
-import { getAllCategories } from "./api/Category";
 import { setItems } from "./store/reducers/itemsReducer";
+import { setOutfits } from "./store/reducers/outfitsReducer";
+
+import { getAllCategories } from "./api/Category";
 import { getAllItems } from "./api/Item";
+import { getAllOutfits } from "./api/Outfit";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -19,8 +22,11 @@ const App = () => {
 		(state) => state.categories
 	);
 	const { refresh: itemsRefresh } = useSelector((state) => state.items);
-	const [initialItemsState, setInitialItemsState] = useState(false);
+	const { refresh: outfitsRefresh } = useSelector((state) => state.outfits);
+
 	const [initialCategState, setInitialCategState] = useState(false);
+	const [initialItemsState, setInitialItemsState] = useState(false);
+	const [initialOutfitsState, setInitialOutfitsState] = useState(false);
 
 	useEffect(() => {
 		getAllCategories()
@@ -44,9 +50,20 @@ const App = () => {
 			});
 	}, [itemsRefresh]);
 
+	useEffect(() => {
+		getAllOutfits()
+			.then((fetchedOutfits) => {
+				dispatch(setOutfits(fetchedOutfits));
+				setInitialOutfitsState(true);
+			})
+			.catch((err) => {
+				console.log(`Error loading outfits: ${err}`);
+			});
+	}, [outfitsRefresh]);
+
 	return (
 		<Router>
-			{initialItemsState && initialCategState && (
+			{initialItemsState && initialCategState && initialOutfitsState && (
 				<>
 					<Navbar />
 					<Routes>
