@@ -4,6 +4,7 @@ import styles from "./NavAddMenu.module.css";
 import ImgButton from "../../buttons/ImgButton";
 import AddItemForm from "./AddItemForm";
 import AddCategoryForm from "./AddCategoryForm";
+import AddOutfitForm from "./AddOutfitForm";
 import PopupRadioForm from "./PopupRadioForm";
 
 const NavAddMenu = () => {
@@ -23,6 +24,8 @@ const NavAddMenu = () => {
 			return <AddItemForm handleClose={closePopup} />;
 		} else if (selectedOption === "addCategory") {
 			return <AddCategoryForm handleClose={closePopup} />;
+		} else if (selectedOption === "addOutfit") {
+			return <AddOutfitForm handleClose={closePopup} />;
 		}
 	};
 
