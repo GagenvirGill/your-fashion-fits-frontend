@@ -25,11 +25,10 @@ export const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
 export const imgBackgroundRemoval = async (imgFile) => {
 	try {
 		const blob = await removeBackground(imgFile, {
+			device: "gpu",
+			model: "isnet_fp16",
 			output: {
-				debug: true,
-				output: {
-					format: "image/png",
-				},
+				format: "image/png",
 			},
 		});
 
