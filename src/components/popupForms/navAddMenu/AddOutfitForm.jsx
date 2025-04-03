@@ -8,15 +8,27 @@ import Button from "../../buttons/Button";
 
 const AddOutfitForm = ({ handleClose }) => {
 	const dispatch = useDispatch();
-	const [dateWorn, setDateWorn] = useState(new Date());
+	const [dateWorn, setDateWorn] = useState("");
 	const [description, setDescription] = useState("");
+	const [image, setImage] = useState();
+
+	const handleImage = async (event) => {
+		const file = event.target.files[0];
+		setImage(file);
+	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		await createOutfit(dateWorn, description, []);
-		dispatch(refreshState());
 		handleClose();
+
+		createOutfit(dateWorn, description, [], image)
+			.then(() => {
+				dispatch(refreshState());
+			})
+			.catch(() => {
+				console.error(error);
+			});
 	};
 
 	return (
@@ -34,6 +46,7 @@ const AddOutfitForm = ({ handleClose }) => {
 					required
 				/>
 				<br />
+				<br />
 				<label htmlFor="description" className={styles.formText}>
 					Outfit Description:{" "}
 				</label>
@@ -44,6 +57,31 @@ const AddOutfitForm = ({ handleClose }) => {
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
 				/>
+				<br />
+				<br />
+				<label htmlFor="image" className={styles.addFileLabel}>
+					{image ? (
+						<div className={styles.addFile}>
+							Selected Image:
+							<div className={styles.imageDisplay}>
+								<img
+									key={`${image.imageId}-addOutfitImage`}
+									src={URL.createObjectURL(image)}
+									alt={"Preview"}
+									style={{ width: "100%" }}
+								/>
+							</div>
+						</div>
+					) : (
+						<div className={styles.addFile}>Select an Image</div>
+					)}
+					<input
+						type="file"
+						id="image"
+						accept="image/*"
+						onChange={handleImage}
+					/>
+				</label>
 				<br />
 				<br />
 				<Button type="submit" text={"Create"} />

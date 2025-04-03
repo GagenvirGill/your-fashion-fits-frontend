@@ -1,4 +1,5 @@
 import ax from "./axiosConfig";
+import { workerPool } from "../worker/WorkerPool";
 
 export const getAllOutfits = async () => {
 	try {
@@ -32,12 +33,25 @@ export const getItemsForAnOutfit = async (outfitId) => {
 	}
 };
 
-export const createOutfit = async (dateWorn, description, items) => {
+export const createOutfit = async (dateWorn, description, items, imageFile) => {
 	try {
-		const response = await ax.post("/outfit", {
-			dateWorn: dateWorn,
-			description: description,
-			items: items,
+		const { success, data, message } = await workerPool.processImage(
+			imageFile
+		);
+		if (!success) {
+			throw new Error(message);
+		}
+
+		const formData = new FormData();
+		formData.append("image", data);
+		formData.append("dateWorn", dateWorn);
+		formData.append("description", description);
+		formData.append("items", items);
+
+		const response = await ax.post("/outfit", formData, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
 		});
 		if (response.data.success === true) {
 			console.log(response.data.message);
