@@ -8,24 +8,24 @@ import {
 self.onmessage = async (event) => {
 	const { taskId, imageFile } = event.data;
 	try {
-		const compressedImgFile = await compressImage(imageFile, 750, null);
-		const bgrndRemBlob = await imgBackgroundRemoval(compressedImgFile);
-		const croppedBlob = await removeTransparentEdges(bgrndRemBlob);
+		const initialCompression = await compressImage(imageFile, null, 0.5);
+		const bgrndRemBlob = await imgBackgroundRemoval(initialCompression);
+		const croppedBuffer = await removeTransparentEdges(bgrndRemBlob);
 
-		const cmprssBgrndRemCropFile = new File([croppedBlob], "img.png", {
+		const croppedFile = new File([croppedBuffer], "img.png", {
 			type: "image/png",
 		});
 
-		const finalCompressedFile = await compressImage(
-			cmprssBgrndRemCropFile,
-			null,
-			0.25
+		const finalCompressionFile = await compressImage(
+			croppedFile,
+			750,
+			null
 		);
 
 		self.postMessage({
 			taskId,
 			success: true,
-			data: finalCompressedFile,
+			data: finalCompressionFile,
 		});
 	} catch (err) {
 		self.postMessage({
