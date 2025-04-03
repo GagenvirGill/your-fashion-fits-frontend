@@ -1,6 +1,7 @@
 .imagesDisplay {
-	display: "inline-block";
-	width: 100%;
+	display: inline-block;
+	position: relative;
+	text-align: center;
 	margin: 10px;
 	overflow-y: "auto";
 	overflow-x: hidden;

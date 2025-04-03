@@ -26,8 +26,10 @@ export const imgBackgroundRemoval = async (imgFile) => {
 	try {
 		const blob = await removeBackground(imgFile, {
 			output: {
-				format: "image/png",
-				quality: 1,
+				debug: true,
+				output: {
+					format: "image/png",
+				},
 			},
 		});
 
