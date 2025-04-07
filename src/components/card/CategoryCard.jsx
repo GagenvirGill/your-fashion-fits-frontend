@@ -7,7 +7,7 @@ import styles from "./CategoryCard.module.css";
 import { deleteCategory } from "../../api/Category";
 
 import Card from "./Card";
-import HandleACategoriesItemsForms from "../popupForms/categoryContextMenu/HandleACategoriesItemsForms";
+import CategoryContextMenuForms from "../popupForms/categoryContextMenu/CategoryContextMenuForms";
 import SetCategoriesFavItemForm from "../popupForms/categoryContextMenu/SetCategoriesFavItemForm";
 import ContextMenuButton from "../buttons/ContextMenuButton";
 
@@ -69,7 +69,7 @@ const CategoryCard = ({
 				</Link>
 			</Card>
 			{showCategoryItemsForm && (
-				<HandleACategoriesItemsForms
+				<CategoryContextMenuForms
 					categoryId={categoryId}
 					categoryName={categoryName}
 					handleClose={handleCloseForm}
