@@ -35,15 +35,22 @@ export const getItemsForAnOutfit = async (outfitId) => {
 
 export const createOutfit = async (dateWorn, description, items, imageFile) => {
 	try {
-		const { success, data, message } = await workerPool.processImage(
-			imageFile
-		);
-		if (!success) {
-			throw new Error(message);
+		let processedImage = null;
+
+		if (imageFile) {
+			const { success, data, message } = await workerPool.processImage(
+				imageFile
+			);
+			if (!success) {
+				throw new Error(message);
+			}
+			processedImage = data;
 		}
 
 		const formData = new FormData();
-		formData.append("image", data);
+		if (processedImage) {
+			formData.append("image", processedImage);
+		}
 		formData.append("dateWorn", dateWorn);
 		formData.append("description", description);
 		formData.append("items", items);
