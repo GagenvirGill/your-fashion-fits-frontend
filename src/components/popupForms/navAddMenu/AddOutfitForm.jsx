@@ -73,7 +73,9 @@ const AddOutfitForm = ({ handleClose }) => {
 							</div>
 						</div>
 					) : (
-						<div className={styles.addFile}>Select an Image</div>
+						<div className={styles.addFile}>
+							Select a Full Outfit Image
+						</div>
 					)}
 					<input
 						type="file"
@@ -85,6 +87,8 @@ const AddOutfitForm = ({ handleClose }) => {
 				<br />
 				<br />
 				<Button type="submit" text={"Create"} />
+				<br />
+				<br />
 			</form>
 		</div>
 	);

@@ -43,6 +43,8 @@ const NavAddMenu = () => {
 			{isPopupVisible && (
 				<>
 					<div className={styles.overlay}></div>
+					<div className={styles.overlayLeft}></div>
+					<div className={styles.overlayRight}></div>
 					<div className={styles.popupContent}>
 						<PopupRadioForm
 							renderComponent={renderForm}

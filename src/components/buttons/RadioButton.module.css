@@ -1,7 +1,7 @@
 .radioButton {
 	display: inline-block;
 	padding: 12px;
-	background-color: rgb(180, 180, 180);
+	background-color: rgba(0, 0, 0, 0.2);
 	width: 100%;
 
 	color: rgb(0, 0, 0);
@@ -16,7 +16,7 @@
 }
 
 .radioButton:hover {
-	background-color: rgb(210, 210, 210);
+	background-color: rgba(0, 0, 0, 0.3);
 }
 
 .radioButton input {

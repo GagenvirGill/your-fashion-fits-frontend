@@ -60,6 +60,7 @@ const AddItemForm = ({ handleClose }) => {
 						/>
 					))}
 				</div>
+				<br />
 			</form>
 		</div>
 	);

@@ -3,7 +3,7 @@
 	top: 8vh;
 	left: 20vw;
 	width: 60vw;
-	height: 45vh;
+	max-height: 50vh;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
@@ -24,11 +24,33 @@
 
 .overlay {
 	position: fixed;
-	top: 0;
+	top: 8vh;
 	left: 0;
 	width: 100vw;
-	height: 100vh;
+	height: 92vh;
 	background-color: rgba(0, 0, 0, 0.2);
-	z-index: 1000;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.overlayLeft {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 20vw;
+	height: 8vh;
+	background-color: rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	pointer-events: none;
+}
+
+.overlayRight {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 20vw;
+	height: 8vh;
+	background-color: rgba(0, 0, 0, 0.2);
+	z-index: 1;
 	pointer-events: none;
 }

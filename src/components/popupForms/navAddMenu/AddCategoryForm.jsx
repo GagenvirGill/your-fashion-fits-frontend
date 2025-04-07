@@ -36,6 +36,8 @@ const AddCategoryForm = ({ handleClose }) => {
 				<br />
 				<br />
 				<Button type="submit" text={"Create"} />
+				<br />
+				<br />
 			</form>
 		</div>
 	);
