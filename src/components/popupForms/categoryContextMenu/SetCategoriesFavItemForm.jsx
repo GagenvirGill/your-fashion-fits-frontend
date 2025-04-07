@@ -37,6 +37,7 @@ const SetCategoriesFavItemForm = ({
 					handleSubmit={handleSubmit}
 					preSelectedItemId={currFavItem}
 				/>
+				<br />
 			</div>
 		</>
 	);

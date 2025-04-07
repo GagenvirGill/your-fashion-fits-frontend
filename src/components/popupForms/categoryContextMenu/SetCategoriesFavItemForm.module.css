@@ -1,8 +1,8 @@
 .popupForm {
 	position: fixed;
 	top: 8vh;
-	left: 20vw;
-	width: 60vw;
+	left: 10vw;
+	width: 80vw;
 	max-height: 80vh;
 	justify-content: center;
 	align-items: center;
