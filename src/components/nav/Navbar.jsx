@@ -6,6 +6,13 @@ import NavAddMenu from "../popupForms/navAddMenu/NavAddMenu";
 const Navbar = () => {
 	return (
 		<nav className={styles.navbar}>
+			<Link to="/past-outfits">
+				<img
+					src="/calendar_icon.png"
+					alt="past-outfits"
+					className={styles.navLogo}
+				></img>
+			</Link>
 			<Link to="/closet">
 				<img
 					src="/hanger_icon.png"

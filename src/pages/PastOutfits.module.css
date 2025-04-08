@@ -1,0 +1,17 @@
+.outfitsView {
+	position: relative;
+	width: 100vw;
+	top: 6vh;
+	text-align: center;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.pastOutfitsTitle {
+	color: black;
+	font-family: Courier, "Courier New", monospace;
+	font-size: 20px;
+	text-align: center;
+	font-weight: normal;
+	margin-bottom: 5px;
+}

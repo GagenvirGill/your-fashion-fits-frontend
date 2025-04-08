@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Closet from "./pages/Closet";
 import CategoryView from "./pages/CategoryView";
 import AllItemsView from "./pages/AllItemsView";
+import PastOutfits from "./pages/PastOutfits";
 import Navbar from "./components/nav/Navbar";
 
 import { setCategories } from "./store/reducers/categoriesReducer";
@@ -69,6 +70,7 @@ const App = () => {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="*" element={<Home />} />
+						<Route path="/past-outfits" element={<PastOutfits />} />
 						<Route path="/closet" element={<Closet />} />
 						<Route path="/closet/all" element={<AllItemsView />} />
 						{categories.map((category) => (
