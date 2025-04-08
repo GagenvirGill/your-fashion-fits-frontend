@@ -28,6 +28,13 @@ const Navbar = () => {
 				></img>
 			</Link>
 			<NavAddMenu />
+			<Link to="/profile">
+				<img
+					src="/profile_icon.png"
+					alt="profile"
+					className={styles.navLogo}
+				></img>
+			</Link>
 		</nav>
 	);
 };

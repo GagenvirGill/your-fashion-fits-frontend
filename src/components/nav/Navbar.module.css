@@ -14,11 +14,12 @@
 .navLogo {
 	width: 40px;
 	height: 40px;
-	border-radius: 10px;
+	padding: 5px;
+	border-radius: 3px;
 	object-fit: cover;
 	cursor: pointer;
 	transition: 0.3s;
-	margin-inline: 20px;
+	margin-inline: 25px;
 }
 
 .navLogo:hover {
