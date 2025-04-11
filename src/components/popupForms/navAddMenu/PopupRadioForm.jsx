@@ -29,13 +29,6 @@ const PopupRadioForm = ({
 				checked={selectedOption === "addCategory"}
 				onChange={handleRadioChange}
 			/>
-			<RadioButton
-				text="Add new Outfits"
-				buttonId="AddOutfit"
-				value="addOutfit"
-				checked={selectedOption === "addOutfit"}
-				onChange={handleRadioChange}
-			/>
 		</form>
 	);
 };
