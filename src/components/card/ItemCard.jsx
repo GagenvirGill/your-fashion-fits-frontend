@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { refreshState } from "../../store/reducers/itemsReducer";
+import { refreshState as refreshItemsState } from "../../store/reducers/itemsReducer";
+import { refreshState as refreshOutfitsState } from "../../store/reducers/outfitsReducer";
 
 import styles from "./ItemCard.module.css";
 import { deleteItem } from "../../api/Item";
@@ -15,7 +16,8 @@ const ItemCard = ({ itemId, imagePath }) => {
 
 	const onDelete = () => {
 		deleteItem(itemId).then(() => {
-			dispatch(refreshState());
+			dispatch(refreshItemsState());
+			dispatch(refreshOutfitsState());
 		});
 	};
 
