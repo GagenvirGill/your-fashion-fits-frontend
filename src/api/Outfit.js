@@ -1,5 +1,4 @@
 import ax from "./axiosConfig";
-import { workerPool } from "../worker/WorkerPool";
 
 export const getAllOutfits = async () => {
 	try {
