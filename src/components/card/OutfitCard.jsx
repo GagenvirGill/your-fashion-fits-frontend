@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { refreshState } from "../../store/reducers/outfitsReducer";
 
@@ -6,12 +6,9 @@ import styles from "./OutfitCard.module.css";
 import { deleteOutfit } from "../../api/Outfit";
 
 import Card from "./Card";
-import OutfitContextMenuForms from "../popupForms/outfitContextMenu/OutfitContextMenuForms";
-import ContextMenuButton from "../buttons/ContextMenuButton";
 
-const OutfitCard = ({ outfitId, imagePath, dateWorn, description }) => {
+const OutfitCard = ({ outfitId, dateWorn, description, items }) => {
 	const dispatch = useDispatch();
-	const [showForm, setShowForm] = useState(false);
 
 	const onDelete = () => {
 		deleteOutfit(outfitId).then(() => {
@@ -19,13 +16,7 @@ const OutfitCard = ({ outfitId, imagePath, dateWorn, description }) => {
 		});
 	};
 
-	const handleShowForm = () => {
-		setShowForm(true);
-	};
-
-	const handleCloseForm = () => {
-		setShowForm(false);
-	};
+	const sortedItems = [...items].sort((a, b) => a.orderNum - b.orderNum);
 
 	return (
 		<>
@@ -33,29 +24,21 @@ const OutfitCard = ({ outfitId, imagePath, dateWorn, description }) => {
 				id={outfitId}
 				onDelete={onDelete}
 				className={styles.outfitCard}
-				customConMenu={
-					<ContextMenuButton
-						onClick={handleShowForm}
-						text="Manage this Outfits's Items"
-					/>
-				}
 				type={`'${dateWorn}' Outfit`}
 			>
+				<div>
+					{sortedItems.map((item) => (
+						<img
+							key={`${item.templateItemId}-${item.Item.itemId}`}
+							src={item.Item.imagePath}
+							alt={"item-img"}
+						/>
+					))}
+				</div>
 				<img src={imagePath} alt="Preview" id={outfitId} />
-				<p className={styles.outfitCardText}>{dateWorn}</p>
-				<p
-					className={`${styles.outfitCardText} ${styles.outfitCardDesc}`}
-				>
-					{description}
-				</p>
+				<p className={styles.outfitDate}>{dateWorn}</p>
+				<p className={styles.outfitDesc}>{description}</p>
 			</Card>
-			{showForm && (
-				<OutfitContextMenuForms
-					outfitId={outfitId}
-					imagePath={imagePath}
-					handleClose={handleCloseForm}
-				/>
-			)}
 		</>
 	);
 };
