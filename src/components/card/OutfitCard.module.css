@@ -1,8 +1,8 @@
 .outfitCard {
 	display: inline-block;
 	position: relative;
-	width: 160px;
-	height: 350px;
+	max-width: 200px;
+	height: 600px;
 	justify-content: center;
 	align-items: center;
 	padding: 10px;
@@ -16,18 +16,13 @@
 }
 
 .outfitImage {
-	height: 80%;
+	height: 90%;
 	width: 100%;
-	object-fit: contain;
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
 	pointer-events: fill;
-}
-
-.outfitImage img {
-	width: 100%;
-	object-fit: cover;
+	justify-content: center;
+	align-items: center;
 }
 
 .outfitDate {

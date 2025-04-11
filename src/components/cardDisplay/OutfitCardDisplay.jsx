@@ -16,13 +16,7 @@ const OutfitCardDisplay = () => {
 						outfitId={outfit.outfitId}
 						dateWorn={outfit.dateWorn}
 						description={outfit.description}
-						imagePath={
-							outfit.imagePath
-								? `${"http://localhost:5001"}${
-										outfit.imagePath
-								  }`
-								: "/default_icon.png"
-						}
+						items={outfit.OutfitTemplate.TemplateItems}
 					/>
 				);
 			})}
