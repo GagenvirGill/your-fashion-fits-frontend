@@ -59,39 +59,3 @@ export const deleteOutfit = async (outfitId) => {
 		alert("Something went wrong when deleting an outfit");
 	}
 };
-
-export const addItemsToOutfit = async (outfitId, items) => {
-	try {
-		const response = await ax.post(`/outfit/${outfitId}/items`, {
-			items: items,
-		});
-
-		if (response.data.success === true) {
-			console.log(response.data.message);
-		} else {
-			console.error(response.data.message);
-			alert(response.data.message);
-		}
-	} catch (err) {
-		console.error(err);
-		alert("Something went wrong when adding items to an outfit");
-	}
-};
-
-export const removeItemsFromOutfit = async (outfitId, items) => {
-	try {
-		const response = await ax.delete(`/outfit/${outfitId}/items`, {
-			data: { items: items },
-		});
-
-		if (response.data.success === true) {
-			console.log(response.data.message);
-		} else {
-			console.error(response.data.message);
-			alert(response.data.message);
-		}
-	} catch (err) {
-		console.error(err);
-		alert("Something went wrong when removing items from an outfit");
-	}
-};
