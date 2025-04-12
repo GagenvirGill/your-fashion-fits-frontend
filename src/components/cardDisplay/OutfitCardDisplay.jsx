@@ -15,8 +15,9 @@ const OutfitCardDisplay = () => {
 						key={`${outfit.outfitId}.card`}
 						outfitId={outfit.outfitId}
 						dateWorn={outfit.dateWorn}
-						description={outfit.description}
+						desc={outfit.description}
 						items={outfit.OutfitTemplate.TemplateItems}
+						totalWeight={outfit.OutfitTemplate.totalWeight}
 					/>
 				);
 			})}
