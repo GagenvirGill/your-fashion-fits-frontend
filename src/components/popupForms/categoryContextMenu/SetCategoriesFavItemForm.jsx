@@ -36,6 +36,7 @@ const SetCategoriesFavItemForm = ({
 				<ItemsRadioForm
 					handleSubmit={handleSubmit}
 					preSelectedItemId={currFavItem}
+					formId={"setCategoriesFavItemForm"}
 				/>
 				<br />
 			</div>

@@ -5,7 +5,13 @@ import styles from "./FormStyles.module.css";
 import ImgRadioButton from "../buttons/ImgRadioButton";
 import Button from "../buttons/Button";
 
-const ItemsRadioForm = ({ handleSubmit, preSelectedItemId, displayItems }) => {
+const ItemsRadioForm = ({
+	handleSubmit,
+	preSelectedItemId,
+	displayItems,
+	formId,
+	returnImagePath,
+}) => {
 	let display_items;
 	if (displayItems) {
 		display_items = displayItems;
@@ -15,25 +21,34 @@ const ItemsRadioForm = ({ handleSubmit, preSelectedItemId, displayItems }) => {
 	}
 
 	const [selectedItemId, setSelectedItemId] = useState(preSelectedItemId);
+	const [selectedItemImagePath, setSelectedItemImagePath] = useState(null);
 
-	const handleRadioChange = (itemId) => {
-		setSelectedItemId(itemId);
+	const handleRadioChange = (item) => {
+		setSelectedItemId(item.itemId);
+		if (returnImagePath) {
+			setSelectedItemImagePath(item.imagePath);
+		}
 	};
 
-	const handleRadioSubmit = async () => {
-		handleSubmit(selectedItemId);
+	const handleRadioSubmit = (e) => {
+		e.preventDefault();
+		if (returnImagePath) {
+			handleSubmit(selectedItemId, selectedItemImagePath);
+		} else {
+			handleSubmit(selectedItemId);
+		}
 	};
 
 	return (
 		<form className={styles.form} onSubmit={handleRadioSubmit}>
 			{display_items.map((item) => (
 				<ImgRadioButton
-					key={item.itemId}
+					key={`${formId}-${item.itemId}`}
 					buttonId={item.itemId}
 					imgPath={item.imagePath}
 					isSelected={selectedItemId === item.itemId}
-					onChange={() => handleRadioChange(item.itemId)}
-					formId={"setCategoriesFavItem-uniqueID"}
+					onChange={() => handleRadioChange(item)}
+					formId={`${formId}-uniqueID`}
 				/>
 			))}
 			<br />
