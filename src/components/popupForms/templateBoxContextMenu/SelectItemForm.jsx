@@ -4,14 +4,12 @@ import styles from "../ContextMenuPopUpStyles.module.css";
 import Button from "../../buttons/Button";
 import ItemsRadioForm from "../../forms/ItemsRadioForm";
 
-const SelectItemForm = ({
-	setCurrentItemId,
-	setCurrentItemImagePath,
-	setShowItemForm,
-}) => {
+const SelectItemForm = ({ setCurrentItem, setShowItemForm }) => {
 	const handleSubmit = (selectedItemId, selectedItemImagePath) => {
-		setCurrentItemId(selectedItemId);
-		setCurrentItemImagePath(selectedItemImagePath);
+		setCurrentItem({
+			itemId: selectedItemId,
+			imagePath: selectedItemImagePath,
+		});
 		handleClose();
 	};
 

@@ -8,9 +8,12 @@ import SelectItemForm from "../popupForms/templateBoxContextMenu/SelectItemForm"
 const TemplateBox = () => {
 	const { categories } = useSelector((state) => state.categories);
 
-	const [currentItemId, setCurrentItemId] = useState("");
-	const [currentItemImagePath, setCurrentItemImagePath] = useState(null);
+	const [currentItem, setCurrentItem] = useState({
+		itemId: null,
+		imagePath: null,
+	});
 	const [showItemForm, setShowItemForm] = useState(false);
+
 	const [selectedCategories, setSelectedCategories] = useState(categories);
 	const [isLocked, setIsLocked] = useState(false);
 
@@ -65,12 +68,14 @@ const TemplateBox = () => {
 				<p>hello there</p>
 				<p>locked: {`${isLocked}`}</p>
 				<p>select item form: {`${showItemForm}`}</p>
-				{currentItemId && <p>{currentItemId}</p>}
-				{currentItemImagePath && (
+				{currentItem && <p>{currentItem.itemId}</p>}
+				{currentItem.imagePath && (
 					<img
-						src={`${"http://localhost:5001"}${currentItemImagePath}`}
+						src={`${"http://localhost:5001"}${
+							currentItem.imagePath
+						}`}
 						alt="Preview"
-						id={`${currentItemImagePath}-${currentItemId}`}
+						id={`${currentItem.imagePath}-${currentItem.itemId}`}
 					/>
 				)}
 				{showMenu && (
@@ -97,8 +102,7 @@ const TemplateBox = () => {
 			{showItemForm && (
 				<div>
 					<SelectItemForm
-						setCurrentItemId={setCurrentItemId}
-						setCurrentItemImagePath={setCurrentItemImagePath}
+						setCurrentItem={setCurrentItem}
 						setShowItemForm={setShowItemForm}
 					/>
 				</div>
