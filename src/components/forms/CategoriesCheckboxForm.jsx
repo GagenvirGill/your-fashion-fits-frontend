@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CheckboxButton from "../buttons/CheckboxButton";
 import Button from "../buttons/Button";
-import styles from "./CategoriesCheckboxForm.module.css";
+import styles from "./FormStyles.module.css";
 
 const CategoriesCheckboxForm = ({ handleSubmit, displayCategories }) => {
 	let display_categories;

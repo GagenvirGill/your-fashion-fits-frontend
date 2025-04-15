@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ImgCheckboxButton from "../buttons/ImgCheckboxButton";
 import Button from "../buttons/Button";
-import styles from "./ItemsCheckboxForm.module.css";
+import styles from "./FormStyles.module.css";
 
 const ItemsCheckboxForm = ({ handleSubmit, displayItems }) => {
 	let display_items;
