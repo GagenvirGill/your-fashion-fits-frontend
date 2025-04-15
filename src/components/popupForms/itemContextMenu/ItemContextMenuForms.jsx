@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./ItemContextMenuForms.module.css";
+import styles from "../ContextMenuPopUpStyles.module.css";
 
 import { getCategoriesForItem } from "../../../api/Item";
 
@@ -35,6 +35,7 @@ const ItemContextMenuForms = ({ itemId, imagePath, handleClose }) => {
 					src={`${"http://localhost:5001"}${imagePath}`}
 					alt="Preview"
 					id={`${itemId}-ItemCM`}
+					className={styles.popupImage}
 				/>
 				<AddItemToCategoriesForm
 					itemId={itemId}

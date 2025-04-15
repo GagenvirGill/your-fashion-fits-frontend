@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./CategoryContextMenuForms.module.css";
+import styles from "../ContextMenuPopUpStyles.module.css";
 
 import { filterItemsByCategories } from "../../../api/Item";
 
@@ -35,7 +35,7 @@ const CategoryContextMenuForms = ({
 				<Button onClick={handleClose} text={"Close Form"} />
 				<br />
 				<br />
-				<p className={styles.categoryTitle}>{categoryName}</p>
+				<p className={styles.title}>{categoryName}</p>
 				<AddCategoryToItemsForm
 					categoryId={categoryId}
 					handleClose={handleClose}

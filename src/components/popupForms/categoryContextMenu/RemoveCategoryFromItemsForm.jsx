@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./RemoveCategoryFromItemsForm.module.css";
+import styles from "../ContextMenuPopUpStyles.module.css";
 import { refreshState } from "../../../store/reducers/categoriesReducer";
 import { useDispatch } from "react-redux";
 

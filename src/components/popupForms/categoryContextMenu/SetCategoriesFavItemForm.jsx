@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./SetCategoriesFavItemForm.module.css";
+import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch } from "react-redux";
 
 import { setCategoriesFavItem } from "../../../api/Category";
