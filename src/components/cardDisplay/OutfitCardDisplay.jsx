@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import styles from "./OutfitCardDisplay.module.css";
+import styles from "./CardDisplayStyles.module.css";
 
 import OutfitCard from "../card/OutfitCard";
 
@@ -8,7 +8,7 @@ const OutfitCardDisplay = () => {
 	const { outfits } = useSelector((state) => state.outfits);
 
 	return (
-		<div className={styles.outfitCardDisplay}>
+		<div className={styles.cardDisplay}>
 			{outfits.map((outfit) => {
 				return (
 					<OutfitCard

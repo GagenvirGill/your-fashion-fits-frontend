@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import styles from "./CategoryCardDisplay.module.css";
+import styles from "./CardDisplayStyles.module.css";
 
 import CategoryCard from "../card/CategoryCard";
 
@@ -9,7 +9,7 @@ const CategoryCardDisplay = () => {
 	const { items: currItems } = useSelector((state) => state.items);
 
 	return (
-		<div className={styles.categoryCardDisplay}>
+		<div className={styles.cardDisplay}>
 			<CategoryCard
 				key={`all.card`}
 				categoryId={null}

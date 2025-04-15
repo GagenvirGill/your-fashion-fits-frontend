@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./ItemCardDisplay.module.css";
+import styles from "./CardDisplayStyles.module.css";
 
 import { filterItemsByCategories } from "../../api/Item";
 
@@ -27,7 +27,7 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 
 	return (
 		<>
-			<div className={styles.itemCardDisplay}>
+			<div className={styles.cardDisplay}>
 				{displayItems.map((item) => (
 					<ItemCard
 						key={`${item.itemId}-${selectedCategories}`}
