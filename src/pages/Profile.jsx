@@ -1,12 +1,12 @@
 import React from "react";
-import styles from "./Profile.module.css";
+import styles from "./GenericPageStyles.module.css";
 
 const Profile = () => {
 	return (
 		<>
 			<br />
 			<br />
-			<div className={styles.profilePage}>profile: nothing for now</div>
+			<div className={styles.pageContainer}>profile: nothing for now</div>
 		</>
 	);
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./AllItemsView.module.css";
+import styles from "./GenericPageStyles.module.css";
 
 import ItemCardDisplay from "../components/cardDisplay/ItemCardDisplay";
 import FilterItemsForm from "../components/forms/FilterItemsForm";
@@ -12,8 +12,8 @@ const AllItemsView = () => {
 	};
 
 	return (
-		<div className={styles.allItemsView}>
-			<p className={styles.allTitle}>All Items</p>
+		<div className={styles.pageContainer}>
+			<p className={styles.pageTitle}>All Items</p>
 			<FilterItemsForm handleSubmit={handleSubmit} />
 			<ItemCardDisplay selectedCategories={selectedCategories} />
 		</div>

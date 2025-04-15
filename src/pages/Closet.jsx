@@ -1,11 +1,12 @@
 import React from "react";
-import styles from "./Closet.module.css";
+import styles from "./GenericPageStyles.module.css";
 
 import CategoryCardDisplay from "../components/cardDisplay/CategoryCardDisplay";
 
 const Closet = () => {
 	return (
-		<div className={styles.closetPage}>
+		<div className={styles.pageContainer}>
+			<br />
 			<CategoryCardDisplay />
 		</div>
 	);
