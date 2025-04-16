@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import CheckboxButton from "../buttons/CheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./FormStyles.module.css";
 
-const CategoriesCheckboxForm = ({ handleSubmit, displayCategories }) => {
+const CategoriesCheckboxForm = ({
+	handleSubmit,
+	displayCategories,
+	preSelectedCategories,
+}) => {
 	let display_categories;
 	if (displayCategories) {
 		display_categories = displayCategories;
@@ -13,7 +17,12 @@ const CategoriesCheckboxForm = ({ handleSubmit, displayCategories }) => {
 		display_categories = categories;
 	}
 
-	const [selectedCategories, setSelectedCategories] = useState([]);
+	const selectedIds = preSelectedCategories.map(
+		(category) => category.categoryId
+	);
+	const [selectedCategories, setSelectedCategories] = useState(
+		selectedIds || []
+	);
 
 	const handleCheckboxChange = (categoryId, checked) => {
 		setSelectedCategories((prevState) => {
@@ -36,13 +45,14 @@ const CategoriesCheckboxForm = ({ handleSubmit, displayCategories }) => {
 				<CheckboxButton
 					key={category.categoryId}
 					text={category.name}
-					id={category.categoryId}
+					buttonId={category.categoryId}
 					onChange={(event) =>
 						handleCheckboxChange(
 							category.categoryId,
 							event.target.checked
 						)
 					}
+					checked={selectedCategories.includes(category.categoryId)}
 				/>
 			))}
 			<br />

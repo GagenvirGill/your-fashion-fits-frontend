@@ -3,19 +3,18 @@ import { useSelector } from "react-redux";
 import styles from "./TemplateBox.module.css";
 
 import ContextMenuButton from "../buttons/ContextMenuButton";
-import SelectItemForm from "../popupForms/templateBoxContextMenu/SelectItemForm";
+import TemplateBoxForm from "../popupForms/templateBoxContextMenu/TemplateBoxForm";
 
 const TemplateBox = () => {
 	const { categories } = useSelector((state) => state.categories);
 
+	const [showForm, setshowForm] = useState(false);
+	const [isLocked, setIsLocked] = useState(false);
 	const [currentItem, setCurrentItem] = useState({
 		itemId: null,
 		imagePath: null,
 	});
-	const [showItemForm, setShowItemForm] = useState(false);
-
 	const [selectedCategories, setSelectedCategories] = useState(categories);
-	const [isLocked, setIsLocked] = useState(false);
 
 	const [showMenu, setShowMenu] = useState(false);
 	const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
@@ -39,11 +38,11 @@ const TemplateBox = () => {
 		setIsLocked(!isLocked);
 	};
 
-	const handleSelectItem = (e) => {
+	const handleTemplateSelect = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowMenu(false);
-		setShowItemForm(true);
+		setshowForm(true);
 	};
 
 	useEffect(() => {
@@ -65,11 +64,11 @@ const TemplateBox = () => {
 				onContextMenu={handleContextMenu}
 				onClick={handleClick}
 			>
-				<p>hello there</p>
 				<p>locked: {`${isLocked}`}</p>
-				<p>select item form: {`${showItemForm}`}</p>
-				{currentItem && <p>{currentItem.itemId}</p>}
-				{currentItem.imagePath && (
+				{selectedCategories.map((category) => (
+					<p key={category.categoryId}>{category.name}</p>
+				))}
+				{currentItem && currentItem.imagePath && (
 					<img
 						src={`${"http://localhost:5001"}${
 							currentItem.imagePath
@@ -85,8 +84,8 @@ const TemplateBox = () => {
 						onClick={handleClick}
 					>
 						<ContextMenuButton
-							onClick={handleSelectItem}
-							text="Select Item"
+							onClick={handleTemplateSelect}
+							text="Select an Item or Categories"
 						/>
 						<ContextMenuButton
 							onClick={handleLocked}
@@ -99,11 +98,13 @@ const TemplateBox = () => {
 					</div>
 				)}
 			</div>
-			{showItemForm && (
+			{showForm && (
 				<div>
-					<SelectItemForm
+					<TemplateBoxForm
 						setCurrentItem={setCurrentItem}
-						setShowItemForm={setShowItemForm}
+						setSelectedCategories={setSelectedCategories}
+						preSelectedCategories={selectedCategories}
+						setshowForm={setshowForm}
 					/>
 				</div>
 			)}
