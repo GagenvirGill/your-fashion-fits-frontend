@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import styles from "./FormStyles.module.css";
+
+import { filterItemsByCategories } from "../../api/Item";
 
 import ImgRadioButton from "../buttons/ImgRadioButton";
 import Button from "../buttons/Button";
@@ -8,17 +9,23 @@ import Button from "../buttons/Button";
 const ItemsRadioForm = ({
 	handleSubmit,
 	preSelectedItemId,
-	displayItems,
 	formId,
 	returnImagePath,
+	filteringCategoryIds,
 }) => {
-	let display_items;
-	if (displayItems) {
-		display_items = displayItems;
-	} else {
-		const { items } = useSelector((state) => state.items);
-		display_items = items;
-	}
+	const [displayItems, setDisplayItems] = useState([]);
+
+	useEffect(() => {
+		if (filteringCategoryIds) {
+			filterItemsByCategories(filteringCategoryIds)
+				.then((filteredItems) => {
+					setDisplayItems(filteredItems);
+				})
+				.catch((error) => {
+					console.error("Error filtering items:", error);
+				});
+		}
+	}, [filteringCategoryIds]);
 
 	const [selectedItemId, setSelectedItemId] = useState(preSelectedItemId);
 	const [selectedItemImagePath, setSelectedItemImagePath] = useState(null);
@@ -41,7 +48,7 @@ const ItemsRadioForm = ({
 
 	return (
 		<form className={styles.form} onSubmit={handleRadioSubmit}>
-			{display_items.map((item) => (
+			{displayItems.map((item) => (
 				<ImgRadioButton
 					key={`${formId}-${item.itemId}`}
 					buttonId={item.itemId}

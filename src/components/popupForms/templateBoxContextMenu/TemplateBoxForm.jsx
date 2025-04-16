@@ -39,6 +39,10 @@ const TemplateBoxForm = ({
 		setshowForm(false);
 	};
 
+	const categoryIds = preSelectedCategories.map(
+		(category) => category.categoryId
+	);
+
 	return (
 		<>
 			<div className={styles.overlay}></div>
@@ -52,7 +56,7 @@ const TemplateBoxForm = ({
 				</p>
 				<CategoriesCheckboxForm
 					handleSubmit={handleCategorySubmit}
-					preSelectedCategories={preSelectedCategories}
+					preSelectedCategoryIds={categoryIds}
 				/>
 				<br />
 				<br />
@@ -62,6 +66,7 @@ const TemplateBoxForm = ({
 					preSelectedItemId={null}
 					formId={"template-select-item"}
 					returnImagePath={true}
+					filteringCategoryIds={categoryIds}
 				/>
 				<br />
 			</div>

@@ -7,21 +7,18 @@ import styles from "./FormStyles.module.css";
 const CategoriesCheckboxForm = ({
 	handleSubmit,
 	displayCategories,
-	preSelectedCategories,
+	preSelectedCategoryIds,
 }) => {
+	const { categories } = useSelector((state) => state.categories);
 	let display_categories;
 	if (displayCategories) {
 		display_categories = displayCategories;
 	} else {
-		const { categories } = useSelector((state) => state.categories);
 		display_categories = categories;
 	}
 
-	const selectedIds = preSelectedCategories.map(
-		(category) => category.categoryId
-	);
 	const [selectedCategories, setSelectedCategories] = useState(
-		selectedIds || []
+		preSelectedCategoryIds
 	);
 
 	const handleCheckboxChange = (categoryId, checked) => {
