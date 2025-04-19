@@ -31,10 +31,7 @@ const TemplateBox = () => {
 		setShowContextMenu(false);
 	};
 
-	useEffect(() => {
-		// This effect will run whenever currentItem changes
-		// You can add any additional logic here if needed
-	}, [currentItem]);
+	useEffect(() => {}, [currentItem]);
 
 	return (
 		<>
@@ -63,6 +60,7 @@ const TemplateBox = () => {
 					setShowContextMenu={setShowContextMenu}
 					menuPosition={menuPosition}
 					setShowForm={setShowForm}
+					selectedCategories={selectedCategories}
 				/>
 			</div>
 			{showForm && (

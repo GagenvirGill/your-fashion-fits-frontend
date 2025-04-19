@@ -10,6 +10,7 @@ const TemplateBoxContextMenu = ({
 	setShowContextMenu,
 	menuPosition,
 	setShowForm,
+	selectedCategories,
 }) => {
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -62,6 +63,21 @@ const TemplateBoxContextMenu = ({
 					<ContextMenuButton
 						onClick={handleClick}
 						text="Close Menu"
+					/>
+					<ContextMenuButton
+						onClick={(e) => e.stopPropagation()}
+						text="Current Categories:"
+						moreContent={
+							<>
+								<br />
+								{selectedCategories.map((category) => (
+									<span key={category.categoryId}>
+										{category.name}
+										<br />
+									</span>
+								))}
+							</>
+						}
 					/>
 				</div>
 			)}

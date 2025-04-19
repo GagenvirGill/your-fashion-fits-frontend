@@ -49,7 +49,10 @@ const CategoriesCheckboxForm = ({
 							event.target.checked
 						)
 					}
-					checked={selectedCategories.includes(category.categoryId)}
+					checked={
+						selectedCategories &&
+						selectedCategories.includes(category.categoryId)
+					}
 				/>
 			))}
 			<br />

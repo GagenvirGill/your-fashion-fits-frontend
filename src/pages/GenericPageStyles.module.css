@@ -1,8 +1,9 @@
 .pageContainer {
 	position: relative;
-	width: 100vw;
 	top: 6vh;
+	left: 0px;
 	text-align: center;
+	justify-content: center;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
