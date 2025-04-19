@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styles from "./TemplateBox.module.css";
 
-import ContextMenuButton from "../buttons/ContextMenuButton";
+import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateBoxForm from "../popupForms/templateBoxContextMenu/TemplateBoxForm";
 
 const TemplateBox = () => {
@@ -15,47 +15,21 @@ const TemplateBox = () => {
 		imagePath: null,
 	});
 	const [selectedCategories, setSelectedCategories] = useState(categories);
-	const [showContextForm, setShowContextForm] = useState(false);
+	const [showContextMenu, setShowContextMenu] = useState(false);
 
 	const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
 	const handleContextMenu = (e) => {
 		e.preventDefault();
 		setMenuPosition({ x: e.pageX, y: e.pageY });
-		setShowContextForm(true);
+		setShowContextMenu(true);
 	};
 
 	const handleClick = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		setShowContextForm(false);
+		setShowContextMenu(false);
 	};
-
-	const handleLocked = (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setShowContextForm(false);
-		setIsLocked(!isLocked);
-	};
-
-	const handleTemplateSelect = (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setShowContextForm(false);
-		setShowForm(true);
-	};
-
-	useEffect(() => {
-		if (showContextForm) {
-			document.addEventListener("click", handleClick);
-		} else {
-			document.removeEventListener("click", handleClick);
-		}
-
-		return () => {
-			document.removeEventListener("click", handleClick);
-		};
-	}, [showContextForm]);
 
 	return (
 		<>
@@ -77,26 +51,14 @@ const TemplateBox = () => {
 						id={`${currentItem.imagePath}-${currentItem.itemId}`}
 					/>
 				)}
-				{showContextForm && (
-					<div
-						className={styles.contextMenu}
-						style={{ top: menuPosition.y, left: menuPosition.x }}
-						onClick={handleClick}
-					>
-						<ContextMenuButton
-							onClick={handleTemplateSelect}
-							text="Select an Item or Categories"
-						/>
-						<ContextMenuButton
-							onClick={handleLocked}
-							text="Lock Item In"
-						/>
-						<ContextMenuButton
-							onClick={handleClick}
-							text="Close Menu"
-						/>
-					</div>
-				)}
+				<TemplateBoxContextMenu
+					setIsLocked={setIsLocked}
+					isLocked={isLocked}
+					showContextMenu={showContextMenu}
+					setShowContextMenu={setShowContextMenu}
+					menuPosition={menuPosition}
+					setShowForm={setShowForm}
+				/>
 			</div>
 			{showForm && (
 				<div>
