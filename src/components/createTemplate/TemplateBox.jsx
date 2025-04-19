@@ -8,45 +8,45 @@ import TemplateBoxForm from "../popupForms/templateBoxContextMenu/TemplateBoxFor
 const TemplateBox = () => {
 	const { categories } = useSelector((state) => state.categories);
 
-	const [showForm, setshowForm] = useState(false);
+	const [showForm, setShowForm] = useState(false);
 	const [isLocked, setIsLocked] = useState(false);
 	const [currentItem, setCurrentItem] = useState({
 		itemId: null,
 		imagePath: null,
 	});
 	const [selectedCategories, setSelectedCategories] = useState(categories);
+	const [showContextForm, setShowContextForm] = useState(false);
 
-	const [showMenu, setShowMenu] = useState(false);
 	const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
 	const handleContextMenu = (e) => {
 		e.preventDefault();
 		setMenuPosition({ x: e.pageX, y: e.pageY });
-		setShowMenu(true);
+		setShowContextForm(true);
 	};
 
 	const handleClick = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		setShowMenu(false);
+		setShowContextForm(false);
 	};
 
 	const handleLocked = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		setShowMenu(false);
+		setShowContextForm(false);
 		setIsLocked(!isLocked);
 	};
 
 	const handleTemplateSelect = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		setShowMenu(false);
-		setshowForm(true);
+		setShowContextForm(false);
+		setShowForm(true);
 	};
 
 	useEffect(() => {
-		if (showMenu) {
+		if (showContextForm) {
 			document.addEventListener("click", handleClick);
 		} else {
 			document.removeEventListener("click", handleClick);
@@ -55,7 +55,7 @@ const TemplateBox = () => {
 		return () => {
 			document.removeEventListener("click", handleClick);
 		};
-	}, [showMenu]);
+	}, [showContextForm]);
 
 	return (
 		<>
@@ -77,7 +77,7 @@ const TemplateBox = () => {
 						id={`${currentItem.imagePath}-${currentItem.itemId}`}
 					/>
 				)}
-				{showMenu && (
+				{showContextForm && (
 					<div
 						className={styles.contextMenu}
 						style={{ top: menuPosition.y, left: menuPosition.x }}
@@ -104,7 +104,7 @@ const TemplateBox = () => {
 						setCurrentItem={setCurrentItem}
 						setSelectedCategories={setSelectedCategories}
 						preSelectedCategories={selectedCategories}
-						setshowForm={setshowForm}
+						setShowForm={setShowForm}
 					/>
 				</div>
 			)}

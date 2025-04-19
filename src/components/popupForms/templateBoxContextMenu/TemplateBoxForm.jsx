@@ -10,7 +10,7 @@ const TemplateBoxForm = ({
 	setCurrentItem,
 	setSelectedCategories,
 	preSelectedCategories,
-	setshowForm,
+	setShowForm,
 }) => {
 	const { categories } = useSelector((state) => state.categories);
 
@@ -36,7 +36,7 @@ const TemplateBoxForm = ({
 	};
 
 	const handleClose = () => {
-		setshowForm(false);
+		setShowForm(false);
 	};
 
 	const categoryIds = preSelectedCategories.map(

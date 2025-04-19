@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styles from "./FormStyles.module.css";
 
 import { filterItemsByCategories } from "../../api/Item";
@@ -13,17 +14,22 @@ const ItemsRadioForm = ({
 	returnImagePath,
 	filteringCategoryIds,
 }) => {
+	const { items } = useSelector((state) => state.items);
 	const [displayItems, setDisplayItems] = useState([]);
 
 	useEffect(() => {
 		if (filteringCategoryIds) {
-			filterItemsByCategories(filteringCategoryIds)
-				.then((filteredItems) => {
-					setDisplayItems(filteredItems);
-				})
-				.catch((error) => {
-					console.error("Error filtering items:", error);
-				});
+			if (filteringCategoryIds.length === 0) {
+				setDisplayItems(items);
+			} else {
+				filterItemsByCategories(filteringCategoryIds)
+					.then((filteredItems) => {
+						setDisplayItems(filteredItems);
+					})
+					.catch((error) => {
+						console.error("Error filtering items:", error);
+					});
+			}
 		}
 	}, [filteringCategoryIds]);
 
