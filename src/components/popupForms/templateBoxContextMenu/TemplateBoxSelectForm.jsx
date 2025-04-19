@@ -6,7 +6,7 @@ import Button from "../../buttons/Button";
 import ItemsRadioForm from "../../forms/ItemsRadioForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-const TemplateBoxForm = ({
+const TemplateBoxSelectForm = ({
 	setCurrentItem,
 	setSelectedCategories,
 	preSelectedCategories,
@@ -74,4 +74,4 @@ const TemplateBoxForm = ({
 	);
 };
 
-export default TemplateBoxForm;
+export default TemplateBoxSelectForm;

@@ -3,20 +3,21 @@ import { useSelector } from "react-redux";
 import styles from "./TemplateBox.module.css";
 
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
-import TemplateBoxForm from "../popupForms/templateBoxContextMenu/TemplateBoxForm";
+import TemplateBoxSelectForm from "../popupForms/templateBoxContextMenu/TemplateBoxSelectForm";
 
 const TemplateBox = () => {
 	const { categories } = useSelector((state) => state.categories);
 
-	const [showForm, setShowForm] = useState(false);
+	const [imgScale, setImgScale] = useState(1);
 	const [isLocked, setIsLocked] = useState(false);
+	const [selectedCategories, setSelectedCategories] = useState(categories);
 	const [currentItem, setCurrentItem] = useState({
 		itemId: null,
 		imagePath: null,
 	});
-	const [selectedCategories, setSelectedCategories] = useState(categories);
-	const [showContextMenu, setShowContextMenu] = useState(false);
 
+	const [showForm, setShowForm] = useState(false);
+	const [showContextMenu, setShowContextMenu] = useState(false);
 	const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
 	const handleContextMenu = (e) => {
@@ -36,6 +37,10 @@ const TemplateBox = () => {
 	return (
 		<>
 			<div
+				style={{
+					height: `${150 * imgScale}px`,
+					...(currentItem && { width: `${150 * imgScale}px` }),
+				}}
 				className={
 					currentItem && currentItem.itemId
 						? styles.templateBoxWithItem
@@ -61,11 +66,13 @@ const TemplateBox = () => {
 					menuPosition={menuPosition}
 					setShowForm={setShowForm}
 					selectedCategories={selectedCategories}
+					imgScale={imgScale}
+					setImgScale={setImgScale}
 				/>
 			</div>
 			{showForm && (
 				<div>
-					<TemplateBoxForm
+					<TemplateBoxSelectForm
 						setCurrentItem={setCurrentItem}
 						setSelectedCategories={setSelectedCategories}
 						preSelectedCategories={selectedCategories}

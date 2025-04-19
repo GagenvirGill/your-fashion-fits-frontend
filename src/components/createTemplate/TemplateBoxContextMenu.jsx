@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./TemplateBox.module.css";
 
 import ContextMenuButton from "../buttons/ContextMenuButton";
@@ -11,6 +11,8 @@ const TemplateBoxContextMenu = ({
 	menuPosition,
 	setShowForm,
 	selectedCategories,
+	imgScale,
+	setImgScale,
 }) => {
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -58,14 +60,37 @@ const TemplateBoxContextMenu = ({
 					/>
 					<ContextMenuButton
 						onClick={handleLocked}
-						text="Lock Item In"
+						text={
+							isLocked
+								? "Unlock Item to allow Randomization"
+								: "Lock Item in"
+						}
 					/>
 					<ContextMenuButton
 						onClick={handleClick}
-						text="Close Menu"
+						text={`Change Image Scale (Current: ${imgScale.toFixed(
+							1
+						)})`}
+						moreContent={
+							<>
+								<br />
+								<input
+									id="scaleSlider"
+									type="range"
+									min="0.5"
+									max="3.0"
+									step="0.1"
+									value={imgScale}
+									onChange={(e) =>
+										setImgScale(parseFloat(e.target.value))
+									}
+									className={styles.slider}
+								/>
+							</>
+						}
 					/>
 					<ContextMenuButton
-						onClick={(e) => e.stopPropagation()}
+						onClick={handleClick}
 						text="Current Categories:"
 						moreContent={
 							<>
@@ -78,6 +103,10 @@ const TemplateBoxContextMenu = ({
 								))}
 							</>
 						}
+					/>
+					<ContextMenuButton
+						onClick={handleClick}
+						text="Close Menu"
 					/>
 				</div>
 			)}
