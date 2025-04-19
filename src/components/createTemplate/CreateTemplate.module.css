@@ -1,0 +1,7 @@
+.createTemplateContainer {
+	display: inline-block;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}

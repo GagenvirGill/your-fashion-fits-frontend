@@ -31,17 +31,22 @@ const TemplateBox = () => {
 		setShowContextMenu(false);
 	};
 
+	useEffect(() => {
+		// This effect will run whenever currentItem changes
+		// You can add any additional logic here if needed
+	}, [currentItem]);
+
 	return (
 		<>
 			<div
-				className={styles.templateBox}
+				className={
+					currentItem && currentItem.itemId
+						? styles.templateBoxWithItem
+						: styles.templateBoxWithoutItem
+				}
 				onContextMenu={handleContextMenu}
 				onClick={handleClick}
 			>
-				<p>locked: {`${isLocked}`}</p>
-				{selectedCategories.map((category) => (
-					<p key={category.categoryId}>{category.name}</p>
-				))}
 				{currentItem && currentItem.imagePath && (
 					<img
 						src={`${"http://localhost:5001"}${

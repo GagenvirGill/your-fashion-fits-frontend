@@ -1,12 +1,26 @@
-.templateBox {
-	width: 250px;
-	height: 250px;
-	background-color: aqua;
+.templateBoxWithItem {
+	height: 150px;
+	width: 150px;
+	border: 1px solid transparent;
+	background-color: transparent;
 }
 
-.templateBox img {
-	height: 100px;
-	width: 100px;
+.templateBoxWithoutItem {
+	height: 150px;
+	width: 150px;
+	border: 1px solid rgb(200, 200, 200);
+	background-color: rgb(240, 240, 240);
+}
+
+.templateBoxWithItem img {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+.templateBoxWithoutItem img {
+	height: 100%;
+	width: 100%;
 	object-fit: contain;
 }
 

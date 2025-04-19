@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./GenericPageStyles.module.css";
 
-import TemplateBox from "../components/createTemplate/TemplateBox";
+import CreateTemplate from "../components/createTemplate/CreateTemplate";
 
 const Home = () => {
 	return (
@@ -9,7 +9,7 @@ const Home = () => {
 			<br />
 			<br />
 			<div className={styles.pageContainer}>
-				<TemplateBox />
+				<CreateTemplate />
 			</div>
 		</>
 	);
