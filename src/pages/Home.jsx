@@ -11,6 +11,26 @@ const Home = () => {
 			<div className={styles.pageContainer}>
 				<CreateTemplate />
 			</div>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
 		</>
 	);
 };

@@ -5,7 +5,7 @@ import styles from "./TemplateBox.module.css";
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateBoxSelectForm from "../popupForms/templateBoxContextMenu/TemplateBoxSelectForm";
 
-const TemplateBox = () => {
+const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 	const { categories } = useSelector((state) => state.categories);
 
 	const [imgScale, setImgScale] = useState(1);
@@ -30,6 +30,18 @@ const TemplateBox = () => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
+	};
+
+	const addTemplateBoxBefore = () => {
+		addBoxBefore(boxId);
+	};
+
+	const addTemplateBoxAfter = () => {
+		addBoxAfter(boxId);
+	};
+
+	const removeTemplateBox = () => {
+		removeBox(boxId);
 	};
 
 	useEffect(() => {}, [currentItem]);
@@ -68,6 +80,9 @@ const TemplateBox = () => {
 					selectedCategories={selectedCategories}
 					imgScale={imgScale}
 					setImgScale={setImgScale}
+					addBoxBefore={addTemplateBoxBefore}
+					addBoxAfter={addTemplateBoxAfter}
+					removeBox={removeTemplateBox}
 				/>
 			</div>
 			{showForm && (

@@ -13,6 +13,9 @@ const TemplateBoxContextMenu = ({
 	selectedCategories,
 	imgScale,
 	setImgScale,
+	addBoxBefore,
+	addBoxAfter,
+	removeBox,
 }) => {
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -103,6 +106,18 @@ const TemplateBoxContextMenu = ({
 								))}
 							</>
 						}
+					/>
+					<ContextMenuButton
+						onClick={addBoxBefore}
+						text="Above this, add an Item/Box"
+					/>
+					<ContextMenuButton
+						onClick={addBoxAfter}
+						text="Below this, add an Item/Box"
+					/>
+					<ContextMenuButton
+						onClick={removeBox}
+						text="Remove this Item/Box from Outfit"
 					/>
 					<ContextMenuButton
 						onClick={handleClick}
