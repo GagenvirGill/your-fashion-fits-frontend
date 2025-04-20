@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./TemplateBox.module.css";
 
 import ContextMenuButton from "../buttons/ContextMenuButton";
+import InlineContextMenuButton from "../buttons/InlineContextMenuButton";
 
 const TemplateBoxContextMenu = ({
 	setIsLocked,
@@ -80,23 +81,12 @@ const TemplateBoxContextMenu = ({
 						moreContent={
 							<>
 								<br />
-								{selectedCategories.map((category) => (
-									<span key={category.categoryId}>
-										{category.name}
-										<br />
-									</span>
-								))}
+								{selectedCategories
+									.map((c) => c.name)
+									.join(", ")}
 							</>
 						}
 						disabled={isLocked}
-					/>
-					<ContextMenuButton
-						onClick={handleLocked}
-						text={
-							isLocked
-								? "Unlock Item to allow Randomization"
-								: "Lock Item in"
-						}
 					/>
 					<ContextMenuButton
 						onClick={handleClick}
@@ -116,22 +106,28 @@ const TemplateBoxContextMenu = ({
 									onChange={(e) =>
 										setImgScale(parseFloat(e.target.value))
 									}
-									className={styles.slider}
+									style={{ width: "100%" }}
 								/>
 							</>
 						}
 					/>
-					<ContextMenuButton
-						onClick={addBoxBefore}
-						text="Above this, add an Item/Box"
+					<InlineContextMenuButton
+						texts={[
+							"Add Above",
+							"Add Below",
+							"Add Left",
+							"Add Right",
+						]}
+						onClicks={[addBoxBefore, addBoxAfter, null, null]}
 					/>
-					<ContextMenuButton
-						onClick={addBoxAfter}
-						text="Below this, add an Item/Box"
-					/>
-					<ContextMenuButton
-						onClick={removeBox}
-						text="Remove this Item/Box from Outfit"
+					<InlineContextMenuButton
+						texts={[
+							"Remove this Item/Box",
+							isLocked
+								? "Unlock Item to allow Randomization"
+								: "Lock Item in",
+						]}
+						onClicks={[removeBox, handleLocked]}
 					/>
 					<ContextMenuButton
 						onClick={handleClick}
