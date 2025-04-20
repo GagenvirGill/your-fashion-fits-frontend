@@ -23,6 +23,7 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 				id={outfitId}
 				onDelete={onDelete}
 				className={styles.outfitCard}
+				customConMenu={null}
 				type={`'${dateWorn}' Outfit`}
 			>
 				<div className={styles.outfitImage}>

@@ -23,9 +23,15 @@ const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 	};
 
 	const handleClick = (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setShowMenu(false);
+		if (type.endsWith("Category")) {
+			e.preventDefault();
+			e.stopPropagation();
+			setShowMenu(false);
+		} else {
+			e.stopPropagation();
+			setMenuPosition({ x: e.pageX, y: e.pageY });
+			setShowMenu(!showMenu);
+		}
 	};
 
 	useEffect(() => {

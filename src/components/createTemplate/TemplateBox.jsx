@@ -27,9 +27,9 @@ const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 	};
 
 	const handleClick = (e) => {
-		e.preventDefault();
 		e.stopPropagation();
-		setShowContextMenu(false);
+		setMenuPosition({ x: e.pageX, y: e.pageY });
+		setShowContextMenu(!showContextMenu);
 	};
 
 	const addTemplateBoxBefore = () => {
