@@ -9,7 +9,8 @@ const TemplateBoxContextMenu = ({
 	showContextMenu,
 	setShowContextMenu,
 	menuPosition,
-	setShowForm,
+	setShowItemForm,
+	setShowCategoriesForm,
 	selectedCategories,
 	imgScale,
 	setImgScale,
@@ -24,11 +25,18 @@ const TemplateBoxContextMenu = ({
 		setShowContextMenu(false);
 	};
 
-	const handleTemplateSelectForm = (e) => {
+	const handleTemplateItemForm = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		setShowForm(true);
+		setShowItemForm(true);
+	};
+
+	const handleTemplateCategoriesForm = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setShowContextMenu(false);
+		setShowCategoriesForm(true);
 	};
 
 	const handleLocked = (e) => {
@@ -59,8 +67,12 @@ const TemplateBoxContextMenu = ({
 					onClick={handleClick}
 				>
 					<ContextMenuButton
-						onClick={handleTemplateSelectForm}
-						text="Select an Item or Categories"
+						onClick={handleTemplateItemForm}
+						text="Select an Item"
+					/>
+					<ContextMenuButton
+						onClick={handleTemplateCategoriesForm}
+						text="Select Categories for Randomization"
 					/>
 					<ContextMenuButton
 						onClick={handleRandomization}
@@ -76,6 +88,7 @@ const TemplateBoxContextMenu = ({
 								))}
 							</>
 						}
+						disabled={isLocked}
 					/>
 					<ContextMenuButton
 						onClick={handleLocked}

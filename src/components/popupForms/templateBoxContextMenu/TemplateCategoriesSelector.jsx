@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
 
@@ -6,7 +6,7 @@ import Button from "../../buttons/Button";
 import ItemsRadioForm from "../../forms/ItemsRadioForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-const TemplateBoxSelectForm = ({
+const TemplateCategoriesSelector = ({
 	setCurrentItem,
 	setSelectedCategories,
 	preSelectedCategories,
@@ -14,34 +14,28 @@ const TemplateBoxSelectForm = ({
 }) => {
 	const { categories } = useSelector((state) => state.categories);
 
-	const handleItemSubmit = (selectedItemId, selectedItemImagePath) => {
-		setCurrentItem({
-			itemId: selectedItemId,
-			imagePath: selectedItemImagePath,
-		});
-		handleClose();
-	};
+	const [templateCategoryIds, setTemplateCategoryIds] = useState(
+		preSelectedCategories.map((category) => category.categoryId)
+	);
 
-	const handleCategorySubmit = (selectedCategoryIds) => {
+	const handleTemplateCategorySubmit = (selectedCategoryIds) => {
 		const selectedCategoryIdsSet = new Set(selectedCategoryIds);
 
 		const selectedCategories = categories.filter((category) =>
 			selectedCategoryIdsSet.has(category.categoryId)
 		);
 		setSelectedCategories(selectedCategories);
+		setTemplateCategoryIds(selectedCategoryIds);
 		setCurrentItem({
 			itemId: null,
 			imagePath: null,
 		});
+		handleClose();
 	};
 
 	const handleClose = () => {
 		setShowForm(false);
 	};
-
-	const categoryIds = preSelectedCategories.map(
-		(category) => category.categoryId
-	);
 
 	return (
 		<>
@@ -52,21 +46,12 @@ const TemplateBoxSelectForm = ({
 				<br />
 				<br />
 				<p className={styles.formTitle}>
-					Select Categories For Filtering AND Randomization
+					Select Categories For Randomization
 				</p>
 				<CategoriesCheckboxForm
-					handleSubmit={handleCategorySubmit}
-					preSelectedCategoryIds={categoryIds}
-				/>
-				<br />
-				<br />
-				<p className={styles.formTitle}>Select Item</p>
-				<ItemsRadioForm
-					handleSubmit={handleItemSubmit}
-					preSelectedItemId={null}
-					formId={"template-select-item"}
-					returnImagePath={true}
-					filteringCategoryIds={categoryIds}
+					handleSubmit={handleTemplateCategorySubmit}
+					preSelectedCategoryIds={templateCategoryIds}
+					formId={"template-select-categories"}
 				/>
 				<br />
 			</div>
@@ -74,4 +59,4 @@ const TemplateBoxSelectForm = ({
 	);
 };
 
-export default TemplateBoxSelectForm;
+export default TemplateCategoriesSelector;

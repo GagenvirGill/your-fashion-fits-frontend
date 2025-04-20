@@ -5,7 +5,8 @@ import styles from "./TemplateBox.module.css";
 import { getRandomItemWithCategories } from "../../api/Item";
 
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
-import TemplateBoxSelectForm from "../popupForms/templateBoxContextMenu/TemplateBoxSelectForm";
+import TemplateItemSelector from "../popupForms/templateBoxContextMenu/TemplateItemSelector";
+import TemplateCategoriesSelector from "../popupForms/templateBoxContextMenu/TemplateCategoriesSelector";
 
 const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 	const { categories } = useSelector((state) => state.categories);
@@ -18,7 +19,8 @@ const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 		imagePath: null,
 	});
 
-	const [showForm, setShowForm] = useState(false);
+	const [showItemForm, setShowItemForm] = useState(false);
+	const [showCategoriesForm, setShowCategoriesForm] = useState(false);
 	const [showContextMenu, setShowContextMenu] = useState(false);
 	const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
@@ -48,7 +50,6 @@ const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 
 	const handleRandomization = () => {
 		if (isLocked) {
-			alert("Box is locked. Unlock to randomize.");
 			return;
 		}
 
@@ -98,7 +99,8 @@ const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 					showContextMenu={showContextMenu}
 					setShowContextMenu={setShowContextMenu}
 					menuPosition={menuPosition}
-					setShowForm={setShowForm}
+					setShowItemForm={setShowItemForm}
+					setShowCategoriesForm={setShowCategoriesForm}
 					selectedCategories={selectedCategories}
 					imgScale={imgScale}
 					setImgScale={setImgScale}
@@ -108,13 +110,22 @@ const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 					handleRandomization={handleRandomization}
 				/>
 			</div>
-			{showForm && (
+			{showItemForm && (
 				<div>
-					<TemplateBoxSelectForm
+					<TemplateItemSelector
+						setCurrentItem={setCurrentItem}
+						currentItem={currentItem}
+						setShowForm={setShowItemForm}
+					/>
+				</div>
+			)}
+			{showCategoriesForm && (
+				<div>
+					<TemplateCategoriesSelector
 						setCurrentItem={setCurrentItem}
 						setSelectedCategories={setSelectedCategories}
 						preSelectedCategories={selectedCategories}
-						setShowForm={setShowForm}
+						setShowForm={setShowCategoriesForm}
 					/>
 				</div>
 			)}

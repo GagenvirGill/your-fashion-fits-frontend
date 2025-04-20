@@ -8,6 +8,7 @@ const CategoriesCheckboxForm = ({
 	handleSubmit,
 	displayCategories,
 	preSelectedCategoryIds,
+	formId,
 }) => {
 	const { categories } = useSelector((state) => state.categories);
 	let display_categories;
@@ -37,7 +38,11 @@ const CategoriesCheckboxForm = ({
 	};
 
 	return (
-		<form className={styles.form} onSubmit={handleCheckboxSubmit}>
+		<form
+			id={formId}
+			className={styles.form}
+			onSubmit={handleCheckboxSubmit}
+		>
 			{display_categories.map((category) => (
 				<CheckboxButton
 					key={category.categoryId}
