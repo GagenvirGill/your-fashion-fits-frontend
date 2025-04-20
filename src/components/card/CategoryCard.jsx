@@ -65,8 +65,12 @@ const CategoryCard = ({
 			>
 				<Link key={`${categoryId}-link`} to={urlRoute}>
 					<img src={imagePath} alt="Preview" id={categoryId} />
-					<p className={styles.categoryCardText}>{categoryName}</p>
 				</Link>
+				<div className={styles.categoryCardDiv}>
+					<div className={styles.categoryCardText}>
+						{categoryName}
+					</div>
+				</div>
 			</Card>
 			{showCategoryItemsForm && (
 				<CategoryContextMenuForms

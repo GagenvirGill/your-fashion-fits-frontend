@@ -1,6 +1,6 @@
 .cardDisplay {
 	display: inline-block;
-	position: relative;
+	position: flex;
 	text-align: center;
 	width: 90vw;
 	overflow-y: auto;

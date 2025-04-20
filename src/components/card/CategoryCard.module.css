@@ -1,6 +1,5 @@
 .categoryCard {
 	display: inline-block;
-	position: relative;
 	width: 160px;
 	height: 200px;
 	justify-content: center;
@@ -22,9 +21,19 @@
 	pointer-events: fill;
 }
 
+.categoryCardDiv {
+	position: relative;
+	width: 160px;
+}
+
 .categoryCardText {
 	position: absolute;
-	top: 40%;
+
+	width: 100%;
+	max-width: 110px;
+	box-sizing: border-box;
+
+	top: -110px;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: rgb(0, 0, 0);
@@ -34,13 +43,6 @@
 	border-radius: 1px;
 
 	background-color: rgba(255, 255, 255, 0.8);
-	padding-left: 12px;
-	padding-right: 12px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	transition: 0.3s;
-}
-
-.categoryCardText:hover {
-	background-color: rgba(225, 225, 225, 0.9);
+	padding: 5px;
+	pointer-events: none;
 }

@@ -6,8 +6,6 @@ import CreateTemplate from "../components/createTemplate/CreateTemplate";
 const Home = () => {
 	return (
 		<>
-			<br />
-			<br />
 			<div className={styles.pageContainer}>
 				<CreateTemplate />
 			</div>

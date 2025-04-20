@@ -1,5 +1,5 @@
 .contextMenu {
-	position: fixed;
+	position: absolute;
 	background-color: rgb(255, 255, 255);
 	border: 1px solid rgb(200, 200, 200);
 	z-index: 99999;
