@@ -16,6 +16,7 @@ const TemplateBoxContextMenu = ({
 	addBoxBefore,
 	addBoxAfter,
 	removeBox,
+	handleRandomization,
 }) => {
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -62,6 +63,21 @@ const TemplateBoxContextMenu = ({
 						text="Select an Item or Categories"
 					/>
 					<ContextMenuButton
+						onClick={handleRandomization}
+						text="Randomize Item from Current Categories:"
+						moreContent={
+							<>
+								<br />
+								{selectedCategories.map((category) => (
+									<span key={category.categoryId}>
+										{category.name}
+										<br />
+									</span>
+								))}
+							</>
+						}
+					/>
+					<ContextMenuButton
 						onClick={handleLocked}
 						text={
 							isLocked
@@ -89,21 +105,6 @@ const TemplateBoxContextMenu = ({
 									}
 									className={styles.slider}
 								/>
-							</>
-						}
-					/>
-					<ContextMenuButton
-						onClick={handleClick}
-						text="Current Categories:"
-						moreContent={
-							<>
-								<br />
-								{selectedCategories.map((category) => (
-									<span key={category.categoryId}>
-										{category.name}
-										<br />
-									</span>
-								))}
 							</>
 						}
 					/>

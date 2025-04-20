@@ -135,3 +135,24 @@ export const removeItemFromCategories = async (itemId, categories) => {
 		alert("Something went wrong when removing item from categories");
 	}
 };
+
+export const getRandomItemWithCategories = async (categories) => {
+	try {
+		const response = await ax.get("/item/random", {
+			params: {
+				categories: categories,
+			},
+		});
+
+		if (response.data.success === true) {
+			console.log(response.data.message);
+			return response.data.data;
+		} else {
+			console.error(response.data.message);
+			alert(response.data.message);
+		}
+	} catch (err) {
+		console.error(err);
+		alert("Something went wrong when getting a random item");
+	}
+};

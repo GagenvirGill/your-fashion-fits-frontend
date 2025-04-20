@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styles from "./TemplateBox.module.css";
 
+import { getRandomItemWithCategories } from "../../api/Item";
+
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateBoxSelectForm from "../popupForms/templateBoxContextMenu/TemplateBoxSelectForm";
 
@@ -44,7 +46,27 @@ const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 		removeBox(boxId);
 	};
 
-	useEffect(() => {}, [currentItem]);
+	const handleRandomization = () => {
+		if (isLocked) {
+			alert("Box is locked. Unlock to randomize.");
+			return;
+		}
+
+		const categoryIds = selectedCategories.map(
+			(category) => category.categoryId
+		);
+
+		getRandomItemWithCategories(categoryIds)
+			.then((item) => {
+				setCurrentItem({
+					itemId: item.itemId,
+					imagePath: item.imagePath,
+				});
+			})
+			.catch((err) => {
+				console.error("Error fetching random item:", err);
+			});
+	};
 
 	return (
 		<>
@@ -83,6 +105,7 @@ const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 					addBoxBefore={addTemplateBoxBefore}
 					addBoxAfter={addTemplateBoxAfter}
 					removeBox={removeTemplateBox}
+					handleRandomization={handleRandomization}
 				/>
 			</div>
 			{showForm && (
