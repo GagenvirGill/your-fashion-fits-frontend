@@ -8,7 +8,13 @@ import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateItemSelector from "../popupForms/templateBoxContextMenu/TemplateItemSelector";
 import TemplateCategoriesSelector from "../popupForms/templateBoxContextMenu/TemplateCategoriesSelector";
 
-const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
+const TemplateBox = ({
+	boxId,
+	addBoxBefore,
+	addBoxAfter,
+	removeBox,
+	randomizationFlag,
+}) => {
 	const { categories } = useSelector((state) => state.categories);
 
 	const [imgScale, setImgScale] = useState(1);
@@ -68,6 +74,12 @@ const TemplateBox = ({ boxId, addBoxBefore, addBoxAfter, removeBox }) => {
 				console.error("Error fetching random item:", err);
 			});
 	};
+
+	useEffect(() => {
+		if (randomizationFlag) {
+			handleRandomization();
+		}
+	}, [randomizationFlag]);
 
 	return (
 		<>

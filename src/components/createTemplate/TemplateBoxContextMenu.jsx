@@ -75,6 +75,24 @@ const TemplateBoxContextMenu = ({
 						onClick={handleTemplateCategoriesForm}
 						text="Select Categories for Randomization"
 					/>
+					<InlineContextMenuButton
+						texts={[
+							"Remove this Item/Box",
+							isLocked
+								? "Unlock Item to allow Randomization"
+								: "Lock Item in",
+						]}
+						onClicks={[removeBox, handleLocked]}
+					/>
+					<InlineContextMenuButton
+						texts={[
+							"Add Above",
+							"Add Below",
+							"Add Left",
+							"Add Right",
+						]}
+						onClicks={[addBoxBefore, addBoxAfter, null, null]}
+					/>
 					<ContextMenuButton
 						onClick={handleRandomization}
 						text="Randomize Item from Current Categories:"
@@ -110,24 +128,6 @@ const TemplateBoxContextMenu = ({
 								/>
 							</>
 						}
-					/>
-					<InlineContextMenuButton
-						texts={[
-							"Add Above",
-							"Add Below",
-							"Add Left",
-							"Add Right",
-						]}
-						onClicks={[addBoxBefore, addBoxAfter, null, null]}
-					/>
-					<InlineContextMenuButton
-						texts={[
-							"Remove this Item/Box",
-							isLocked
-								? "Unlock Item to allow Randomization"
-								: "Lock Item in",
-						]}
-						onClicks={[removeBox, handleLocked]}
 					/>
 					<ContextMenuButton
 						onClick={handleClick}
