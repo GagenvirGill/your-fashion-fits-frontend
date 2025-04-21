@@ -7,6 +7,7 @@ import ItemsRadioForm from "../../forms/ItemsRadioForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
 const TemplateCategoriesSelector = ({
+	boxId,
 	setCurrentItem,
 	setSelectedCategories,
 	preSelectedCategories,
@@ -26,10 +27,7 @@ const TemplateCategoriesSelector = ({
 		);
 		setSelectedCategories(selectedCategories);
 		setTemplateCategoryIds(selectedCategoryIds);
-		setCurrentItem({
-			itemId: null,
-			imagePath: null,
-		});
+		setCurrentItem(boxId, null, null);
 		handleClose();
 	};
 

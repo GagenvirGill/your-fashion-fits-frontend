@@ -10,6 +10,10 @@ import TemplateCategoriesSelector from "../popupForms/templateBoxContextMenu/Tem
 
 const TemplateBox = ({
 	boxId,
+	imgScale,
+	setImgScale,
+	currentItem,
+	setCurrentItem,
 	addBoxBefore,
 	addBoxAfter,
 	removeBox,
@@ -17,13 +21,9 @@ const TemplateBox = ({
 }) => {
 	const { categories } = useSelector((state) => state.categories);
 
-	const [imgScale, setImgScale] = useState(1);
 	const [isLocked, setIsLocked] = useState(false);
 	const [selectedCategories, setSelectedCategories] = useState(categories);
-	const [currentItem, setCurrentItem] = useState({
-		itemId: null,
-		imagePath: null,
-	});
+	const [currItem, setCurrItem] = useState(currentItem);
 
 	const [showItemForm, setShowItemForm] = useState(false);
 	const [showCategoriesForm, setShowCategoriesForm] = useState(false);
@@ -65,10 +65,11 @@ const TemplateBox = ({
 
 		getRandomItemWithCategories(categoryIds)
 			.then((item) => {
-				setCurrentItem({
+				setCurrItem({
 					itemId: item.itemId,
 					imagePath: item.imagePath,
 				});
+				setCurrentItem(boxId, item.itemId, item.imagePath);
 			})
 			.catch((err) => {
 				console.error("Error fetching random item:", err);
@@ -86,26 +87,25 @@ const TemplateBox = ({
 			<div
 				style={{
 					height: `${150 * imgScale}px`,
-					...(currentItem && { width: `${150 * imgScale}px` }),
+					...(currItem && { width: `${150 * imgScale}px` }),
 				}}
 				className={
-					currentItem && currentItem.itemId
+					currItem && currItem.itemId
 						? styles.templateBoxWithItem
 						: styles.templateBoxWithoutItem
 				}
 				onContextMenu={handleContextMenu}
 				onClick={handleClick}
 			>
-				{currentItem && currentItem.imagePath && (
+				{currItem && currItem.imagePath && (
 					<img
-						src={`${"http://localhost:5001"}${
-							currentItem.imagePath
-						}`}
+						src={`${"http://localhost:5001"}${currItem.imagePath}`}
 						alt="Preview"
-						id={`${currentItem.imagePath}-${currentItem.itemId}`}
+						id={`${currItem.imagePath}-${currItem.itemId}`}
 					/>
 				)}
 				<TemplateBoxContextMenu
+					boxId={boxId}
 					setIsLocked={setIsLocked}
 					isLocked={isLocked}
 					showContextMenu={showContextMenu}
@@ -125,6 +125,7 @@ const TemplateBox = ({
 			{showItemForm && (
 				<div>
 					<TemplateItemSelector
+						boxId={boxId}
 						setCurrentItem={setCurrentItem}
 						currentItem={currentItem}
 						setShowForm={setShowItemForm}
@@ -134,6 +135,7 @@ const TemplateBox = ({
 			{showCategoriesForm && (
 				<div>
 					<TemplateCategoriesSelector
+						boxId={boxId}
 						setCurrentItem={setCurrentItem}
 						setSelectedCategories={setSelectedCategories}
 						preSelectedCategories={selectedCategories}

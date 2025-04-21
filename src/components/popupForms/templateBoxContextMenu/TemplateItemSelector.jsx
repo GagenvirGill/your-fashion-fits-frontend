@@ -6,14 +6,16 @@ import Button from "../../buttons/Button";
 import ItemsRadioForm from "../../forms/ItemsRadioForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-const TemplateItemSelector = ({ setCurrentItem, setShowForm, currentItem }) => {
+const TemplateItemSelector = ({
+	boxId,
+	setCurrentItem,
+	setShowForm,
+	currentItem,
+}) => {
 	const [filteringCategoryIds, setFilteringCategoryIds] = useState([]);
 
 	const handleItemSubmit = (selectedItemId, selectedItemImagePath) => {
-		setCurrentItem({
-			itemId: selectedItemId,
-			imagePath: selectedItemImagePath,
-		});
+		setCurrentItem(boxId, selectedItemId, selectedItemImagePath);
 		handleClose();
 	};
 

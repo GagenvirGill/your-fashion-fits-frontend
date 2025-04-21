@@ -5,43 +5,104 @@ import TemplateBox from "./TemplateBox";
 import ImgButton from "../buttons/ImgButton";
 
 const CreateTemplate = () => {
-	const [templateBoxesList, setTemplateBoxesList] = useState([Date.now()]);
+	const [templateBoxIds, setTemplateBoxIds] = useState([Date.now()]);
+	const [templateBoxScales, setTemplateBoxScales] = useState([1]);
+	const [templateBoxItems, setTemplateBoxItems] = useState([
+		{
+			itemId: null,
+			imagePath: null,
+		},
+	]);
 	const [randomizationFlag, setRandomizationFlag] = useState(false);
 
-	const addTemplateBoxBefore = (boxId) => {
-		const newBoxList = [...templateBoxesList];
-		const index = newBoxList.indexOf(boxId);
+	const handleScaleChange = (boxId, newScale) => {
+		const index = templateBoxIds.indexOf(boxId);
 
 		if (index !== -1) {
-			newBoxList.splice(index, 0, Date.now());
+			const newBoxScales = [...templateBoxScales];
+			newBoxScales[index] = newScale;
+			setTemplateBoxScales(newBoxScales);
+		}
+	};
+
+	const handleItemChange = (boxId, itemId, imagePath) => {
+		const index = templateBoxIds.indexOf(boxId);
+
+		if (index !== -1) {
+			const newBoxItems = [...templateBoxItems];
+			newBoxItems[index] = {
+				itemId: itemId,
+				imagePath: imagePath,
+			};
+			setTemplateBoxItems(newBoxItems);
+		}
+	};
+
+	const addTemplateBoxBefore = (boxId) => {
+		const newBoxIds = [...templateBoxIds];
+		const newBoxScales = [...templateBoxScales];
+		const newBoxItems = [...templateBoxItems];
+		const index = newBoxIds.indexOf(boxId);
+
+		if (index !== -1) {
+			newBoxIds.splice(index, 0, Date.now());
+			newBoxScales.splice(index, 0, 1);
+			newBoxItems.splice(index, 0, {
+				itemId: null,
+				imagePath: null,
+			});
 		}
 
-		setTemplateBoxesList(newBoxList);
+		setTemplateBoxIds(newBoxIds);
+		setTemplateBoxScales(newBoxScales);
+		setTemplateBoxItems(newBoxItems);
 	};
 
 	const addTemplateBoxAfter = (boxId) => {
-		const newBoxList = [...templateBoxesList];
-		const index = newBoxList.indexOf(boxId);
+		const newBoxIds = [...templateBoxIds];
+		const newBoxScales = [...templateBoxScales];
+		const newBoxItems = [...templateBoxItems];
+		const index = newBoxIds.indexOf(boxId);
 
 		if (index !== -1) {
-			newBoxList.splice(index + 1, 0, Date.now());
+			newBoxIds.splice(index + 1, 0, Date.now());
+			newBoxScales.splice(index + 1, 0, 1);
+			newBoxItems.splice(index + 1, 0, {
+				itemId: null,
+				imagePath: null,
+			});
 		}
 
-		setTemplateBoxesList(newBoxList);
+		setTemplateBoxIds(newBoxIds);
+		setTemplateBoxScales(newBoxScales);
+		setTemplateBoxItems(newBoxItems);
 	};
 
 	const removeTemplateBox = (boxId) => {
-		if (templateBoxesList.length === 1) {
-			setTemplateBoxesList([Date.now()]);
+		if (templateBoxIds.length === 1) {
+			setTemplateBoxIds([Date.now()]);
+			setTemplateBoxScales([1]);
+			setTemplateBoxItems([
+				{
+					itemId: null,
+					imagePath: null,
+				},
+			]);
 		} else {
-			const newBoxList = [...templateBoxesList];
-			const index = newBoxList.indexOf(boxId);
+			const newBoxIds = [...templateBoxIds];
+			const newBoxScales = [...templateBoxScales];
+			const newBoxItems = [...templateBoxItems];
+			const index = newBoxIds.indexOf(boxId);
 
 			if (index !== -1) {
-				newBoxList.splice(index, 1);
+				newBoxIds.splice(index, 1);
+				newBoxScales.splice(index, 1);
+				newBoxItems.splice(index, 1);
 			}
 
-			setTemplateBoxesList(newBoxList);
+			setTemplateBoxIds(newBoxIds);
+			setTemplateBoxScales(newBoxScales);
+			setTemplateBoxItems(newBoxItems);
 		}
 	};
 
@@ -71,10 +132,14 @@ const CreateTemplate = () => {
 			</div>
 
 			<br />
-			{templateBoxesList.map((boxId) => (
+			{templateBoxIds.map((boxId, index) => (
 				<TemplateBox
 					key={boxId}
 					boxId={boxId}
+					imgScale={templateBoxScales[index]}
+					setImgScale={handleScaleChange}
+					currentItem={templateBoxItems[index]}
+					setCurrentItem={handleItemChange}
 					addBoxBefore={addTemplateBoxBefore}
 					addBoxAfter={addTemplateBoxAfter}
 					removeBox={removeTemplateBox}

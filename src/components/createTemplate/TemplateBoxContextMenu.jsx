@@ -5,6 +5,7 @@ import ContextMenuButton from "../buttons/ContextMenuButton";
 import InlineContextMenuButton from "../buttons/InlineContextMenuButton";
 
 const TemplateBoxContextMenu = ({
+	boxId,
 	setIsLocked,
 	isLocked,
 	showContextMenu,
@@ -122,7 +123,10 @@ const TemplateBoxContextMenu = ({
 									step="0.1"
 									value={imgScale}
 									onChange={(e) =>
-										setImgScale(parseFloat(e.target.value))
+										setImgScale(
+											boxId,
+											parseFloat(e.target.value)
+										)
 									}
 									style={{ width: "100%" }}
 								/>
