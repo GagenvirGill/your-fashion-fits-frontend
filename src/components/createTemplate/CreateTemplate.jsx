@@ -94,6 +94,13 @@ const CreateTemplate = () => {
 		setShowCreateOutfitForm(true);
 	};
 
+	const handleClearTemplate = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		dispatch(setAllBoxes({ newBoxes: [] }));
+	};
+
 	return (
 		<>
 			<div className={styles.createTemplateContainer}>
@@ -107,6 +114,11 @@ const CreateTemplate = () => {
 						buttonId="outfit-template-randomize-button"
 						imgFileName="/shuffle_icon.png"
 						onClick={handleRandomizationAll}
+					/>
+					<ImgButton
+						buttonId="outfit-template-clear-button"
+						imgFileName="/trash_icon.png"
+						onClick={handleClearTemplate}
 					/>
 				</div>
 
