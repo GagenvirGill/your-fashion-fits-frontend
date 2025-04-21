@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ImgButton.module.css";
 
-const ImgButton = ({ buttonId, imgFileName, onChange, className }) => {
+const ImgButton = ({ buttonId, imgFileName, onChange, className, onClick }) => {
 	let chosenImgStyles;
 
 	if (className) {
@@ -12,7 +12,12 @@ const ImgButton = ({ buttonId, imgFileName, onChange, className }) => {
 
 	return (
 		<label className={styles.imgBtn} htmlFor={buttonId}>
-			<input type="checkbox" id={buttonId} onChange={onChange} />
+			<input
+				type="checkbox"
+				id={buttonId}
+				onChange={onChange}
+				onClick={onClick}
+			/>
 			<img
 				src={imgFileName}
 				alt={buttonId}

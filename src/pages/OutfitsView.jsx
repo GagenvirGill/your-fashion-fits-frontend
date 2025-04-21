@@ -10,10 +10,7 @@ const OutfitsView = () => {
 			<div className={styles.pageTitle}>Outfit Creation Sandbox</div>
 			<CreateTemplate />
 
-			<br />
-			<br />
-			<br />
-			<br />
+			<div className={styles.spacer}></div>
 
 			<div className={styles.pageTitle}>Old Outfits</div>
 			<OutfitCardDisplay />

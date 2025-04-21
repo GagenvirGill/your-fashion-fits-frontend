@@ -15,7 +15,7 @@ const CategoryCardDisplay = () => {
 				categoryId={null}
 				categoryName={"All"}
 				urlRoute={`/closet/all`}
-				imagePath={"/search_browse_icon.png"}
+				imagePath={"/dropdown_icon.png"}
 			/>
 			{categories.map((category) => {
 				const item = currItems.find(

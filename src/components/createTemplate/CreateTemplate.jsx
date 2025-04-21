@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./CreateTemplate.module.css";
 
 import TemplateBox from "./TemplateBox";
-import Button from "../buttons/Button";
+import ImgButton from "../buttons/ImgButton";
 
 const CreateTemplate = () => {
 	const [templateBoxesList, setTemplateBoxesList] = useState([Date.now()]);
@@ -58,10 +58,14 @@ const CreateTemplate = () => {
 	return (
 		<div className={styles.createTemplateContainer}>
 			<div className={styles.inlineButtons}>
-				<Button type="submit" text="Create Outfit" onClick={null} />
-				<Button
-					type="submit"
-					text="Randomize Items"
+				<ImgButton
+					buttonId="outfit-template-create-button"
+					imgFileName="/checkmark_icon.png"
+					onClick={null}
+				/>
+				<ImgButton
+					buttonId="outfit-template-randomize-button"
+					imgFileName="/shuffle_icon.png"
 					onClick={handleRandomization}
 				/>
 			</div>
