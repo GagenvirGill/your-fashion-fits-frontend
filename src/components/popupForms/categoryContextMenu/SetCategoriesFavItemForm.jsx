@@ -37,6 +37,8 @@ const SetCategoriesFavItemForm = ({
 					handleSubmit={handleSubmit}
 					preSelectedItemId={currFavItem}
 					formId={"setCategoriesFavItemForm"}
+					returnImagePath={false}
+					filteringCategoryIds={[]}
 				/>
 				<br />
 			</div>
