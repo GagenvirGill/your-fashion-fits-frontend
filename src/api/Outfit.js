@@ -17,7 +17,6 @@ export const getAllOutfits = async () => {
 };
 
 export const createOutfit = async (dateWorn, description, items) => {
-	console.log(items);
 	try {
 		const response = await ax.post("/outfit", {
 			dateWorn: dateWorn,

@@ -19,7 +19,7 @@ const CategoriesCheckboxForm = ({
 	}
 
 	const [selectedCategories, setSelectedCategories] = useState(
-		preSelectedCategoryIds
+		preSelectedCategoryIds || []
 	);
 
 	const handleCheckboxChange = (categoryId, checked) => {

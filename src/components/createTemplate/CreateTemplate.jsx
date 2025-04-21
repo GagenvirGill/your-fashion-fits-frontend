@@ -234,6 +234,15 @@ const CreateTemplate = () => {
 			}
 		});
 
+		if (items.length === 0) {
+			alert("Please select at least one item to create an outfit.");
+			return;
+		}
+		if (items.length > 10) {
+			alert("You can only select up to 10 items.");
+			return;
+		}
+
 		await createOutfit(new Date(), "Created from template", items);
 		dispatch(refreshState());
 	};
