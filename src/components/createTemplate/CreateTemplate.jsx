@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./CreateTemplate.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshState } from "../../store/reducers/outfitsReducer";
 import { setAllBoxes } from "../../store/reducers/outfitTemplateReducer";
-import { createOutfit } from "../../api/Outfit";
 import { getRandomItemWithCategories } from "../../api/Item";
 
 import TemplateBox from "./TemplateBox";
 import ImgButton from "../buttons/ImgButton";
+import CreateOutfitForm from "../popupForms/templatePopups/CreateOutfitForm";
 
 const CreateTemplate = () => {
 	const dispatch = useDispatch();
 	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
+
+	const [showCreateOutfitForm, setShowCreateOutfitForm] = useState(false);
 
 	const handleRandomizationAll = async (e) => {
 		e.preventDefault();
@@ -90,61 +91,41 @@ const CreateTemplate = () => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		let errorFlag = false;
-		const outfitsItems = templateBoxes.map((box, index) => {
-			if (!box.itemId) {
-				errorFlag = true;
-				return;
-			}
-
-			return {
-				itemId: box.itemId,
-				orderNum: index,
-				itemWeight: box.scale * 10,
-			};
-		});
-
-		if (errorFlag) {
-			alert("Please select items for the empty boxes or remove them.");
-			return;
-		}
-		if (outfitsItems.length === 0) {
-			alert("Please select at least one item to create an outfit.");
-			return;
-		}
-		if (outfitsItems.length > 10) {
-			alert("You can only select up to 10 items.");
-			return;
-		}
-
-		await createOutfit(new Date(), "Created from template", outfitsItems);
-		dispatch(refreshState());
+		setShowCreateOutfitForm(true);
 	};
 
 	return (
-		<div className={styles.createTemplateContainer}>
-			<div className={styles.inlineButtons}>
-				<ImgButton
-					buttonId="outfit-template-create-button"
-					imgFileName="/checkmark_icon.png"
-					onClick={handleCreateOutfit}
-				/>
-				<ImgButton
-					buttonId="outfit-template-randomize-button"
-					imgFileName="/shuffle_icon.png"
-					onClick={handleRandomizationAll}
-				/>
+		<>
+			<div className={styles.createTemplateContainer}>
+				<div className={styles.inlineButtons}>
+					<ImgButton
+						buttonId="outfit-template-create-button"
+						imgFileName="/checkmark_icon.png"
+						onClick={handleCreateOutfit}
+					/>
+					<ImgButton
+						buttonId="outfit-template-randomize-button"
+						imgFileName="/shuffle_icon.png"
+						onClick={handleRandomizationAll}
+					/>
+				</div>
+
+				<br />
+				{templateBoxes.map((templateBox, index) => (
+					<TemplateBox
+						key={templateBox.boxId}
+						gsIndex={index}
+						handleRandomization={handleRandomizationOne}
+					/>
+				))}
 			</div>
 
-			<br />
-			{templateBoxes.map((templateBox, index) => (
-				<TemplateBox
-					key={templateBox.boxId}
-					gsIndex={index}
-					handleRandomization={handleRandomizationOne}
+			{showCreateOutfitForm && (
+				<CreateOutfitForm
+					setShowCreateOutfitForm={setShowCreateOutfitForm}
 				/>
-			))}
-		</div>
+			)}
+		</>
 	);
 };
 

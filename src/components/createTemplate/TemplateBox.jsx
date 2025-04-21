@@ -3,8 +3,8 @@ import styles from "./TemplateBox.module.css";
 import { useSelector } from "react-redux";
 
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
-import TemplateItemSelector from "../popupForms/templateBoxContextMenu/TemplateItemSelector";
-import TemplateCategoriesSelector from "../popupForms/templateBoxContextMenu/TemplateCategoriesSelector";
+import TemplateItemSelector from "../popupForms/templatePopups/TemplateItemSelector";
+import TemplateCategoriesSelector from "../popupForms/templatePopups/TemplateCategoriesSelector";
 
 const TemplateBox = ({ gsIndex, handleRandomization }) => {
 	const { templateBoxes } = useSelector((state) => state.outfitTemplate);

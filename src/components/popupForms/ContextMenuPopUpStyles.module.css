@@ -40,3 +40,15 @@
 	font-family: Courier, "Courier New", monospace;
 	font-size: 15px;
 }
+
+.inputFieldText {
+	padding: 10px;
+	margin: 5px;
+	width: 30%;
+}
+
+.inputFieldDate {
+	padding: 10px;
+	margin: 5px;
+	width: 10%;
+}
