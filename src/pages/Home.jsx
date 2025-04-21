@@ -1,34 +1,13 @@
 import React from "react";
 import styles from "./GenericPageStyles.module.css";
 
-import CreateTemplate from "../components/createTemplate/CreateTemplate";
-
 const Home = () => {
 	return (
 		<>
 			<div className={styles.pageContainer}>
-				<CreateTemplate />
+				idk what I'd put here, maybe a tutorial link and welcome
+				message? Create account?
 			</div>
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
 		</>
 	);
 };

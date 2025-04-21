@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Closet from "./pages/Closet";
 import CategoryView from "./pages/CategoryView";
 import AllItemsView from "./pages/AllItemsView";
-import PastOutfits from "./pages/PastOutfits";
+import OutfitsView from "./pages/OutfitsView";
 import Profile from "./pages/Profile";
 import Navbar from "./components/nav/Navbar";
 
@@ -71,7 +71,7 @@ const App = () => {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="*" element={<Home />} />
-						<Route path="/past-outfits" element={<PastOutfits />} />
+						<Route path="/outfits" element={<OutfitsView />} />
 						<Route path="/closet" element={<Closet />} />
 						<Route path="/closet/all" element={<AllItemsView />} />
 						<Route path="/profile" element={<Profile />} />
