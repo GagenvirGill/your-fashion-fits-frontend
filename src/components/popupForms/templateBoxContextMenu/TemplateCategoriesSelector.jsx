@@ -25,7 +25,7 @@ const TemplateCategoriesSelector = ({
 		const selectedCategories = categories.filter((category) =>
 			selectedCategoryIdsSet.has(category.categoryId)
 		);
-		setSelectedCategories(selectedCategories);
+		setSelectedCategories(boxId, selectedCategories);
 		setTemplateCategoryIds(selectedCategoryIds);
 		setCurrentItem(boxId, null, null);
 		handleClose();

@@ -45,7 +45,7 @@ const TemplateBoxContextMenu = ({
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		setIsLocked(!isLocked);
+		setIsLocked(boxId, !isLocked);
 	};
 
 	useEffect(() => {
@@ -95,7 +95,9 @@ const TemplateBoxContextMenu = ({
 						onClicks={[addBoxBefore, addBoxAfter, null, null]}
 					/>
 					<ContextMenuButton
-						onClick={handleRandomization}
+						onClick={() => {
+							handleRandomization(boxId);
+						}}
 						text="Randomize Item from Current Categories:"
 						moreContent={
 							<>

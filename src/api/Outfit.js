@@ -16,21 +16,14 @@ export const getAllOutfits = async () => {
 	}
 };
 
-export const createOutfit = async (dateWorn, description, itemsMap) => {
+export const createOutfit = async (dateWorn, description, items) => {
+	console.log(items);
 	try {
-		const response = await ax.post(
-			"/outfit",
-			{
-				dateWorn: dateWorn,
-				description: description,
-				items: itemsMap,
-			},
-			{
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-			}
-		);
+		const response = await ax.post("/outfit", {
+			dateWorn: dateWorn,
+			description: description,
+			items: items,
+		});
 		if (response.data.success === true) {
 			console.log(response.data.message);
 			return response.data.data;

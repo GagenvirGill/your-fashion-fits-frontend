@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
 import styles from "./TemplateBox.module.css";
-
-import { getRandomItemWithCategories } from "../../api/Item";
 
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateItemSelector from "../popupForms/templateBoxContextMenu/TemplateItemSelector";
@@ -14,17 +11,15 @@ const TemplateBox = ({
 	setImgScale,
 	currentItem,
 	setCurrentItem,
+	isLocked,
+	setIsLocked,
+	selectedCategories,
+	setSelectedCategories,
 	addBoxBefore,
 	addBoxAfter,
 	removeBox,
-	randomizationFlag,
+	handleRandomization,
 }) => {
-	const { categories } = useSelector((state) => state.categories);
-
-	const [isLocked, setIsLocked] = useState(false);
-	const [selectedCategories, setSelectedCategories] = useState(categories);
-	const [currItem, setCurrItem] = useState(currentItem);
-
 	const [showItemForm, setShowItemForm] = useState(false);
 	const [showCategoriesForm, setShowCategoriesForm] = useState(false);
 	const [showContextMenu, setShowContextMenu] = useState(false);
@@ -54,54 +49,28 @@ const TemplateBox = ({
 		removeBox(boxId);
 	};
 
-	const handleRandomization = () => {
-		if (isLocked) {
-			return;
-		}
-
-		const categoryIds = selectedCategories.map(
-			(category) => category.categoryId
-		);
-
-		getRandomItemWithCategories(categoryIds)
-			.then((item) => {
-				setCurrItem({
-					itemId: item.itemId,
-					imagePath: item.imagePath,
-				});
-				setCurrentItem(boxId, item.itemId, item.imagePath);
-			})
-			.catch((err) => {
-				console.error("Error fetching random item:", err);
-			});
-	};
-
-	useEffect(() => {
-		if (randomizationFlag) {
-			handleRandomization();
-		}
-	}, [randomizationFlag]);
-
 	return (
 		<>
 			<div
 				style={{
 					height: `${150 * imgScale}px`,
-					...(currItem && { width: `${150 * imgScale}px` }),
+					...(currentItem && { width: `${150 * imgScale}px` }),
 				}}
 				className={
-					currItem && currItem.itemId
+					currentItem && currentItem.itemId
 						? styles.templateBoxWithItem
 						: styles.templateBoxWithoutItem
 				}
 				onContextMenu={handleContextMenu}
 				onClick={handleClick}
 			>
-				{currItem && currItem.imagePath && (
+				{currentItem && currentItem.imagePath && (
 					<img
-						src={`${"http://localhost:5001"}${currItem.imagePath}`}
+						src={`${"http://localhost:5001"}${
+							currentItem.imagePath
+						}`}
 						alt="Preview"
-						id={`${currItem.imagePath}-${currItem.itemId}`}
+						id={`${currentItem.imagePath}-${currentItem.itemId}`}
 					/>
 				)}
 				<TemplateBoxContextMenu
