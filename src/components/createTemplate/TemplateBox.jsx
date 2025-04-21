@@ -1,25 +1,15 @@
 import React, { useState } from "react";
 import styles from "./TemplateBox.module.css";
+import { useSelector } from "react-redux";
 
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateItemSelector from "../popupForms/templateBoxContextMenu/TemplateItemSelector";
 import TemplateCategoriesSelector from "../popupForms/templateBoxContextMenu/TemplateCategoriesSelector";
 
-const TemplateBox = ({
-	boxId,
-	imgScale,
-	setImgScale,
-	currentItem,
-	setCurrentItem,
-	isLocked,
-	setIsLocked,
-	selectedCategories,
-	setSelectedCategories,
-	addBoxBefore,
-	addBoxAfter,
-	removeBox,
-	handleRandomization,
-}) => {
+const TemplateBox = ({ gsIndex, handleRandomization }) => {
+	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
+	const { itemId, imagePath, scale } = templateBoxes[gsIndex];
+
 	const [showItemForm, setShowItemForm] = useState(false);
 	const [showCategoriesForm, setShowCategoriesForm] = useState(false);
 	const [showContextMenu, setShowContextMenu] = useState(false);
@@ -37,66 +27,42 @@ const TemplateBox = ({
 		setShowContextMenu(!showContextMenu);
 	};
 
-	const addTemplateBoxBefore = () => {
-		addBoxBefore(boxId);
-	};
-
-	const addTemplateBoxAfter = () => {
-		addBoxAfter(boxId);
-	};
-
-	const removeTemplateBox = () => {
-		removeBox(boxId);
-	};
-
 	return (
 		<>
 			<div
 				style={{
-					height: `${150 * imgScale}px`,
-					...(currentItem && { width: `${150 * imgScale}px` }),
+					height: `${150 * scale}px`,
+					...(!itemId && { width: `${150 * scale}px` }),
 				}}
 				className={
-					currentItem && currentItem.itemId
+					itemId
 						? styles.templateBoxWithItem
 						: styles.templateBoxWithoutItem
 				}
 				onContextMenu={handleContextMenu}
 				onClick={handleClick}
 			>
-				{currentItem && currentItem.imagePath && (
+				{itemId && imagePath && (
 					<img
-						src={`${"http://localhost:5001"}${
-							currentItem.imagePath
-						}`}
+						src={`${"http://localhost:5001"}${imagePath}`}
 						alt="Preview"
-						id={`${currentItem.imagePath}-${currentItem.itemId}`}
+						id={`${imagePath}-${itemId}`}
 					/>
 				)}
 				<TemplateBoxContextMenu
-					boxId={boxId}
-					setIsLocked={setIsLocked}
-					isLocked={isLocked}
+					gsIndex={gsIndex}
 					showContextMenu={showContextMenu}
 					setShowContextMenu={setShowContextMenu}
 					menuPosition={menuPosition}
 					setShowItemForm={setShowItemForm}
 					setShowCategoriesForm={setShowCategoriesForm}
-					selectedCategories={selectedCategories}
-					imgScale={imgScale}
-					setImgScale={setImgScale}
-					addBoxBefore={addTemplateBoxBefore}
-					addBoxAfter={addTemplateBoxAfter}
-					removeBox={removeTemplateBox}
 					handleRandomization={handleRandomization}
 				/>
 			</div>
 			{showItemForm && (
 				<div>
 					<TemplateItemSelector
-						boxId={boxId}
-						setCurrentItem={setCurrentItem}
-						currentItem={currentItem}
+						gsIndex={gsIndex}
 						setShowForm={setShowItemForm}
 					/>
 				</div>
@@ -104,10 +70,7 @@ const TemplateBox = ({
 			{showCategoriesForm && (
 				<div>
 					<TemplateCategoriesSelector
-						boxId={boxId}
-						setCurrentItem={setCurrentItem}
-						setSelectedCategories={setSelectedCategories}
-						preSelectedCategories={selectedCategories}
+						gsIndex={gsIndex}
 						setShowForm={setShowCategoriesForm}
 					/>
 				</div>

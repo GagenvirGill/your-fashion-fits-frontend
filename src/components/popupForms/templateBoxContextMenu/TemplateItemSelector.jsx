@@ -1,21 +1,28 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
+
+import { setBoxItem } from "../../../store/reducers/outfitTemplateReducer";
 
 import Button from "../../buttons/Button";
 import ItemsRadioForm from "../../forms/ItemsRadioForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-const TemplateItemSelector = ({
-	boxId,
-	setCurrentItem,
-	setShowForm,
-	currentItem,
-}) => {
+const TemplateItemSelector = ({ gsIndex, setShowForm }) => {
+	const dispatch = useDispatch();
+	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
+	const { itemId } = templateBoxes[gsIndex];
+
 	const [filteringCategoryIds, setFilteringCategoryIds] = useState([]);
 
 	const handleItemSubmit = (selectedItemId, selectedItemImagePath) => {
-		setCurrentItem(boxId, selectedItemId, selectedItemImagePath);
+		dispatch(
+			setBoxItem({
+				boxIndex: gsIndex,
+				itemId: selectedItemId,
+				imagePath: selectedItemImagePath,
+			})
+		);
 		handleClose();
 	};
 
@@ -45,7 +52,7 @@ const TemplateItemSelector = ({
 				<br />
 				<ItemsRadioForm
 					handleSubmit={handleItemSubmit}
-					preSelectedItemId={currentItem && currentItem.itemId}
+					preSelectedItemId={itemId}
 					formId={"template-select-item"}
 					returnImagePath={true}
 					filteringCategoryIds={filteringCategoryIds}

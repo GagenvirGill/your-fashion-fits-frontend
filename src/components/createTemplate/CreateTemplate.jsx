@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./CreateTemplate.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshState } from "../../store/reducers/outfitsReducer";
+import { setAllBoxes } from "../../store/reducers/outfitTemplateReducer";
 import { createOutfit } from "../../api/Outfit";
 import { getRandomItemWithCategories } from "../../api/Item";
 
@@ -10,209 +11,78 @@ import ImgButton from "../buttons/ImgButton";
 
 const CreateTemplate = () => {
 	const dispatch = useDispatch();
-	const { categories } = useSelector((state) => state.categories);
+	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
 
-	const [templateBoxIds, setTemplateBoxIds] = useState([Date.now()]);
-	const [templateBoxScales, setTemplateBoxScales] = useState([1]);
-	const [templateBoxIsLocked, setTemplateBoxIsLocked] = useState([false]);
-	const [templateBoxCategories, setTemplateBoxCategories] = useState([
-		categories,
-	]);
-	const [templateBoxItems, setTemplateBoxItems] = useState([
-		{
-			itemId: null,
-			imagePath: null,
-		},
-	]);
-
-	const handleScaleChange = (boxId, newScale) => {
-		const index = templateBoxIds.indexOf(boxId);
-
-		if (index !== -1) {
-			const newBoxScales = [...templateBoxScales];
-			newBoxScales[index] = newScale;
-			setTemplateBoxScales(newBoxScales);
-		}
-	};
-
-	const handleSelectedCategoriesChange = (boxId, newSelectedCategories) => {
-		const index = templateBoxIds.indexOf(boxId);
-		if (index !== -1) {
-			const newBoxCategories = [...templateBoxCategories];
-			newBoxCategories[index] = newSelectedCategories;
-			setTemplateBoxCategories(newBoxCategories);
-		}
-	};
-
-	const handleIsLockedChange = (boxId, newIsLocked) => {
-		const index = templateBoxIds.indexOf(boxId);
-		if (index !== -1) {
-			const newBoxIsLockeds = [...templateBoxIsLocked];
-			newBoxIsLockeds[index] = newIsLocked;
-			setTemplateBoxIsLocked(newBoxIsLockeds);
-		}
-	};
-
-	const handleItemChange = (boxId, itemId, imagePath) => {
-		const index = templateBoxIds.indexOf(boxId);
-
-		if (index !== -1) {
-			const newBoxItems = [...templateBoxItems];
-			newBoxItems[index] = {
-				itemId: itemId,
-				imagePath: imagePath,
-			};
-			setTemplateBoxItems(newBoxItems);
-		}
-	};
-
-	const addTemplateBoxBefore = (boxId) => {
-		const newBoxIds = [...templateBoxIds];
-		const newBoxScales = [...templateBoxScales];
-		const newBoxIsLockeds = [...templateBoxIsLocked];
-		const newBoxCategories = [...templateBoxCategories];
-		const newBoxItems = [...templateBoxItems];
-		const index = newBoxIds.indexOf(boxId);
-
-		if (index !== -1) {
-			newBoxIds.splice(index, 0, Date.now());
-			newBoxScales.splice(index, 0, 1);
-			newBoxIsLockeds.splice(index, 0, false);
-			newBoxCategories.splice(index, 0, categories);
-			newBoxItems.splice(index, 0, {
-				itemId: null,
-				imagePath: null,
-			});
-		}
-
-		setTemplateBoxIds(newBoxIds);
-		setTemplateBoxScales(newBoxScales);
-		setTemplateBoxIsLocked(newBoxIsLockeds);
-		setTemplateBoxCategories(newBoxCategories);
-		setTemplateBoxItems(newBoxItems);
-	};
-
-	const addTemplateBoxAfter = (boxId) => {
-		const newBoxIds = [...templateBoxIds];
-		const newBoxScales = [...templateBoxScales];
-		const newBoxIsLockeds = [...templateBoxIsLocked];
-		const newBoxCategories = [...templateBoxCategories];
-		const newBoxItems = [...templateBoxItems];
-		const index = newBoxIds.indexOf(boxId);
-
-		if (index !== -1) {
-			newBoxIds.splice(index + 1, 0, Date.now());
-			newBoxScales.splice(index + 1, 0, 1);
-			newBoxIsLockeds.splice(index + 1, 0, false);
-			newBoxCategories.splice(index + 1, 0, categories);
-			newBoxItems.splice(index + 1, 0, {
-				itemId: null,
-				imagePath: null,
-			});
-		}
-
-		setTemplateBoxIds(newBoxIds);
-		setTemplateBoxScales(newBoxScales);
-		setTemplateBoxIsLocked(newBoxIsLockeds);
-		setTemplateBoxCategories(newBoxCategories);
-		setTemplateBoxItems(newBoxItems);
-	};
-
-	const removeTemplateBox = (boxId) => {
-		if (templateBoxIds.length === 1) {
-			setTemplateBoxIds([Date.now()]);
-			setTemplateBoxScales([1]);
-			setTemplateBoxIsLocked(false);
-			setTemplateBoxCategories([categories]);
-			setTemplateBoxItems([
-				{
-					itemId: null,
-					imagePath: null,
-				},
-			]);
-		} else {
-			const newBoxIds = [...templateBoxIds];
-			const newBoxScales = [...templateBoxScales];
-			const newBoxIsLockeds = [...templateBoxIsLocked];
-			const newBoxCategories = [...templateBoxCategories];
-			const newBoxItems = [...templateBoxItems];
-			const index = newBoxIds.indexOf(boxId);
-
-			if (index !== -1) {
-				newBoxIds.splice(index, 1);
-				newBoxScales.splice(index, 1);
-				newBoxIsLockeds.splice(index, 1);
-				newBoxCategories.splice(index, 1);
-				newBoxItems.splice(index, 1);
-			}
-
-			setTemplateBoxIds(newBoxIds);
-			setTemplateBoxScales(newBoxScales);
-			setTemplateBoxIsLocked(newBoxIsLockeds);
-			setTemplateBoxCategories(newBoxCategories);
-			setTemplateBoxItems(newBoxItems);
-		}
-	};
-
-	const handleRandomization = async (e) => {
+	const handleRandomizationAll = async (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const promises = templateBoxIds.map((_, index) =>
-			handleTemplateBoxRandomization(index)
+		const promises = templateBoxes.map((templateBox) =>
+			handleTemplateBoxRandomization(
+				templateBox.isLocked,
+				templateBox.categories
+			)
 		);
 
 		const results = await Promise.all(promises);
 
-		const newBoxItems = [...templateBoxItems];
+		const newBoxes = [...templateBoxes];
 
-		results.forEach((map, index) => {
-			if (map && map.itemId) {
-				newBoxItems[index] = {
-					itemId: map.itemId,
-					imagePath: map.imagePath,
+		templateBoxes.map((box, index) => {
+			if (results && results[index]) {
+				newBoxes[index] = {
+					boxId: box.boxId,
+					itemId: results[index].itemId,
+					imagePath: results[index].imagePath,
+					scale: box.scale,
+					isLocked: box.isLocked,
+					categories: box.categories,
 				};
 			}
+			return box;
 		});
 
-		setTemplateBoxItems(newBoxItems);
+		dispatch(setAllBoxes({ newBoxes: newBoxes }));
 	};
 
-	const handleTemplateBoxRandomization = async (index) => {
-		if (index !== -1 && templateBoxIsLocked[index] === false) {
-			try {
-				const item = await getRandomItemWithCategories(
-					templateBoxCategories[index].map(
-						(category) => category.categoryId
-					)
-				);
-				return {
-					index: index,
-					itemId: item.itemId,
-					imagePath: item.imagePath,
-				};
-			} catch (err) {
-				console.error("Error fetching random item:", err);
-			}
+	const handleRandomizationOne = async (index) => {
+		const box = templateBoxes[index];
+
+		const result = await handleTemplateBoxRandomization(
+			box.isLocked,
+			box.categories
+		);
+
+		if (result && result.itemId) {
+			const newBoxes = [...templateBoxes];
+			const box = newBoxes[index];
+
+			newBoxes[index] = {
+				boxId: box.boxId,
+				itemId: result.itemId,
+				imagePath: result.imagePath,
+				scale: box.scale,
+				isLocked: box.isLocked,
+				categories: box.categories,
+			};
+
+			dispatch(setAllBoxes({ newBoxes: newBoxes }));
 		}
 	};
 
-	const handleSingleRandomization = async (boxId) => {
-		const index = templateBoxIds.indexOf(boxId);
-
-		if (index !== -1) {
-			const result = await handleTemplateBoxRandomization(index);
-
-			if (result && result.itemId) {
-				const newBoxItems = [...templateBoxItems];
-
-				newBoxItems[result.index] = {
-					itemId: result.itemId,
-					imagePath: result.imagePath,
-				};
-
-				setTemplateBoxItems(newBoxItems);
+	const handleTemplateBoxRandomization = async (isLocked, categories) => {
+		try {
+			if (isLocked) {
+				return;
 			}
+
+			const item = await getRandomItemWithCategories(categories);
+			return {
+				itemId: item.itemId,
+				imagePath: item.imagePath,
+			};
+		} catch (err) {
+			console.error("Error fetching random item:", err);
 		}
 	};
 
@@ -220,30 +90,34 @@ const CreateTemplate = () => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const items = [];
-
-		templateBoxScales.map((scale, index) => {
-			const item = templateBoxItems[index];
-
-			if (item.itemId) {
-				items.push({
-					itemId: item.itemId,
-					orderNum: index,
-					itemWeight: scale * 10,
-				});
+		let errorFlag = false;
+		const outfitsItems = templateBoxes.map((box, index) => {
+			if (!box.itemId) {
+				errorFlag = true;
+				return;
 			}
+
+			return {
+				itemId: box.itemId,
+				orderNum: index,
+				itemWeight: box.scale * 10,
+			};
 		});
 
-		if (items.length === 0) {
+		if (errorFlag) {
+			alert("Please select items for the empty boxes or remove them.");
+			return;
+		}
+		if (outfitsItems.length === 0) {
 			alert("Please select at least one item to create an outfit.");
 			return;
 		}
-		if (items.length > 10) {
+		if (outfitsItems.length > 10) {
 			alert("You can only select up to 10 items.");
 			return;
 		}
 
-		await createOutfit(new Date(), "Created from template", items);
+		await createOutfit(new Date(), "Created from template", outfitsItems);
 		dispatch(refreshState());
 	};
 
@@ -258,27 +132,16 @@ const CreateTemplate = () => {
 				<ImgButton
 					buttonId="outfit-template-randomize-button"
 					imgFileName="/shuffle_icon.png"
-					onClick={handleRandomization}
+					onClick={handleRandomizationAll}
 				/>
 			</div>
 
 			<br />
-			{templateBoxIds.map((boxId, index) => (
+			{templateBoxes.map((templateBox, index) => (
 				<TemplateBox
-					key={boxId}
-					boxId={boxId}
-					imgScale={templateBoxScales[index]}
-					setImgScale={handleScaleChange}
-					currentItem={templateBoxItems[index]}
-					setCurrentItem={handleItemChange}
-					isLocked={templateBoxIsLocked[index]}
-					setIsLocked={handleIsLockedChange}
-					selectedCategories={templateBoxCategories[index]}
-					setSelectedCategories={handleSelectedCategoriesChange}
-					addBoxBefore={addTemplateBoxBefore}
-					addBoxAfter={addTemplateBoxAfter}
-					removeBox={removeTemplateBox}
-					handleRandomization={handleSingleRandomization}
+					key={templateBox.boxId}
+					gsIndex={index}
+					handleRandomization={handleRandomizationOne}
 				/>
 			))}
 		</div>

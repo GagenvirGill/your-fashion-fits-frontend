@@ -1,33 +1,34 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
 
+import {
+	setBoxCategories,
+	setBoxItem,
+} from "../../../store/reducers/outfitTemplateReducer";
+
 import Button from "../../buttons/Button";
-import ItemsRadioForm from "../../forms/ItemsRadioForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-const TemplateCategoriesSelector = ({
-	boxId,
-	setCurrentItem,
-	setSelectedCategories,
-	preSelectedCategories,
-	setShowForm,
-}) => {
-	const { categories } = useSelector((state) => state.categories);
-
-	const [templateCategoryIds, setTemplateCategoryIds] = useState(
-		preSelectedCategories.map((category) => category.categoryId)
-	);
+const TemplateCategoriesSelector = ({ gsIndex, setShowForm }) => {
+	const dispatch = useDispatch();
+	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
+	const { categories } = templateBoxes[gsIndex];
 
 	const handleTemplateCategorySubmit = (selectedCategoryIds) => {
-		const selectedCategoryIdsSet = new Set(selectedCategoryIds);
-
-		const selectedCategories = categories.filter((category) =>
-			selectedCategoryIdsSet.has(category.categoryId)
+		dispatch(
+			setBoxCategories({
+				boxIndex: gsIndex,
+				categories: selectedCategoryIds,
+			})
 		);
-		setSelectedCategories(boxId, selectedCategories);
-		setTemplateCategoryIds(selectedCategoryIds);
-		setCurrentItem(boxId, null, null);
+		dispatch(
+			setBoxItem({
+				boxIndex: gsIndex,
+				itemId: null,
+				imagePath: null,
+			})
+		);
 		handleClose();
 	};
 
@@ -48,7 +49,7 @@ const TemplateCategoriesSelector = ({
 				</p>
 				<CategoriesCheckboxForm
 					handleSubmit={handleTemplateCategorySubmit}
-					preSelectedCategoryIds={templateCategoryIds}
+					preSelectedCategoryIds={categories}
 					formId={"template-select-categories"}
 				/>
 				<br />

@@ -1,26 +1,40 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./TemplateBox.module.css";
+
+import {
+	setBoxLockedStatus,
+	removeTemplateBox,
+	addTemplateBoxBefore,
+	addTemplateBoxAfter,
+	setBoxScale,
+} from "../../store/reducers/outfitTemplateReducer";
 
 import ContextMenuButton from "../buttons/ContextMenuButton";
 import InlineContextMenuButton from "../buttons/InlineContextMenuButton";
 
 const TemplateBoxContextMenu = ({
-	boxId,
-	setIsLocked,
-	isLocked,
+	gsIndex,
 	showContextMenu,
 	setShowContextMenu,
 	menuPosition,
 	setShowItemForm,
 	setShowCategoriesForm,
-	selectedCategories,
-	imgScale,
-	setImgScale,
-	addBoxBefore,
-	addBoxAfter,
-	removeBox,
 	handleRandomization,
 }) => {
+	const dispatch = useDispatch();
+	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
+	const {
+		scale,
+		isLocked,
+		categories: templateCategories,
+	} = templateBoxes[gsIndex];
+
+	const { categories } = useSelector((state) => state.categories);
+	const categoryNames = categories
+		.filter((category) => templateCategories.includes(category.categoryId))
+		.map((category) => category.name);
+
 	const handleClick = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -41,11 +55,45 @@ const TemplateBoxContextMenu = ({
 		setShowCategoriesForm(true);
 	};
 
+	const handleRemoveBox = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setShowContextMenu(false);
+		dispatch(removeTemplateBox({ boxIndex: gsIndex }));
+	};
+
 	const handleLocked = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		setIsLocked(boxId, !isLocked);
+		dispatch(
+			setBoxLockedStatus({ boxIndex: gsIndex, isLocked: !isLocked })
+		);
+	};
+
+	const handleAddBoxBefore = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setShowContextMenu(false);
+		dispatch(addTemplateBoxBefore({ boxIndex: gsIndex }));
+	};
+
+	const handleAddBoxAfter = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setShowContextMenu(false);
+		dispatch(addTemplateBoxAfter({ boxIndex: gsIndex }));
+	};
+
+	const handleImageScale = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		dispatch(
+			setBoxScale({
+				boxIndex: gsIndex,
+				scale: parseFloat(e.target.value),
+			})
+		);
 	};
 
 	useEffect(() => {
@@ -83,7 +131,7 @@ const TemplateBoxContextMenu = ({
 								? "Unlock Item to allow Randomization"
 								: "Lock Item in",
 						]}
-						onClicks={[removeBox, handleLocked]}
+						onClicks={[handleRemoveBox, handleLocked]}
 					/>
 					<InlineContextMenuButton
 						texts={[
@@ -92,26 +140,31 @@ const TemplateBoxContextMenu = ({
 							"Add Left",
 							"Add Right",
 						]}
-						onClicks={[addBoxBefore, addBoxAfter, null, null]}
+						onClicks={[
+							handleAddBoxBefore,
+							handleAddBoxAfter,
+							null,
+							null,
+						]}
 					/>
 					<ContextMenuButton
 						onClick={() => {
-							handleRandomization(boxId);
+							handleRandomization(gsIndex);
 						}}
 						text="Randomize Item from Current Categories:"
 						moreContent={
 							<>
 								<br />
-								{selectedCategories
-									.map((c) => c.name)
-									.join(", ")}
+								{categoryNames.length === 0
+									? "All Categories"
+									: categoryNames.join(", ")}
 							</>
 						}
 						disabled={isLocked}
 					/>
 					<ContextMenuButton
 						onClick={handleClick}
-						text={`Change Image Scale (Current: ${imgScale.toFixed(
+						text={`Change Image Scale (Current: ${scale.toFixed(
 							1
 						)})`}
 						moreContent={
@@ -123,13 +176,8 @@ const TemplateBoxContextMenu = ({
 									min="0.5"
 									max="3.0"
 									step="0.1"
-									value={imgScale}
-									onChange={(e) =>
-										setImgScale(
-											boxId,
-											parseFloat(e.target.value)
-										)
-									}
+									value={scale}
+									onChange={handleImageScale}
 									style={{ width: "100%" }}
 								/>
 							</>
