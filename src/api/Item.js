@@ -3,7 +3,7 @@ import { workerPool } from "../worker/WorkerPool";
 
 export const getAllItems = async () => {
 	try {
-		const response = await ax.get("/item");
+		const response = await ax.get("/item", { withCredentials: true });
 		if (response.data.success === true) {
 			console.log(response.data.message);
 			return response.data.data;
@@ -29,11 +29,16 @@ export const createItem = async (imageFile) => {
 		const formData = new FormData();
 		formData.append("image", data);
 
-		const response = await ax.post("/item", formData, {
-			headers: {
-				"Content-Type": "multipart/form-data",
+		const response = await ax.post(
+			"/item",
+			formData,
+			{
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
 			},
-		});
+			{ withCredentials: true }
+		);
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -50,7 +55,9 @@ export const createItem = async (imageFile) => {
 
 export const deleteItem = async (itemId) => {
 	try {
-		const response = await ax.delete(`/item/${itemId}`);
+		const response = await ax.delete(`/item/${itemId}`, {
+			withCredentials: true,
+		});
 		if (response.data.success === true) {
 			console.log(response.data.message);
 		} else {
@@ -65,7 +72,9 @@ export const deleteItem = async (itemId) => {
 
 export const getCategoriesForItem = async (itemId) => {
 	try {
-		const response = await ax.get(`/item/${itemId}/categories`);
+		const response = await ax.get(`/item/${itemId}/categories`, {
+			withCredentials: true,
+		});
 		if (response.data.success === true) {
 			console.log(response.data.message);
 			return response.data.data;
@@ -81,11 +90,15 @@ export const getCategoriesForItem = async (itemId) => {
 
 export const filterItemsByCategories = async (categories) => {
 	try {
-		const response = await ax.get("/item", {
-			params: {
-				categories: categories,
+		const response = await ax.get(
+			"/item",
+			{
+				params: {
+					categories: categories,
+				},
 			},
-		});
+			{ withCredentials: true }
+		);
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -102,9 +115,13 @@ export const filterItemsByCategories = async (categories) => {
 
 export const addItemToCategories = async (itemId, categories) => {
 	try {
-		const response = await ax.post(`/item/${itemId}/categories`, {
-			categories: categories,
-		});
+		const response = await ax.post(
+			`/item/${itemId}/categories`,
+			{
+				categories: categories,
+			},
+			{ withCredentials: true }
+		);
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -120,9 +137,13 @@ export const addItemToCategories = async (itemId, categories) => {
 
 export const removeItemFromCategories = async (itemId, categories) => {
 	try {
-		const response = await ax.delete(`/item/${itemId}/categories`, {
-			data: { categories: categories },
-		});
+		const response = await ax.delete(
+			`/item/${itemId}/categories`,
+			{
+				data: { categories: categories },
+			},
+			{ withCredentials: true }
+		);
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -138,11 +159,15 @@ export const removeItemFromCategories = async (itemId, categories) => {
 
 export const getRandomItemWithCategories = async (categories) => {
 	try {
-		const response = await ax.get("/item/random", {
-			params: {
-				categories: categories,
+		const response = await ax.get(
+			"/item/random",
+			{
+				params: {
+					categories: categories,
+				},
 			},
-		});
+			{ withCredentials: true }
+		);
 
 		if (response.data.success === true) {
 			console.log(response.data.message);

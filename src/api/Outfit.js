@@ -2,7 +2,7 @@ import ax from "./axiosConfig";
 
 export const getAllOutfits = async () => {
 	try {
-		const response = await ax.get("/outfit");
+		const response = await ax.get("/outfit", { withCredentials: true });
 		if (response.data.success === true) {
 			console.log(response.data.message);
 			return response.data.data;
@@ -18,11 +18,15 @@ export const getAllOutfits = async () => {
 
 export const createOutfit = async (dateWorn, description, items) => {
 	try {
-		const response = await ax.post("/outfit", {
-			dateWorn: dateWorn,
-			description: description,
-			items: items,
-		});
+		const response = await ax.post(
+			"/outfit",
+			{
+				dateWorn: dateWorn,
+				description: description,
+				items: items,
+			},
+			{ withCredentials: true }
+		);
 		if (response.data.success === true) {
 			console.log(response.data.message);
 			return response.data.data;
@@ -38,7 +42,9 @@ export const createOutfit = async (dateWorn, description, items) => {
 
 export const deleteOutfit = async (outfitId) => {
 	try {
-		const response = await ax.delete(`/outfit/${outfitId}`);
+		const response = await ax.delete(`/outfit/${outfitId}`, {
+			withCredentials: true,
+		});
 		if (response.data.success === true) {
 			console.log(response.data.message);
 		} else {

@@ -2,7 +2,7 @@ import ax from "./axiosConfig";
 
 export const getAllCategories = async () => {
 	try {
-		const response = await ax.get("/category");
+		const response = await ax.get("/category", { withCredentials: true });
 		if (response.data.success === true) {
 			console.log(response.data.message);
 			return response.data.data;
@@ -18,9 +18,13 @@ export const getAllCategories = async () => {
 
 export const createCategory = async (name) => {
 	try {
-		const response = await ax.post("/category", {
-			name: name,
-		});
+		const response = await ax.post(
+			"/category",
+			{
+				name: name,
+			},
+			{ withCredentials: true }
+		);
 		if (response.data.success === true) {
 			console.log(response.data.message);
 			return response.data.data;
@@ -36,7 +40,9 @@ export const createCategory = async (name) => {
 
 export const deleteCategory = async (categoryId) => {
 	try {
-		const response = await ax.delete(`/category/${categoryId}`);
+		const response = await ax.delete(`/category/${categoryId}`, {
+			withCredentials: true,
+		});
 		if (response.data.success === true) {
 			console.log(response.data.message);
 		} else {
@@ -51,9 +57,13 @@ export const deleteCategory = async (categoryId) => {
 
 export const addCategoryToItems = async (categoryId, items) => {
 	try {
-		const response = await ax.post(`/category/${categoryId}/items`, {
-			items: items,
-		});
+		const response = await ax.post(
+			`/category/${categoryId}/items`,
+			{
+				items: items,
+			},
+			{ withCredentials: true }
+		);
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -69,9 +79,13 @@ export const addCategoryToItems = async (categoryId, items) => {
 
 export const removeCategoryFromItems = async (categoryId, items) => {
 	try {
-		const response = await ax.delete(`/category/${categoryId}/items`, {
-			data: { items: items },
-		});
+		const response = await ax.delete(
+			`/category/${categoryId}/items`,
+			{
+				data: { items: items },
+			},
+			{ withCredentials: true }
+		);
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -88,7 +102,8 @@ export const removeCategoryFromItems = async (categoryId, items) => {
 export const setCategoriesFavItem = async (categoryId, itemId) => {
 	try {
 		const response = await ax.post(
-			`/category/${categoryId}/fav-item/${itemId}`
+			`/category/${categoryId}/fav-item/${itemId}`,
+			{ withCredentials: true }
 		);
 
 		if (response.data.success === true) {
