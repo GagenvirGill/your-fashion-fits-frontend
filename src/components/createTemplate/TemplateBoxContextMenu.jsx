@@ -6,7 +6,9 @@ import {
 	setBoxLockedStatus,
 	removeTemplateBox,
 	addTemplateBoxBefore,
+	addTemplateRowBefore,
 	addTemplateBoxAfter,
+	addTemplateRowAfter,
 	setBoxScale,
 } from "../../store/reducers/outfitTemplateReducer";
 
@@ -14,7 +16,8 @@ import ContextMenuButton from "../buttons/ContextMenuButton";
 import InlineContextMenuButton from "../buttons/InlineContextMenuButton";
 
 const TemplateBoxContextMenu = ({
-	gsIndex,
+	rowIndex,
+	boxIndex,
 	showContextMenu,
 	setShowContextMenu,
 	menuPosition,
@@ -23,12 +26,12 @@ const TemplateBoxContextMenu = ({
 	handleRandomization,
 }) => {
 	const dispatch = useDispatch();
-	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
+	const { templateRows } = useSelector((state) => state.outfitTemplate);
 	const {
 		scale,
 		isLocked,
 		categories: templateCategories,
-	} = templateBoxes[gsIndex];
+	} = templateRows[rowIndex][boxIndex];
 
 	const { categories } = useSelector((state) => state.categories);
 	const categoryNames = categories
@@ -59,7 +62,7 @@ const TemplateBoxContextMenu = ({
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(removeTemplateBox({ boxIndex: gsIndex }));
+		dispatch(removeTemplateBox({ rowIndex: rowIndex, boxIndex: boxIndex }));
 	};
 
 	const handleLocked = (e) => {
@@ -67,7 +70,11 @@ const TemplateBoxContextMenu = ({
 		e.stopPropagation();
 		setShowContextMenu(false);
 		dispatch(
-			setBoxLockedStatus({ boxIndex: gsIndex, isLocked: !isLocked })
+			setBoxLockedStatus({
+				rowIndex: rowIndex,
+				boxIndex: boxIndex,
+				isLocked: !isLocked,
+			})
 		);
 	};
 
@@ -75,14 +82,32 @@ const TemplateBoxContextMenu = ({
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(addTemplateBoxBefore({ boxIndex: gsIndex }));
+		dispatch(
+			addTemplateBoxBefore({ rowIndex: rowIndex, boxIndex: boxIndex })
+		);
 	};
 
 	const handleAddBoxAfter = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(addTemplateBoxAfter({ boxIndex: gsIndex }));
+		dispatch(
+			addTemplateBoxAfter({ rowIndex: rowIndex, boxIndex: boxIndex })
+		);
+	};
+
+	const handleAddRowBefore = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setShowContextMenu(false);
+		dispatch(addTemplateRowBefore({ rowIndex: rowIndex }));
+	};
+
+	const handleAddRowAfter = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setShowContextMenu(false);
+		dispatch(addTemplateRowAfter({ rowIndex: rowIndex }));
 	};
 
 	const handleImageScale = (e) => {
@@ -90,7 +115,8 @@ const TemplateBoxContextMenu = ({
 		e.stopPropagation();
 		dispatch(
 			setBoxScale({
-				boxIndex: gsIndex,
+				rowIndex: rowIndex,
+				boxIndex: boxIndex,
 				scale: parseFloat(e.target.value),
 			})
 		);
@@ -141,15 +167,15 @@ const TemplateBoxContextMenu = ({
 							"Add Right",
 						]}
 						onClicks={[
+							handleAddRowBefore,
+							handleAddRowAfter,
 							handleAddBoxBefore,
 							handleAddBoxAfter,
-							null,
-							null,
 						]}
 					/>
 					<ContextMenuButton
 						onClick={() => {
-							handleRandomization(gsIndex);
+							handleRandomization(rowIndex, boxIndex);
 						}}
 						text="Randomize Item from Current Categories:"
 						moreContent={

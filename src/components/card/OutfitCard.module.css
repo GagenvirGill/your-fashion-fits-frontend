@@ -1,7 +1,7 @@
 .outfitCard {
 	display: inline-block;
-	max-width: 200px;
-	height: 600px;
+	max-width: 300px;
+	height: 700px;
 	justify-content: center;
 	align-items: center;
 	padding: 10px;
@@ -14,14 +14,21 @@
 	background-color: rgb(230, 230, 230);
 }
 
-.outfitImage {
-	height: 90%;
-	width: 100%;
+.outfitContainer {
+	width: 300px;
+	height: 650px;
 	display: flex;
 	flex-direction: column;
 	pointer-events: fill;
 	justify-content: center;
 	align-items: center;
+}
+
+.outfitRowContainer {
+	width: 300px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .outfitDate {

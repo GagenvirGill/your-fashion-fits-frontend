@@ -16,7 +16,8 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 		});
 	};
 
-	const sortedItems = [...items].sort((a, b) => a.orderNum - b.orderNum);
+	const sortedRows = [...items].map((item) => item.TemplateItems);
+
 	return (
 		<>
 			<Card
@@ -26,20 +27,28 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 				customConMenu={null}
 				type={`'${dateWorn}' Outfit`}
 			>
-				<div className={styles.outfitImage}>
-					{sortedItems.map((item) => (
-						<img
-							key={`${item.Item.itemId}-${item.Item.templateItemId}`}
-							src={`http://localhost:5001${item.Item.imagePath}`}
-							alt="item-img"
-							style={{
-								maxHeight: `${
-									(item.itemWeight / totalWeight) * 100
-								}%`,
-								maxWidth: "100%",
-								objectFit: "contain",
-							}}
-						/>
+				<div className={styles.outfitContainer}>
+					{sortedRows.map((row, rowIndex) => (
+						<div
+							key={`${outfitId}-${rowIndex}`}
+							className={styles.outfitRowContainer}
+						>
+							{row.map((item) => (
+								<img
+									key={`${item.Item.itemId}-${item.Item.templateItemId}`}
+									src={`http://localhost:5001${item.Item.imagePath}`}
+									alt="item-img"
+									style={{
+										maxHeight: `${
+											(item.itemWeight / totalWeight) *
+											650
+										}px`,
+										maxWidth: `${(1 / row.length) * 300}px`,
+										objectFit: "contain",
+									}}
+								/>
+							))}
+						</div>
 					))}
 				</div>
 				<p className={styles.outfitDate}>{dateWorn}</p>

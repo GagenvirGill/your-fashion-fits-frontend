@@ -6,9 +6,9 @@ import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateItemSelector from "../popupForms/templatePopups/TemplateItemSelector";
 import TemplateCategoriesSelector from "../popupForms/templatePopups/TemplateCategoriesSelector";
 
-const TemplateBox = ({ gsIndex, handleRandomization }) => {
-	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
-	const { itemId, imagePath, scale } = templateBoxes[gsIndex];
+const TemplateBox = ({ rowIndex, boxIndex, handleRandomization }) => {
+	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const { itemId, imagePath, scale } = templateRows[rowIndex][boxIndex];
 
 	const [showItemForm, setShowItemForm] = useState(false);
 	const [showCategoriesForm, setShowCategoriesForm] = useState(false);
@@ -30,10 +30,19 @@ const TemplateBox = ({ gsIndex, handleRandomization }) => {
 	return (
 		<>
 			<div
-				style={{
-					height: `${150 * scale}px`,
-					...(!itemId && { width: `${150 * scale}px` }),
-				}}
+				style={
+					itemId
+						? {
+								height: `${150 * scale}px`,
+								...(!itemId && { width: `${150 * scale}px` }),
+						  }
+						: {
+								height: `${150 * scale - 10}px`,
+								...(!itemId && {
+									width: `${150 * scale - 10}px`,
+								}),
+						  }
+				}
 				className={
 					itemId
 						? styles.templateBoxWithItem
@@ -50,7 +59,8 @@ const TemplateBox = ({ gsIndex, handleRandomization }) => {
 					/>
 				)}
 				<TemplateBoxContextMenu
-					gsIndex={gsIndex}
+					rowIndex={rowIndex}
+					boxIndex={boxIndex}
 					showContextMenu={showContextMenu}
 					setShowContextMenu={setShowContextMenu}
 					menuPosition={menuPosition}
@@ -62,7 +72,8 @@ const TemplateBox = ({ gsIndex, handleRandomization }) => {
 			{showItemForm && (
 				<div>
 					<TemplateItemSelector
-						gsIndex={gsIndex}
+						rowIndex={rowIndex}
+						boxIndex={boxIndex}
 						setShowForm={setShowItemForm}
 					/>
 				</div>
@@ -70,7 +81,8 @@ const TemplateBox = ({ gsIndex, handleRandomization }) => {
 			{showCategoriesForm && (
 				<div>
 					<TemplateCategoriesSelector
-						gsIndex={gsIndex}
+						rowIndex={rowIndex}
+						boxIndex={boxIndex}
 						setShowForm={setShowCategoriesForm}
 					/>
 				</div>

@@ -10,21 +10,23 @@ import {
 import Button from "../../buttons/Button";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-const TemplateCategoriesSelector = ({ gsIndex, setShowForm }) => {
+const TemplateCategoriesSelector = ({ rowIndex, boxIndex, setShowForm }) => {
 	const dispatch = useDispatch();
-	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
-	const { categories } = templateBoxes[gsIndex];
+	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const { categories } = templateRows[rowIndex][boxIndex];
 
 	const handleTemplateCategorySubmit = (selectedCategoryIds) => {
 		dispatch(
 			setBoxCategories({
-				boxIndex: gsIndex,
+				rowIndex: rowIndex,
+				boxIndex: boxIndex,
 				categories: selectedCategoryIds,
 			})
 		);
 		dispatch(
 			setBoxItem({
-				boxIndex: gsIndex,
+				rowIndex: rowIndex,
+				boxIndex: boxIndex,
 				itemId: null,
 				imagePath: null,
 			})

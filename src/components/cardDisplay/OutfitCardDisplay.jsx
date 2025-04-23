@@ -16,7 +16,7 @@ const OutfitCardDisplay = () => {
 						outfitId={outfit.outfitId}
 						dateWorn={outfit.dateWorn}
 						desc={outfit.description}
-						items={outfit.OutfitTemplate.TemplateItems}
+						items={outfit.OutfitTemplate.TemplateRows}
 						totalWeight={outfit.OutfitTemplate.totalWeight}
 					/>
 				);

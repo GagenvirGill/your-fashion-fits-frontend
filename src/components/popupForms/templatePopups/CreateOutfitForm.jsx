@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshState } from "../../../store/reducers/outfitsReducer";
+import { setWholeTemplate } from "../../../store/reducers/outfitTemplateReducer";
 
 import { createOutfit } from "../../../api/Outfit";
 
@@ -9,7 +10,7 @@ import Button from "../../buttons/Button";
 
 const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 	const dispatch = useDispatch();
-	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
+	const { templateRows } = useSelector((state) => state.outfitTemplate);
 
 	const [description, setDescription] = useState("");
 	const [date, setDate] = useState("");
@@ -18,33 +19,44 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		let errorFlag = false;
-		const outfitsItems = templateBoxes.map((box, index) => {
-			if (!box.itemId) {
-				errorFlag = true;
+		const outfitsItems = templateRows.map((row) => {
+			const rowItems = row.map((box) => {
+				if (!box.itemId) {
+					return;
+				} else {
+					return {
+						itemId: box.itemId,
+						itemWeight: box.scale * 10,
+					};
+				}
+			});
+
+			if (rowItems.length > 5) {
+				alert("You can only select up to 5 items per row.");
+				return;
+			}
+			if (rowItems.length !== row.length) {
+				alert(
+					"Please select items for the empty boxes or remove them."
+				);
 				return;
 			}
 
-			return {
-				itemId: box.itemId,
-				orderNum: index,
-				itemWeight: box.scale * 10,
-			};
+			return rowItems;
 		});
 
-		if (errorFlag) {
-			alert("Please select items for the empty boxes or remove them.");
-			return;
-		}
 		if (outfitsItems.length === 0) {
 			alert("Please select at least one item to create an outfit.");
 			return;
 		}
-		if (outfitsItems.length > 10) {
-			alert("You can only select up to 10 items.");
+		if (outfitsItems.length > 8) {
+			alert("You can only have up to 8 rows of items.");
 			return;
 		}
-
+		if (outfitsItems.length !== templateRows.length) {
+			alert("Please select items for the empty boxes or remove them.");
+			return;
+		}
 		if (date === "") {
 			alert("Please select a date.");
 			return;
@@ -53,6 +65,7 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 		setShowCreateOutfitForm(false);
 		await createOutfit(date, description, outfitsItems);
 		dispatch(refreshState());
+		dispatch(setWholeTemplate({ newTemplate: [] }));
 	};
 
 	return (

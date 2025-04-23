@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import styles from "./CreateTemplate.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setAllBoxes } from "../../store/reducers/outfitTemplateReducer";
+import {
+	setWholeTemplate,
+	setWholeRow,
+} from "../../store/reducers/outfitTemplateReducer";
 import { getRandomItemWithCategories } from "../../api/Item";
 
-import TemplateBox from "./TemplateBox";
+import TemplateRow from "./TemplateRow";
 import ImgButton from "../buttons/ImgButton";
 import CreateOutfitForm from "../popupForms/templatePopups/CreateOutfitForm";
 
 const CreateTemplate = () => {
 	const dispatch = useDispatch();
-	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
+	const { templateRows } = useSelector((state) => state.outfitTemplate);
 
 	const [showCreateOutfitForm, setShowCreateOutfitForm] = useState(false);
 
@@ -18,36 +21,41 @@ const CreateTemplate = () => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const promises = templateBoxes.map((templateBox) =>
-			handleTemplateBoxRandomization(
-				templateBox.isLocked,
-				templateBox.categories
+		const promises = templateRows.map((row) =>
+			Promise.all(
+				row.map((templateBox) =>
+					handleTemplateBoxRandomization(
+						templateBox.isLocked,
+						templateBox.categories
+					)
+				)
 			)
 		);
 
 		const results = await Promise.all(promises);
 
-		const newBoxes = [...templateBoxes];
+		const newRows = templateRows.map((row) => [...row]);
 
-		templateBoxes.map((box, index) => {
-			if (results && results[index]) {
-				newBoxes[index] = {
-					boxId: box.boxId,
-					itemId: results[index].itemId,
-					imagePath: results[index].imagePath,
-					scale: box.scale,
-					isLocked: box.isLocked,
-					categories: box.categories,
-				};
-			}
-			return box;
+		templateRows.map((row, rowIdx) => {
+			row.map((box, boxIdx) => {
+				if (results && results[rowIdx] && results[rowIdx][boxIdx]) {
+					newRows[rowIdx][boxIdx] = {
+						boxId: box.boxId,
+						itemId: results[rowIdx][boxIdx].itemId,
+						imagePath: results[rowIdx][boxIdx].imagePath,
+						scale: box.scale,
+						isLocked: box.isLocked,
+						categories: box.categories,
+					};
+				}
+			});
 		});
 
-		dispatch(setAllBoxes({ newBoxes: newBoxes }));
+		dispatch(setWholeTemplate({ newTemplate: newRows }));
 	};
 
-	const handleRandomizationOne = async (index) => {
-		const box = templateBoxes[index];
+	const handleRandomizationOne = async (rowIndex, boxIndex) => {
+		const box = templateRows[rowIndex][boxIndex];
 
 		const result = await handleTemplateBoxRandomization(
 			box.isLocked,
@@ -55,10 +63,10 @@ const CreateTemplate = () => {
 		);
 
 		if (result && result.itemId) {
-			const newBoxes = [...templateBoxes];
-			const box = newBoxes[index];
+			const newRow = [...templateRows[rowIndex]];
+			const box = newRow[boxIndex];
 
-			newBoxes[index] = {
+			newRow[boxIndex] = {
 				boxId: box.boxId,
 				itemId: result.itemId,
 				imagePath: result.imagePath,
@@ -67,7 +75,7 @@ const CreateTemplate = () => {
 				categories: box.categories,
 			};
 
-			dispatch(setAllBoxes({ newBoxes: newBoxes }));
+			dispatch(setWholeRow({ rowIndex: rowIndex, newRow: newRow }));
 		}
 	};
 
@@ -98,7 +106,7 @@ const CreateTemplate = () => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		dispatch(setAllBoxes({ newBoxes: [] }));
+		dispatch(setWholeTemplate({ newTemplate: [] }));
 	};
 
 	return (
@@ -123,11 +131,11 @@ const CreateTemplate = () => {
 				</div>
 
 				<br />
-				{templateBoxes.map((templateBox, index) => (
-					<TemplateBox
-						key={templateBox.boxId}
-						gsIndex={index}
-						handleRandomization={handleRandomizationOne}
+				{templateRows.map((_, rowIndex) => (
+					<TemplateRow
+						key={`templaterow-${rowIndex}`}
+						rowIndex={rowIndex}
+						handleRandomizationOne={handleRandomizationOne}
 					/>
 				))}
 			</div>

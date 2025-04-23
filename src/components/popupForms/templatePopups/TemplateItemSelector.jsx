@@ -8,17 +8,18 @@ import Button from "../../buttons/Button";
 import ItemsRadioForm from "../../forms/ItemsRadioForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-const TemplateItemSelector = ({ gsIndex, setShowForm }) => {
+const TemplateItemSelector = ({ rowIndex, boxIndex, setShowForm }) => {
 	const dispatch = useDispatch();
-	const { templateBoxes } = useSelector((state) => state.outfitTemplate);
-	const { itemId } = templateBoxes[gsIndex];
+	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const { itemId } = templateRows[rowIndex][boxIndex];
 
 	const [filteringCategoryIds, setFilteringCategoryIds] = useState([]);
 
 	const handleItemSubmit = (selectedItemId, selectedItemImagePath) => {
 		dispatch(
 			setBoxItem({
-				boxIndex: gsIndex,
+				rowIndex: rowIndex,
+				boxIndex: boxIndex,
 				itemId: selectedItemId,
 				imagePath: selectedItemImagePath,
 			})

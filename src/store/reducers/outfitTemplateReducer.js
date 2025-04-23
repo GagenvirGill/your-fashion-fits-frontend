@@ -2,15 +2,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	templateBoxes: [
-		{
-			boxId: Date.now(),
-			itemId: null,
-			imagePath: null,
-			scale: 1,
-			isLocked: false,
-			categories: [],
-		},
+	templateRows: [
+		[
+			{
+				boxId: Date.now(),
+				itemId: null,
+				imagePath: null,
+				scale: 1,
+				isLocked: false,
+				categories: [],
+			},
+		],
 	],
 };
 
@@ -18,63 +20,73 @@ const outfitTemplateSlice = createSlice({
 	name: "outfitTemplate",
 	initialState,
 	reducers: {
-		setAllBoxes: (state, action) => {
-			const { newBoxes } = action.payload;
+		setWholeTemplate: (state, action) => {
+			const { newTemplate } = action.payload;
 
-			if (newBoxes.length > 0) {
-				state.templateBoxes = newBoxes;
+			if (newTemplate.length > 0) {
+				state.templateRows = newTemplate;
 			} else {
-				state.templateBoxes = [
-					{
-						boxId: Date.now(),
-						itemId: null,
-						imagePath: null,
-						scale: 1,
-						isLocked: false,
-						categories: [],
-					},
+				state.templateRows = [
+					[
+						{
+							boxId: Date.now(),
+							itemId: null,
+							imagePath: null,
+							scale: 1,
+							isLocked: false,
+							categories: [],
+						},
+					],
 				];
+			}
+		},
+
+		setWholeRow: (state, action) => {
+			const { rowIndex, newRow } = action.payload;
+
+			if (rowIndex !== -1) {
+				state.templateRows[rowIndex] = newRow;
 			}
 		},
 
 		setBoxItem: (state, action) => {
-			const { boxIndex, itemId, imagePath } = action.payload;
+			const { rowIndex, boxIndex, itemId, imagePath } = action.payload;
 
-			if (boxIndex !== -1) {
-				state.templateBoxes[boxIndex].itemId = itemId;
-				state.templateBoxes[boxIndex].imagePath = imagePath;
+			if (boxIndex !== -1 && rowIndex !== -1) {
+				state.templateRows[rowIndex][boxIndex].itemId = itemId;
+				state.templateRows[rowIndex][boxIndex].imagePath = imagePath;
 			}
 		},
 
 		setBoxScale: (state, action) => {
-			const { boxIndex, scale } = action.payload;
+			const { rowIndex, boxIndex, scale } = action.payload;
 
-			if (boxIndex !== -1) {
-				state.templateBoxes[boxIndex].scale = scale;
+			if (boxIndex !== -1 && rowIndex !== -1) {
+				state.templateRows[rowIndex][boxIndex].scale = scale;
 			}
 		},
 
 		setBoxLockedStatus: (state, action) => {
-			const { boxIndex, isLocked } = action.payload;
+			const { rowIndex, boxIndex, isLocked } = action.payload;
 
-			if (boxIndex !== -1) {
-				state.templateBoxes[boxIndex].isLocked = isLocked;
+			if (boxIndex !== -1 && rowIndex !== -1) {
+				state.templateRows[rowIndex][boxIndex].isLocked = isLocked;
 			}
 		},
 
 		setBoxCategories: (state, action) => {
-			const { boxIndex, categories } = action.payload;
+			const { rowIndex, boxIndex, categories } = action.payload;
 
-			if (boxIndex !== -1) {
-				state.templateBoxes[boxIndex].categories = categories;
+			if (boxIndex !== -1 && rowIndex !== -1) {
+				state.templateRows[rowIndex][boxIndex].categories = categories;
 			}
 		},
 
 		addTemplateBoxBefore: (state, action) => {
-			const { boxIndex } = action.payload;
+			const { rowIndex, boxIndex } = action.payload;
 
-			if (boxIndex !== -1) {
-				state.templateBoxes.splice(boxIndex, 0, {
+			if (boxIndex !== -1 && rowIndex !== -1) {
+				state.templateRows[rowIndex].splice(boxIndex, 0, {
 					boxId: Date.now(),
 					itemId: null,
 					imagePath: null,
@@ -85,24 +97,11 @@ const outfitTemplateSlice = createSlice({
 			}
 		},
 
-		addTemplateBoxAfter: (state, action) => {
-			const { boxIndex } = action.payload;
+		addTemplateRowBefore: (state, action) => {
+			const { rowIndex } = action.payload;
 
-			if (boxIndex !== -1) {
-				state.templateBoxes.splice(boxIndex + 1, 0, {
-					boxId: Date.now(),
-					itemId: null,
-					imagePath: null,
-					scale: 1,
-					isLocked: false,
-					categories: [],
-				});
-			}
-		},
-
-		removeTemplateBox: (state, action) => {
-			if (state.templateBoxes.length === 1) {
-				state.templateBoxes = [
+			if (rowIndex !== -1) {
+				state.templateRows.splice(rowIndex, 0, [
 					{
 						boxId: Date.now(),
 						itemId: null,
@@ -111,12 +110,67 @@ const outfitTemplateSlice = createSlice({
 						isLocked: false,
 						categories: [],
 					},
-				];
-			} else {
-				const { boxIndex } = action.payload;
+				]);
+			}
+		},
 
-				if (boxIndex !== -1) {
-					state.templateBoxes.splice(boxIndex, 1);
+		addTemplateBoxAfter: (state, action) => {
+			const { rowIndex, boxIndex } = action.payload;
+
+			if (boxIndex !== -1 && rowIndex !== -1) {
+				state.templateRows[rowIndex].splice(boxIndex + 1, 0, {
+					boxId: Date.now(),
+					itemId: null,
+					imagePath: null,
+					scale: 1,
+					isLocked: false,
+					categories: [],
+				});
+			}
+		},
+
+		addTemplateRowAfter: (state, action) => {
+			const { rowIndex } = action.payload;
+
+			if (rowIndex !== -1) {
+				state.templateRows.splice(rowIndex + 1, 0, [
+					{
+						boxId: Date.now(),
+						itemId: null,
+						imagePath: null,
+						scale: 1,
+						isLocked: false,
+						categories: [],
+					},
+				]);
+			}
+		},
+
+		removeTemplateBox: (state, action) => {
+			const { rowIndex, boxIndex } = action.payload;
+
+			if (
+				state.templateRows.length === 1 &&
+				rowIndex !== -1 &&
+				state.templateRows[rowIndex] === 1
+			) {
+				state.templateRows = [
+					[
+						{
+							boxId: Date.now(),
+							itemId: null,
+							imagePath: null,
+							scale: 1,
+							isLocked: false,
+							categories: [],
+						},
+					],
+				];
+			} else if (boxIndex !== -1 && rowIndex !== -1) {
+				if (state.templateRows[rowIndex] === 1) {
+					state.templateRows.splice(rowIndex, 1);
+				} else {
+					state.templateRows[rowIndex].splice(boxIndex, 1);
 				}
 			}
 		},
@@ -124,13 +178,16 @@ const outfitTemplateSlice = createSlice({
 });
 
 export const {
-	setAllBoxes,
+	setWholeTemplate,
+	setWholeRow,
 	setBoxItem,
 	setBoxScale,
 	setBoxLockedStatus,
 	setBoxCategories,
 	addTemplateBoxBefore,
+	addTemplateRowBefore,
 	addTemplateBoxAfter,
+	addTemplateRowAfter,
 	removeTemplateBox,
 } = outfitTemplateSlice.actions;
 export default outfitTemplateSlice.reducer;
