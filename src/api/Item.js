@@ -29,16 +29,12 @@ export const createItem = async (imageFile) => {
 		const formData = new FormData();
 		formData.append("image", data);
 
-		const response = await ax.post(
-			"/item",
-			formData,
-			{
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
+		const response = await ax.post("/item", formData, {
+			headers: {
+				"Content-Type": "multipart/form-data",
 			},
-			{ withCredentials: true }
-		);
+			withCredentials: true,
+		});
 
 		if (response.data.success === true) {
 			console.log(response.data.message);

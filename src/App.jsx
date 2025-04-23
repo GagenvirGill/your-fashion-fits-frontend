@@ -9,11 +9,13 @@ import AllItemsView from "./pages/AllItemsView";
 import OutfitsView from "./pages/OutfitsView";
 import Profile from "./pages/Profile";
 import Navbar from "./components/nav/Navbar";
+import Welcome from "./pages/Welcome";
 
 import { setCategories } from "./store/reducers/categoriesReducer";
 import { setItems } from "./store/reducers/itemsReducer";
 import { setOutfits } from "./store/reducers/outfitsReducer";
 
+import { checkLoggedInStatus } from "./api/Auth";
 import { getAllCategories } from "./api/Category";
 import { getAllItems } from "./api/Item";
 import { getAllOutfits } from "./api/Outfit";
@@ -26,11 +28,18 @@ const App = () => {
 	const { refresh: itemsRefresh } = useSelector((state) => state.items);
 	const { refresh: outfitsRefresh } = useSelector((state) => state.outfits);
 
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [initialCategState, setInitialCategState] = useState(false);
 	const [initialItemsState, setInitialItemsState] = useState(false);
 	const [initialOutfitsState, setInitialOutfitsState] = useState(false);
 
 	useEffect(() => {
+		checkLoggedInStatus().then((status) => setIsAuthenticated(status));
+	}, []);
+
+	useEffect(() => {
+		if (!isAuthenticated) return;
+
 		getAllCategories()
 			.then((fetchedCategories) => {
 				dispatch(setCategories(fetchedCategories));
@@ -39,9 +48,11 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Error loading categories: ${err}`);
 			});
-	}, [categoriesRefresh]);
+	}, [isAuthenticated, categoriesRefresh]);
 
 	useEffect(() => {
+		if (!isAuthenticated) return;
+
 		getAllItems()
 			.then((fetchedItems) => {
 				dispatch(setItems(fetchedItems));
@@ -50,9 +61,11 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Error loading items: ${err}`);
 			});
-	}, [itemsRefresh]);
+	}, [isAuthenticated, itemsRefresh]);
 
 	useEffect(() => {
+		if (!isAuthenticated) return;
+
 		getAllOutfits()
 			.then((fetchedOutfits) => {
 				dispatch(setOutfits(fetchedOutfits));
@@ -61,37 +74,50 @@ const App = () => {
 			.catch((err) => {
 				console.log(`Error loading outfits: ${err}`);
 			});
-	}, [outfitsRefresh]);
+	}, [isAuthenticated, outfitsRefresh]);
 
 	return (
 		<Router>
-			{initialItemsState && initialCategState && initialOutfitsState && (
+			{!isAuthenticated && (
 				<>
 					<Navbar />
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="*" element={<Home />} />
-						<Route path="/outfits" element={<OutfitsView />} />
-						<Route path="/closet" element={<Closet />} />
-						<Route path="/closet/all" element={<AllItemsView />} />
-						<Route path="/profile" element={<Profile />} />
-						{categories.map((category) => (
-							<Route
-								key={category.categoryId}
-								path={`/closet/${category.name
-									.toLowerCase()
-									.replace(/\s+/g, "")}`}
-								element={
-									<CategoryView
-										categoryId={category.categoryId}
-										categoryName={category.name}
-									/>
-								}
-							/>
-						))}
-					</Routes>
+					<Welcome />
 				</>
 			)}
+			{isAuthenticated &&
+				initialItemsState &&
+				initialCategState &&
+				initialOutfitsState && (
+					<>
+						<Navbar />
+						<Routes>
+							<Route path="/" element={<Welcome />} />
+							<Route path="/home" element={<Home />} />
+							<Route path="/outfits" element={<OutfitsView />} />
+							<Route path="/closet" element={<Closet />} />
+							<Route
+								path="/closet/all"
+								element={<AllItemsView />}
+							/>
+							<Route path="/profile" element={<Profile />} />
+							{categories.map((category) => (
+								<Route
+									key={category.categoryId}
+									path={`/closet/${category.name
+										.toLowerCase()
+										.replace(/\s+/g, "")}`}
+									element={
+										<CategoryView
+											categoryId={category.categoryId}
+											categoryName={category.name}
+										/>
+									}
+								/>
+							))}
+							<Route path="*" element={<Welcome />} />
+						</Routes>
+					</>
+				)}
 		</Router>
 	);
 };

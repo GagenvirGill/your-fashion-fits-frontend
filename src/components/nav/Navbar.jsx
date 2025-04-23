@@ -20,7 +20,7 @@ const Navbar = () => {
 					className={styles.navLogo}
 				></img>
 			</Link>
-			<Link to="/">
+			<Link to="/home">
 				<img
 					src="/house_icon.png"
 					alt="Home"

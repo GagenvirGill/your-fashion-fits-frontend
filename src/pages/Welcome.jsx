@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./GenericPageStyles.module.css";
 
-const Profile = () => {
+const Welcome = () => {
 	const handleLogin = () => {
 		window.location.href = "http://localhost:5001/auth/google";
 	};
@@ -9,10 +9,10 @@ const Profile = () => {
 	return (
 		<div className={styles.pageContainer}>
 			<br />
-			<p className={styles.pageTitle}>Profileeeee</p>
+			<p className={styles.pageTitle}>Welcomeeeeeee</p>
 			<button onClick={handleLogin}>Login with Google</button>
 		</div>
 	);
 };
 
-export default Profile;
+export default Welcome;
