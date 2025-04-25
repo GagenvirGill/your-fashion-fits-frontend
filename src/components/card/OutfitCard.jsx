@@ -35,8 +35,8 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 						>
 							{row.map((item) => (
 								<img
-									key={`${item.Item.itemId}-${item.Item.templateItemId}`}
-									src={`http://localhost:5001${item.Item.imagePath}`}
+									key={`${item.Item.itemId}-${item.templateItemId}`}
+									src={item.Item.imagePath}
 									alt="item-img"
 									style={{
 										maxHeight: `${

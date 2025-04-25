@@ -32,7 +32,7 @@ const ItemContextMenuForms = ({ itemId, imagePath, handleClose }) => {
 				<br />
 				<br />
 				<img
-					src={`${"http://localhost:5001"}${imagePath}`}
+					src={imagePath}
 					alt="Preview"
 					id={`${itemId}-ItemCM`}
 					className={styles.popupImage}

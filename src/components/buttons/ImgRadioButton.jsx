@@ -17,11 +17,7 @@ const ImgRadioButton = ({
 				onChange={onChange}
 				name={formId}
 			/>
-			<img
-				src={`${"http://localhost:5001"}${imgPath}`}
-				alt="Preview"
-				id={`${buttonId}-${formId}-img`}
-			/>
+			<img src={imgPath} alt="Preview" id={`${buttonId}-${formId}-img`} />
 		</label>
 	);
 };

@@ -45,9 +45,9 @@ const CategoriesCheckboxForm = ({
 		>
 			{display_categories.map((category) => (
 				<CheckboxButton
-					key={category.categoryId}
+					key={`${formId}-${category.categoryId}`}
 					text={category.name}
-					buttonId={category.categoryId}
+					buttonId={`${formId}-${category.categoryId}`}
 					onChange={(event) =>
 						handleCheckboxChange(
 							category.categoryId,

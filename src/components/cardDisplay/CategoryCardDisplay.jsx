@@ -31,9 +31,7 @@ const CategoryCardDisplay = () => {
 							.toLowerCase()
 							.replace(/\s+/g, "")}`}
 						imagePath={
-							item
-								? `${"http://localhost:5001"}${item.imagePath}`
-								: "/default_icon.png"
+							item ? `${item.imagePath}` : "/default_icon.png"
 						}
 						{...(item && { favItemId: item.itemId })}
 					/>

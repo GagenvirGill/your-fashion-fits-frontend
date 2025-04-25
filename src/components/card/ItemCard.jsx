@@ -43,11 +43,7 @@ const ItemCard = ({ itemId, imagePath }) => {
 				}
 				type="Item"
 			>
-				<img
-					src={`${"http://localhost:5001"}${imagePath}`}
-					alt="Preview"
-					id={itemId}
-				/>
+				<img src={imagePath} alt="Preview" id={itemId} />
 			</Card>
 			{showForm && (
 				<ItemContextMenuForms

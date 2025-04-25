@@ -79,13 +79,10 @@ export const addCategoryToItems = async (categoryId, items) => {
 
 export const removeCategoryFromItems = async (categoryId, items) => {
 	try {
-		const response = await ax.delete(
-			`/category/${categoryId}/items`,
-			{
-				data: { items: items },
-			},
-			{ withCredentials: true }
-		);
+		const response = await ax.delete(`/category/${categoryId}/items`, {
+			data: { items: items },
+			withCredentials: true,
+		});
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -103,6 +100,7 @@ export const setCategoriesFavItem = async (categoryId, itemId) => {
 	try {
 		const response = await ax.post(
 			`/category/${categoryId}/fav-item/${itemId}`,
+			{},
 			{ withCredentials: true }
 		);
 

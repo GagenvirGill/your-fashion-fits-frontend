@@ -26,6 +26,7 @@ const RemoveItemFromCategoriesForm = ({
 				Select Which Categories to Remove this Item from
 			</p>
 			<CategoriesCheckboxForm
+				formId="RemoveItemFromCategoriesForm"
 				handleSubmit={handleSubmit}
 				displayCategories={itemsCurrCategories}
 			/>

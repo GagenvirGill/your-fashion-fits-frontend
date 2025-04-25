@@ -86,15 +86,12 @@ export const getCategoriesForItem = async (itemId) => {
 
 export const filterItemsByCategories = async (categories) => {
 	try {
-		const response = await ax.get(
-			"/item",
-			{
-				params: {
-					categories: categories,
-				},
+		const response = await ax.get("/item", {
+			params: {
+				categories: categories,
 			},
-			{ withCredentials: true }
-		);
+			withCredentials: true,
+		});
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -133,13 +130,10 @@ export const addItemToCategories = async (itemId, categories) => {
 
 export const removeItemFromCategories = async (itemId, categories) => {
 	try {
-		const response = await ax.delete(
-			`/item/${itemId}/categories`,
-			{
-				data: { categories: categories },
-			},
-			{ withCredentials: true }
-		);
+		const response = await ax.delete(`/item/${itemId}/categories`, {
+			data: { categories: categories },
+			withCredentials: true,
+		});
 
 		if (response.data.success === true) {
 			console.log(response.data.message);
@@ -155,15 +149,12 @@ export const removeItemFromCategories = async (itemId, categories) => {
 
 export const getRandomItemWithCategories = async (categories) => {
 	try {
-		const response = await ax.get(
-			"/item/random",
-			{
-				params: {
-					categories: categories,
-				},
+		const response = await ax.get("/item/random", {
+			params: {
+				categories: categories,
 			},
-			{ withCredentials: true }
-		);
+			withCredentials: true,
+		});
 
 		if (response.data.success === true) {
 			console.log(response.data.message);

@@ -6,11 +6,7 @@ const ImgCheckboxButton = ({ imgPath, buttonId, onChange }) => {
 		<>
 			<label className={styles.imgCheckboxButton} htmlFor={buttonId}>
 				<input type="checkbox" id={buttonId} onChange={onChange} />
-				<img
-					src={`${"http://localhost:5001"}${imgPath}`}
-					alt="Preview"
-					id={`${buttonId}-img`}
-				/>
+				<img src={imgPath} alt="Preview" id={`${buttonId}-img`} />
 			</label>
 		</>
 	);

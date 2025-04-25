@@ -53,7 +53,7 @@ const TemplateBox = ({ rowIndex, boxIndex, handleRandomization }) => {
 			>
 				{itemId && imagePath && (
 					<img
-						src={`${"http://localhost:5001"}${imagePath}`}
+						src={imagePath}
 						alt="Preview"
 						id={`${imagePath}-${itemId}`}
 					/>

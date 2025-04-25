@@ -41,6 +41,7 @@ const AddItemToCategoriesForm = ({
 				Select Which Categories to Add this Item to
 			</p>
 			<CategoriesCheckboxForm
+				formId="AddItemToCategoriesForm"
 				handleSubmit={handleSubmit}
 				displayCategories={filteredCategories}
 			/>
