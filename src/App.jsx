@@ -15,7 +15,6 @@ import { setCategories } from "./store/reducers/categoriesReducer";
 import { setItems } from "./store/reducers/itemsReducer";
 import { setOutfits } from "./store/reducers/outfitsReducer";
 
-import { checkLoggedInStatus } from "./api/Auth";
 import { getAllCategories } from "./api/Category";
 import { getAllItems } from "./api/Item";
 import { getAllOutfits } from "./api/Outfit";
@@ -34,7 +33,23 @@ const App = () => {
 	const [initialOutfitsState, setInitialOutfitsState] = useState(false);
 
 	useEffect(() => {
-		checkLoggedInStatus().then((status) => setIsAuthenticated(status));
+		if (localStorage.getItem("token")) {
+			try {
+				const payload = JSON.parse(atob(token.split(".")[1]));
+				const currentTime = Date.now() / 1000;
+				if (payload.exp && payload.exp > currentTime) {
+					setIsAuthenticated(true);
+				} else {
+					setIsAuthenticated(false);
+					localStorage.removeItem("token");
+				}
+			} catch (error) {
+				setIsAuthenticated(false);
+				localStorage.removeItem("token");
+			}
+		} else {
+			setIsAuthenticated(false);
+		}
 	}, []);
 
 	useEffect(() => {
@@ -78,20 +93,18 @@ const App = () => {
 
 	return (
 		<Router>
-			{!isAuthenticated && (
+			{!isAuthenticated ? (
 				<>
 					<Navbar />
-					<Welcome />
+					<Welcome setIsAuthenticated={setIsAuthenticated} />
 				</>
-			)}
-			{isAuthenticated &&
+			) : (
 				initialItemsState &&
 				initialCategState &&
 				initialOutfitsState && (
 					<>
 						<Navbar />
 						<Routes>
-							<Route path="/" element={<Welcome />} />
 							<Route path="/home" element={<Home />} />
 							<Route path="/outfits" element={<OutfitsView />} />
 							<Route path="/closet" element={<Closet />} />
@@ -99,7 +112,14 @@ const App = () => {
 								path="/closet/all"
 								element={<AllItemsView />}
 							/>
-							<Route path="/profile" element={<Profile />} />
+							<Route
+								path="/profile"
+								element={
+									<Profile
+										setIsAuthenticated={setIsAuthenticated}
+									/>
+								}
+							/>
 							{categories.map((category) => (
 								<Route
 									key={category.categoryId}
@@ -114,10 +134,11 @@ const App = () => {
 									}
 								/>
 							))}
-							<Route path="*" element={<Welcome />} />
+							<Route path="*" element={<Home />} />
 						</Routes>
 					</>
-				)}
+				)
+			)}
 		</Router>
 	);
 };
