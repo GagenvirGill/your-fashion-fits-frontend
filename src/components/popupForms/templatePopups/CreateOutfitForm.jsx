@@ -19,9 +19,12 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 		e.preventDefault();
 		e.stopPropagation();
 
+		let error = false;
+
 		const outfitsItems = templateRows.map((row) => {
 			const rowItems = row.map((box) => {
 				if (!box.itemId) {
+					error = true;
 					return;
 				} else {
 					return {
@@ -33,12 +36,14 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 
 			if (rowItems.length > 5) {
 				alert("You can only select up to 5 items per row.");
+				error = true;
 				return;
 			}
 			if (rowItems.length !== row.length) {
 				alert(
 					"Please select items for the empty boxes or remove them."
 				);
+				error = true;
 				return;
 			}
 
@@ -63,9 +68,11 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 		}
 
 		setShowCreateOutfitForm(false);
-		await createOutfit(date, description, outfitsItems);
-		dispatch(refreshState());
-		dispatch(setWholeTemplate({ newTemplate: [] }));
+		if (!error) {
+			await createOutfit(date, description, outfitsItems);
+			dispatch(refreshState());
+			dispatch(setWholeTemplate({ newTemplate: [] }));
+		}
 	};
 
 	return (

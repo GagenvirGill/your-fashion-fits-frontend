@@ -17,6 +17,9 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 	};
 
 	const sortedRows = [...items].map((item) => item.TemplateItems);
+	const rowWeights = sortedRows.map((row) =>
+		row.reduce((sum, item) => sum + item.itemWeight, 0)
+	);
 
 	return (
 		<>
@@ -33,7 +36,7 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 							key={`${outfitId}-${rowIndex}`}
 							className={styles.outfitRowContainer}
 						>
-							{row.map((item) => (
+							{row.map((item, itemIndex) => (
 								<img
 									key={`${item.Item.itemId}-${item.templateItemId}`}
 									src={item.Item.imagePath}
@@ -41,10 +44,21 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 									style={{
 										maxHeight: `${
 											(item.itemWeight / totalWeight) *
-											650
+											640
 										}px`,
-										maxWidth: `${(1 / row.length) * 300}px`,
+										maxWidth: `${
+											row.length === 1
+												? (item.itemWeight /
+														rowWeights[rowIndex]) *
+												  280
+												: (item.itemWeight /
+														rowWeights[rowIndex]) *
+												  280 *
+												  1.75
+										}px`,
 										objectFit: "contain",
+										marginLeft:
+											itemIndex === 0 ? 0 : "-70%",
 									}}
 								/>
 							))}
