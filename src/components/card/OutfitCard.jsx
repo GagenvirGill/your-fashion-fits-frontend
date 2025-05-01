@@ -16,7 +16,11 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 		});
 	};
 
-	const sortedRows = [...items].map((item) => item.TemplateItems);
+	const sortedRows = [...items]
+		.sort((a, b) => a.orderNum - b.orderNum)
+		.map((item) =>
+			[...item.TemplateItems].sort((a, b) => a.orderNum - b.orderNum)
+		);
 	const rowWeights = sortedRows.map((row) =>
 		row.reduce((sum, item) => sum + item.itemWeight, 0)
 	);
