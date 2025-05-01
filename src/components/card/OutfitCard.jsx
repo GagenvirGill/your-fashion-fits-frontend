@@ -35,39 +35,46 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 				type={`'${dateWorn}' Outfit`}
 			>
 				<div className={styles.outfitContainer}>
-					{sortedRows.map((row, rowIndex) => (
-						<div
-							key={`${outfitId}-${rowIndex}`}
-							className={styles.outfitRowContainer}
-						>
-							{row.map((item, itemIndex) => (
-								<img
-									key={`${item.Item.itemId}-${item.templateItemId}`}
-									src={item.Item.imagePath}
-									alt="item-img"
-									style={{
-										maxHeight: `${
-											(item.itemWeight / totalWeight) *
-											640
-										}px`,
-										maxWidth: `${
-											row.length === 1
-												? (item.itemWeight /
-														rowWeights[rowIndex]) *
-												  280
-												: (item.itemWeight /
-														rowWeights[rowIndex]) *
-												  280 *
-												  1.75
-										}px`,
-										objectFit: "contain",
-										marginLeft:
-											itemIndex === 0 ? 0 : "-70%",
-									}}
-								/>
-							))}
-						</div>
-					))}
+					{row.map((item, itemIndex) => {
+						const itemWidth =
+							(item.itemWeight / rowWeights[rowIndex]) *
+							(row.length === 1 ? 280 : 280 * 1.75);
+
+						const availableWidth = 300;
+						const totalWidth = row.reduce((sum, i) => {
+							return (
+								sum +
+								(i.itemWeight / rowWeights[rowIndex]) *
+									(row.length === 1 ? 280 : 280 * 1.75)
+							);
+						}, 0);
+
+						const overlapNeeded =
+							totalWidth > availableWidth
+								? ((totalWidth - availableWidth) /
+										(row.length - 1)) *
+								  -1
+								: 0;
+
+						return (
+							<img
+								key={`${item.Item.itemId}-${item.templateItemId}`}
+								src={item.Item.imagePath}
+								alt="item-img"
+								style={{
+									maxHeight: `${
+										(item.itemWeight / totalWeight) * 640
+									}px`,
+									maxWidth: `${itemWidth}px`,
+									objectFit: "contain",
+									marginLeft:
+										itemIndex === 0
+											? 0
+											: `${overlapNeeded}px`,
+								}}
+							/>
+						);
+					})}
 				</div>
 				<p className={styles.outfitDate}>{dateWorn}</p>
 				<p className={styles.outfitDesc}>{desc}</p>
