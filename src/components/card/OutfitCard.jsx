@@ -21,9 +21,6 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 		.map((item) =>
 			[...item.TemplateItems].sort((a, b) => a.orderNum - b.orderNum)
 		);
-	const rowWeights = sortedRows.map((row) =>
-		row.reduce((sum, item) => sum + item.itemWeight, 0)
-	);
 
 	return (
 		<>
@@ -35,57 +32,39 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 				type={`'${dateWorn}' Outfit`}
 			>
 				<div className={styles.outfitContainer}>
-					{sortedRows.map((row, rowIndex) => (
-						<div
-							key={`${outfitId}-${rowIndex}`}
-							className={styles.outfitRowContainer}
-						>
-							{row.map((item, itemIndex) => {
-								const itemWidth =
-									(item.itemWeight / rowWeights[rowIndex]) *
-									(row.length === 1 ? 280 : 280 * 1.75);
-
-								const availableWidth = 300;
-								const totalWidth = row.reduce((sum, i) => {
+					{sortedRows.map((row, rowIndex) => {
+						return (
+							<div
+								key={`${outfitId}-${rowIndex}`}
+								className={styles.outfitRowContainer}
+							>
+								{row.map((item, itemIdx) => {
 									return (
-										sum +
-										(i.itemWeight / rowWeights[rowIndex]) *
-											(row.length === 1
-												? 280
-												: 280 * 1.75)
+										<img
+											key={`${item.Item.itemId}-${item.templateItemId}`}
+											src={item.Item.imagePath}
+											alt="item-img"
+											style={{
+												maxHeight: `${Math.min(
+													(item.itemWeight /
+														totalWeight) *
+														640,
+													300
+												)}px`,
+												marginLeft:
+													itemIdx > 0
+														? `-${
+																20 +
+																row.length * 5
+														  }%`
+														: "0%",
+											}}
+										/>
 									);
-								}, 0);
-
-								const overlapNeeded =
-									totalWidth > availableWidth
-										? ((totalWidth - availableWidth) /
-												(row.length - 1)) *
-										  -1
-										: 0;
-
-								return (
-									<img
-										key={`${item.Item.itemId}-${item.templateItemId}`}
-										src={item.Item.imagePath}
-										alt="item-img"
-										style={{
-											maxHeight: `${
-												(item.itemWeight /
-													totalWeight) *
-												640
-											}px`,
-											maxWidth: `${itemWidth}px`,
-											objectFit: "contain",
-											marginLeft:
-												itemIndex === 0
-													? 0
-													: `${overlapNeeded}px`,
-										}}
-									/>
-								);
-							})}
-						</div>
-					))}
+								})}
+							</div>
+						);
+					})}
 				</div>
 				<p className={styles.outfitDate}>{dateWorn}</p>
 				<p className={styles.outfitDesc}>{desc}</p>
@@ -95,3 +74,7 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 };
 
 export default OutfitCard;
+
+// zIndex: `${
+// 	row.length * -1 + itemIdx + 100
+// }`,
