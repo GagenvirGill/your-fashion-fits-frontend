@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createItem } from "../../../api/Item";
 import { refreshState } from "../../../store/reducers/itemsReducer";
@@ -8,6 +8,7 @@ import Button from "../../buttons/Button";
 
 const AddItemForm = () => {
 	const [images, setImages] = useState([]);
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 
 	const handleImage = async (event) => {
@@ -15,18 +16,30 @@ const AddItemForm = () => {
 		setImages(files);
 	};
 
+	useEffect(() => {
+		// just re render the page
+	}, [loading]);
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		images.forEach((image) => {
-			createItem(image)
-				.then(() => {
-					dispatch(refreshState());
-				})
-				.catch((error) => {
-					console.error(error);
-				});
-		});
+		const imagesToCreate = images;
+
+		setImages([]);
+		setLoading(true);
+
+		Promise.all(
+			imagesToCreate.map((image) =>
+				createItem(image).then(() => dispatch(refreshState()))
+			)
+		)
+			.then(() => {
+				setLoading(false);
+			})
+			.catch((error) => {
+				console.error(error);
+				setLoading(false);
+			});
 	};
 
 	return (
@@ -60,6 +73,11 @@ const AddItemForm = () => {
 				</div>
 				<br />
 			</form>
+			{loading && (
+				<div className={styles.formText}>
+					The Item is being created...
+				</div>
+			)}
 		</div>
 	);
 };
