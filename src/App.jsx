@@ -10,6 +10,7 @@ import OutfitsView from "./pages/OutfitsView";
 import Profile from "./pages/Profile";
 import Navbar from "./components/nav/Navbar";
 import Welcome from "./pages/Welcome";
+import CreateView from "./pages/CreateView";
 
 import { setCategories } from "./store/reducers/categoriesReducer";
 import { setItems } from "./store/reducers/itemsReducer";
@@ -109,16 +110,17 @@ const App = () => {
 							<Route path="/outfits" element={<OutfitsView />} />
 							<Route path="/closet" element={<Closet />} />
 							<Route
-								path="/closet/all"
-								element={<AllItemsView />}
-							/>
-							<Route
 								path="/profile"
 								element={
 									<Profile
 										setIsAuthenticated={setIsAuthenticated}
 									/>
 								}
+							/>
+							<Route path="/create" element={<CreateView />} />
+							<Route
+								path="/closet/all"
+								element={<AllItemsView />}
 							/>
 							{categories.map((category) => (
 								<Route

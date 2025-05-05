@@ -1,9 +1,9 @@
 import React from "react";
 
-import RadioButton from "../../buttons/RadioButton";
-import styles from "./PopupRadioForm.module.css";
+import RadioButton from "../buttons/RadioButton";
+import styles from "./FormSelectorRadioButtons.module.css";
 
-const PopupRadioForm = ({
+const FormSelectorRadioButtons = ({
 	renderComponent,
 	selectedOption,
 	setSelectedOption,
@@ -14,7 +14,14 @@ const PopupRadioForm = ({
 	};
 
 	return (
-		<form className={styles.popupRadioForm}>
+		<form className={styles.radioForm}>
+			<RadioButton
+				text="Add new Outfits"
+				buttonId="AddOutfit"
+				value="addOutfit"
+				checked={selectedOption === "addOutfit"}
+				onChange={handleRadioChange}
+			/>
 			<RadioButton
 				text="Add new Items"
 				buttonId="AddItem"
@@ -33,4 +40,4 @@ const PopupRadioForm = ({
 	);
 };
 
-export default PopupRadioForm;
+export default FormSelectorRadioButtons;

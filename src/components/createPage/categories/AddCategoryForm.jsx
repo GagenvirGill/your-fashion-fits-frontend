@@ -6,7 +6,7 @@ import { createCategory } from "../../../api/Category";
 import styles from "./AddCategoryForm.module.css";
 import Button from "../../buttons/Button";
 
-const AddCategoryForm = ({ handleClose }) => {
+const AddCategoryForm = () => {
 	const dispatch = useDispatch();
 	const [name, setName] = useState("");
 
@@ -15,7 +15,6 @@ const AddCategoryForm = ({ handleClose }) => {
 
 		await createCategory(name);
 		dispatch(refreshState());
-		handleClose();
 	};
 
 	return (

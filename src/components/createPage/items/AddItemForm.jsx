@@ -6,7 +6,7 @@ import { refreshState } from "../../../store/reducers/itemsReducer";
 import styles from "./AddItemForm.module.css";
 import Button from "../../buttons/Button";
 
-const AddItemForm = ({ handleClose }) => {
+const AddItemForm = () => {
 	const [images, setImages] = useState([]);
 	const dispatch = useDispatch();
 
@@ -17,8 +17,6 @@ const AddItemForm = ({ handleClose }) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-
-		handleClose();
 
 		images.forEach((image) => {
 			createItem(image)

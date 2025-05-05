@@ -24,24 +24,3 @@
 .textInput:focus {
 	border-color: #007bff;
 }
-
-.addFileLabel {
-	display: inline-block;
-	text-align: center;
-}
-
-.addFileLabel input {
-	display: none;
-}
-
-.addFile {
-	border-radius: 2px;
-	padding: 80px 200px;
-	background-color: rgb(255, 255, 255);
-	border: 1px solid rgb(220, 220, 220);
-
-	color: black;
-	font-family: Courier, "Courier New", monospace;
-	font-size: 12px;
-	text-align: center;
-}

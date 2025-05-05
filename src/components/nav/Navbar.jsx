@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import NavAddMenu from "../popupForms/navAddMenu/NavAddMenu";
 
 const Navbar = () => {
 	return (
@@ -27,7 +26,13 @@ const Navbar = () => {
 					className={styles.navLogo}
 				></img>
 			</Link>
-			<NavAddMenu />
+			<Link to="/create">
+				<img
+					src="/plus_icon.png"
+					alt="Create"
+					className={styles.navLogo}
+				></img>
+			</Link>
 			<Link to="/profile">
 				<img
 					src="/profile_icon.png"
