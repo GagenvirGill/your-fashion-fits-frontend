@@ -13,7 +13,10 @@ const AddCategoryForm = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		await createCategory(name);
+		const nameToCreate = name;
+		setName("");
+
+		await createCategory(nameToCreate);
 		dispatch(refreshState());
 	};
 
