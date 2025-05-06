@@ -5,7 +5,7 @@ const Welcome = ({ setIsAuthenticated }) => {
 	const handleLogin = (e) => {
 		e.preventDefault();
 
-		const loginWindow = window.open(
+		window.open(
 			`${import.meta.env.VITE_BACKEND_URL}/auth/google`,
 			"Login with Google",
 			`width=${500},height=${400},top=${100},left=${100}`
@@ -23,6 +23,7 @@ const Welcome = ({ setIsAuthenticated }) => {
 
 			if (token) {
 				localStorage.setItem("token", token);
+				window.location.href = "/";
 				setIsAuthenticated(true);
 				window.removeEventListener("message", handleMessage);
 			}

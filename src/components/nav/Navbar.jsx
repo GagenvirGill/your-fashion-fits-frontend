@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
+import ProfilePopup from "./profilePopup/profilePopup";
 
-const Navbar = () => {
+const Navbar = ({ setIsAuthenticated }) => {
 	return (
 		<nav className={styles.navbar}>
 			<Link to="/outfits">
@@ -33,13 +34,7 @@ const Navbar = () => {
 					className={styles.navLogo}
 				></img>
 			</Link>
-			<Link to="/profile">
-				<img
-					src="/profile_icon.png"
-					alt="profile"
-					className={styles.navLogo}
-				></img>
-			</Link>
+			<ProfilePopup setIsAuthenticated={setIsAuthenticated} />
 		</nav>
 	);
 };

@@ -7,7 +7,6 @@ import Closet from "./pages/Closet";
 import CategoryView from "./pages/CategoryView";
 import AllItemsView from "./pages/AllItemsView";
 import OutfitsView from "./pages/OutfitsView";
-import Profile from "./pages/Profile";
 import Navbar from "./components/nav/Navbar";
 import Welcome from "./pages/Welcome";
 import CreateView from "./pages/CreateView";
@@ -97,7 +96,7 @@ const App = () => {
 		<Router>
 			{!isAuthenticated ? (
 				<>
-					<Navbar />
+					<Navbar setIsAuthenticated={setIsAuthenticated} />
 					<Welcome setIsAuthenticated={setIsAuthenticated} />
 				</>
 			) : (
@@ -105,19 +104,11 @@ const App = () => {
 				initialCategState &&
 				initialOutfitsState && (
 					<>
-						<Navbar />
+						<Navbar setIsAuthenticated={setIsAuthenticated} />
 						<Routes>
 							<Route path="/home" element={<Home />} />
 							<Route path="/outfits" element={<OutfitsView />} />
 							<Route path="/closet" element={<Closet />} />
-							<Route
-								path="/profile"
-								element={
-									<Profile
-										setIsAuthenticated={setIsAuthenticated}
-									/>
-								}
-							/>
 							<Route path="/create" element={<CreateView />} />
 							<Route
 								path="/closet/all"
