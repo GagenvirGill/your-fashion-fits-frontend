@@ -1,7 +1,19 @@
 import React from "react";
 import styles from "./GenericPageStyles.module.css";
+import Button from "../components/buttons/Button";
 
-const Welcome = ({ setIsAuthenticated }) => {
+const Welcome = ({ setIsAuthenticated, isAuthenticated }) => {
+	const token = localStorage.getItem("token");
+
+	let payload = null;
+	if (token) {
+		try {
+			payload = JSON.parse(atob(token.split(".")[1]));
+		} catch (error) {
+			console.error("Invalid token format:", error);
+		}
+	}
+
 	const handleLogin = (e) => {
 		e.preventDefault();
 
@@ -34,9 +46,13 @@ const Welcome = ({ setIsAuthenticated }) => {
 
 	return (
 		<div className={styles.pageContainer}>
-			<br />
-			<p className={styles.pageTitle}>Welcome to your Closet</p>
-			<button onClick={handleLogin}>Login with Google</button>
+			<p className={styles.pageText}>
+				{isAuthenticated && payload
+					? `Hello ${payload.email}`
+					: "Please Log In"}
+			</p>
+			<p className={styles.pageTitle}>Welcome to Your Fashion Fits</p>
+			<Button onClick={handleLogin} text="Login with Google" />
 		</div>
 	);
 };

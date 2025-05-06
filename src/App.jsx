@@ -92,8 +92,24 @@ const App = () => {
 			<>
 				<Navbar setIsAuthenticated={setIsAuthenticated} />
 				<Routes>
-					<Route path="/" element={<Welcome />} />
-					<Route path="/home" element={<Welcome />} />
+					<Route
+						path="/"
+						element={
+							<Welcome
+								setIsAuthenticated={setIsAuthenticated}
+								isAuthenticated={isAuthenticated}
+							/>
+						}
+					/>
+					<Route
+						path="/home"
+						element={
+							<Welcome
+								setIsAuthenticated={setIsAuthenticated}
+								isAuthenticated={isAuthenticated}
+							/>
+						}
+					/>
 					<Route path="/outfits" element={<OutfitsView />} />
 					<Route path="/closet" element={<Closet />} />
 					<Route path="/create" element={<CreateView />} />
@@ -121,7 +137,15 @@ const App = () => {
 					) : (
 						<></>
 					)}
-					<Route path="*" element={<Welcome />} />
+					<Route
+						path="*"
+						element={
+							<Welcome
+								setIsAuthenticated={setIsAuthenticated}
+								isAuthenticated={isAuthenticated}
+							/>
+						}
+					/>
 				</Routes>
 			</>
 		</Router>
