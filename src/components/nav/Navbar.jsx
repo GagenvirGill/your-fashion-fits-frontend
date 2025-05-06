@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import ProfilePopup from "./profilePopup/profilePopup";
+import ProfilePopup from "./profilePopup/ProfilePopup";
 
 const Navbar = ({ setIsAuthenticated }) => {
 	return (
