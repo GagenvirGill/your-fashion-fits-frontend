@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Home from "./pages/Home";
 import Closet from "./pages/Closet";
 import CategoryView from "./pages/CategoryView";
 import AllItemsView from "./pages/AllItemsView";
@@ -94,22 +93,19 @@ const App = () => {
 
 	return (
 		<Router>
-			{!isAuthenticated ? (
-				<>
-					<Navbar setIsAuthenticated={setIsAuthenticated} />
-					<Welcome setIsAuthenticated={setIsAuthenticated} />
-				</>
-			) : (
-				initialItemsState &&
-				initialCategState &&
-				initialOutfitsState && (
-					<>
-						<Navbar setIsAuthenticated={setIsAuthenticated} />
-						<Routes>
-							<Route path="/home" element={<Home />} />
-							<Route path="/outfits" element={<OutfitsView />} />
-							<Route path="/closet" element={<Closet />} />
-							<Route path="/create" element={<CreateView />} />
+			<>
+				<Navbar setIsAuthenticated={setIsAuthenticated} />
+				<Routes>
+					<Route path="/" element={<Welcome />} />
+					<Route path="/home" element={<Welcome />} />
+					<Route path="/outfits" element={<OutfitsView />} />
+					<Route path="/closet" element={<Closet />} />
+					<Route path="/create" element={<CreateView />} />
+					{isAuthenticated &&
+					initialItemsState &&
+					initialCategState &&
+					initialOutfitsState ? (
+						<>
 							<Route
 								path="/closet/all"
 								element={<AllItemsView />}
@@ -128,11 +124,13 @@ const App = () => {
 									}
 								/>
 							))}
-							<Route path="*" element={<Home />} />
-						</Routes>
-					</>
-				)
-			)}
+						</>
+					) : (
+						<></>
+					)}
+					<Route path="*" element={<Welcome />} />
+				</Routes>
+			</>
 		</Router>
 	);
 };
