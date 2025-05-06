@@ -32,7 +32,7 @@ const CategoryContextMenuForms = ({
 			<div className={styles.overlay}></div>
 			<div className={styles.popupForm}>
 				<br />
-				<Button onClick={handleClose} text={"Close Form"} />
+				<Button onClick={handleClose} text={"Cancel"} />
 				<br />
 				<br />
 				<p className={styles.title}>{categoryName}</p>

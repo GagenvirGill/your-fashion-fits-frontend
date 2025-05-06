@@ -28,7 +28,7 @@ const ItemContextMenuForms = ({ itemId, imagePath, handleClose }) => {
 			<div className={styles.overlay}></div>
 			<div className={styles.popupForm}>
 				<br />
-				<Button onClick={handleClose} text={"Close Form"} />
+				<Button onClick={handleClose} text={"Cancel"} />
 				<br />
 				<br />
 				<img
