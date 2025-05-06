@@ -34,7 +34,8 @@ const App = () => {
 	const [initialOutfitsState, setInitialOutfitsState] = useState(false);
 
 	useEffect(() => {
-		if (localStorage.getItem("token")) {
+		const token = localStorage.getItem("token");
+		if (token) {
 			try {
 				const payload = JSON.parse(atob(token.split(".")[1]));
 				const currentTime = Date.now() / 1000;
