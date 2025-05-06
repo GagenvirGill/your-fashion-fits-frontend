@@ -28,8 +28,6 @@ const App = () => {
 
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [initialCategState, setInitialCategState] = useState(false);
-	const [initialItemsState, setInitialItemsState] = useState(false);
-	const [initialOutfitsState, setInitialOutfitsState] = useState(false);
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -71,7 +69,6 @@ const App = () => {
 		getAllItems()
 			.then((fetchedItems) => {
 				dispatch(setItems(fetchedItems));
-				setInitialItemsState(true);
 			})
 			.catch((err) => {
 				console.log(`Error loading items: ${err}`);
@@ -84,7 +81,6 @@ const App = () => {
 		getAllOutfits()
 			.then((fetchedOutfits) => {
 				dispatch(setOutfits(fetchedOutfits));
-				setInitialOutfitsState(true);
 			})
 			.catch((err) => {
 				console.log(`Error loading outfits: ${err}`);
@@ -101,10 +97,7 @@ const App = () => {
 					<Route path="/outfits" element={<OutfitsView />} />
 					<Route path="/closet" element={<Closet />} />
 					<Route path="/create" element={<CreateView />} />
-					{isAuthenticated &&
-					initialItemsState &&
-					initialCategState &&
-					initialOutfitsState ? (
+					{isAuthenticated && initialCategState ? (
 						<>
 							<Route
 								path="/closet/all"
