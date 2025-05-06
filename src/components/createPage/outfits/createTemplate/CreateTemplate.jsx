@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	setWholeTemplate,
 	setWholeRow,
-} from "../../store/reducers/outfitTemplateReducer";
-import { getRandomItemWithCategories } from "../../api/Item";
+} from "../../../../store/reducers/outfitTemplateReducer";
+import { getRandomItemWithCategories } from "../../../../api/Item";
 
 import TemplateRow from "./TemplateRow";
-import ImgButton from "../buttons/ImgButton";
-import CreateOutfitForm from "../popupForms/templatePopups/CreateOutfitForm";
+import ImgButton from "../../../buttons/ImgButton";
+import CreateOutfitForm from "../../../popupForms/templatePopups/CreateOutfitForm";
 
 const CreateTemplate = () => {
 	const dispatch = useDispatch();

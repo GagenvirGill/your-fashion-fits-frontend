@@ -10,10 +10,10 @@ import {
 	addTemplateBoxAfter,
 	addTemplateRowAfter,
 	setBoxScale,
-} from "../../store/reducers/outfitTemplateReducer";
+} from "../../../../store/reducers/outfitTemplateReducer";
 
-import ContextMenuButton from "../buttons/ContextMenuButton";
-import InlineContextMenuButton from "../buttons/InlineContextMenuButton";
+import ContextMenuButton from "../../../buttons/ContextMenuButton";
+import InlineContextMenuButton from "../../../buttons/InlineContextMenuButton";
 
 const TemplateBoxContextMenu = ({
 	rowIndex,
