@@ -15,6 +15,13 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 	const [description, setDescription] = useState("");
 	const [date, setDate] = useState("");
 
+	const handleCloseForm = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		setShowCreateOutfitForm(false);
+	};
+
 	const handleCreateOutfit = async (e) => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -103,6 +110,7 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 					text="Create Outfit"
 					onClick={handleCreateOutfit}
 				/>
+				<Button type="submit" text="Cancel" onClick={handleCloseForm} />
 				<br />
 				<br />
 			</div>
