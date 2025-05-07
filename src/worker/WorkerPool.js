@@ -19,13 +19,7 @@ class WorkerPool {
 			worker.onmessage = (event) =>
 				this.handleWorkerMessage(worker, event);
 			worker.onerror = (e) => {
-				console.error(
-					"Worker error:",
-					e.message,
-					e.filename,
-					e.lineno,
-					e.colno
-				);
+				console.error(`Worker error: ${e}`);
 			};
 
 			return worker;
