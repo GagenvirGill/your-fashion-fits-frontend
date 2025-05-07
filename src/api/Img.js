@@ -52,7 +52,6 @@ const imgBackgroundRemoval = async (imgFile) => {
 			model: "isnet_quint8",
 			output: {
 				format: "image/png",
-				quality: 0.5,
 			},
 		});
 
