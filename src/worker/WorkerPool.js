@@ -1,27 +1,24 @@
 // src/worker/WorkerPool.js
-import ProcessImageWorker from "./ProcessImageWorker.js?worker";
 
 class WorkerPool {
-	constructor(workerClass, idleTimeout) {
+	constructor(workerPath, idleTimeout) {
 		this.poolSize = Math.max(1, Math.min(navigator.hardwareConcurrency, 3));
 		this.numWorkers = 0;
 		this.taskQueue = [];
 		this.taskIdCounter = 1;
 		this.callbacks = new Map();
 		this.idleTimeout = idleTimeout;
-		this.WorkerClass = WorkerClass;
+		this.workerPath = new URL(workerPath, import.meta.url);
 	}
 
 	createNewWorker() {
 		if (this.numWorkers < this.poolSize) {
-			const worker = new this.WorkerClass();
+			const worker = new Worker(this.workerPath, { type: "module" });
 			this.numWorkers++;
 
 			worker.onmessage = (event) =>
 				this.handleWorkerMessage(worker, event);
-			worker.onerror = (e) => {
-				console.error(`Worker error: ${e}`);
-			};
+			worker.onerror = (error) => console.error("Worker error:", error);
 
 			return worker;
 		} else {
@@ -80,4 +77,7 @@ class WorkerPool {
 	}
 }
 
-export const workerPool = new WorkerPool(ProcessImageWorker, 5000);
+export const workerPool = new WorkerPool(
+	"../worker/ProcessImageWorker.js",
+	5000
+);
