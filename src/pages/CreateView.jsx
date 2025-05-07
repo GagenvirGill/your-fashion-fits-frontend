@@ -7,7 +7,7 @@ import AddItemForm from "../components/createPage/items/AddItemForm";
 import AddCategoryForm from "../components/createPage/categories/AddCategoryForm";
 
 const CreateView = () => {
-	const [selectedForm, setSelectedForm] = useState("addOutfit");
+	const [selectedForm, setSelectedForm] = useState("addItem");
 
 	const renderForm = (selectedOption) => {
 		if (selectedOption === "addOutfit") {

@@ -16,13 +16,6 @@ const FormSelectorRadioButtons = ({
 	return (
 		<form className={styles.radioForm}>
 			<RadioButton
-				text="Add new Outfits"
-				buttonId="AddOutfit"
-				value="addOutfit"
-				checked={selectedOption === "addOutfit"}
-				onChange={handleRadioChange}
-			/>
-			<RadioButton
 				text="Add new Items"
 				buttonId="AddItem"
 				value="addItem"
@@ -34,6 +27,13 @@ const FormSelectorRadioButtons = ({
 				buttonId="AddCategory"
 				value="addCategory"
 				checked={selectedOption === "addCategory"}
+				onChange={handleRadioChange}
+			/>
+			<RadioButton
+				text="Add new Outfits"
+				buttonId="AddOutfit"
+				value="addOutfit"
+				checked={selectedOption === "addOutfit"}
 				onChange={handleRadioChange}
 			/>
 		</form>
