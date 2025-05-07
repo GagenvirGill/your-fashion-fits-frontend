@@ -43,9 +43,6 @@ class WorkerPool {
 		if (this.taskQueue.length === 0) {
 			worker.terminate();
 			this.numWorkers--;
-			if (this.numWorkers === 0) {
-				console.log("All Workers Terminated");
-			}
 		} else {
 			this.assignTask(worker);
 		}
@@ -68,9 +65,6 @@ class WorkerPool {
 		} else if (availWorker && this.taskQueue.length === 0) {
 			availWorker.terminate();
 			this.numWorkers--;
-			if (this.numWorkers === 0) {
-				console.log("All Workers Terminated");
-			}
 		}
 	}
 

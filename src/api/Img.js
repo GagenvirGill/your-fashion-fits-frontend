@@ -18,7 +18,7 @@ export const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
 
 		return compressedImgFile;
 	} catch (err) {
-		console.log(`Error scaling image: ${err}`);
+		console.error(`Error scaling image: ${err}`);
 	}
 };
 

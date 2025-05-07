@@ -1,7 +1,7 @@
 .notificationsContainer {
 	position: fixed;
-	top: 1rem;
-	right: 1rem;
+	top: 2rem;
+	right: 2rem;
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
@@ -38,4 +38,18 @@
 	to {
 		transform: translateX(0);
 	}
+}
+
+@keyframes slideOut {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(-150%);
+	}
+}
+
+.slidingOut {
+	animation: slideOut 0.3s ease forwards;
+	transition: opacity 0.3s ease;
 }
