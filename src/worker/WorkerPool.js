@@ -8,7 +8,7 @@ class WorkerPool {
 		this.taskIdCounter = 1;
 		this.callbacks = new Map();
 		this.idleTimeout = idleTimeout;
-		this.workerPath = new URL(workerPath, import.meta.url);
+		this.workerPath = workerPath;
 	}
 
 	createNewWorker() {
@@ -78,6 +78,6 @@ class WorkerPool {
 }
 
 export const workerPool = new WorkerPool(
-	"../worker/ProcessImageWorker.js",
+	new URL("./ProcessImageWorker.js", import.meta.url),
 	5000
 );
