@@ -4,6 +4,7 @@ import itemsReducer from "./reducers/itemsReducer.js";
 import categoriesReducer from "./reducers/categoriesReducer.js";
 import outfitsReducer from "./reducers/outfitsReducer.js";
 import outfitTemplateReducer from "./reducers/outfitTemplateReducer.js";
+import notificationsReducer from "./reducers/notificationsReducer.js";
 
 const store = configureStore({
 	reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
 		categories: categoriesReducer,
 		outfits: outfitsReducer,
 		outfitTemplate: outfitTemplateReducer,
+		notifications: notificationsReducer,
 	},
 });
 

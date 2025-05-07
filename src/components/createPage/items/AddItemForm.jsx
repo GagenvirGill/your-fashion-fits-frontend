@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createItem } from "../../../api/Item";
 import { refreshState } from "../../../store/reducers/itemsReducer";
+import { addNotification } from "../../../store/reducers/notificationsReducer";
 
 import styles from "./AddItemForm.module.css";
 import Button from "../../buttons/Button";
@@ -35,8 +36,14 @@ const AddItemForm = () => {
 		)
 			.then(() => {
 				setLoading(false);
+				dispatch(addNotification("Item(s) Successfully Created!"));
 			})
 			.catch((error) => {
+				dispatch(
+					addNotification(
+						"Unfortunately an Error Occured While Creating Your Item(s)"
+					)
+				);
 				console.error(error);
 				setLoading(false);
 			});
@@ -75,7 +82,7 @@ const AddItemForm = () => {
 			</form>
 			{loading && (
 				<div className={styles.formText}>
-					The Item is being created...
+					Processing your Item(s)...
 				</div>
 			)}
 		</div>

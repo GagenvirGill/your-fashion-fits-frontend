@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshState } from "../../../store/reducers/itemsReducer";
+import { addNotification } from "../../../store/reducers/notificationsReducer";
 
 import { addItemToCategories } from "../../../api/Item";
 
@@ -33,6 +34,9 @@ const AddItemToCategoriesForm = ({
 		await addItemToCategories(itemId, selectedCategories);
 		dispatch(refreshState());
 		handleClose();
+		dispatch(
+			addNotification("Successfully Added Those Categories to Your Item")
+		);
 	};
 
 	return (

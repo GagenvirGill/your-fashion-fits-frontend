@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { refreshState } from "../../store/reducers/outfitsReducer";
+import { addNotification } from "../../store/reducers/notificationsReducer";
 
 import styles from "./OutfitCard.module.css";
 import { deleteOutfit } from "../../api/Outfit";
@@ -13,6 +14,11 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 	const onDelete = () => {
 		deleteOutfit(outfitId).then(() => {
 			dispatch(refreshState());
+			dispatch(
+				addNotification(
+					`Successfully Deleted Outfit Worn on ${dateWorn}!`
+				)
+			);
 		});
 	};
 

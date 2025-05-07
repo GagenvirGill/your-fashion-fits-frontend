@@ -4,15 +4,12 @@ export const getAllCategories = async () => {
 	try {
 		const response = await ax.get("/category", { withCredentials: true });
 		if (response.data.success === true) {
-			console.log(response.data.message);
 			return response.data.data;
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when getting categories");
 	}
 };
 
@@ -26,15 +23,12 @@ export const createCategory = async (name) => {
 			{ withCredentials: true }
 		);
 		if (response.data.success === true) {
-			console.log(response.data.message);
 			return response.data.data;
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when creating a category");
 	}
 };
 
@@ -44,14 +38,12 @@ export const deleteCategory = async (categoryId) => {
 			withCredentials: true,
 		});
 		if (response.data.success === true) {
-			console.log(response.data.message);
+			//
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when deleting a category");
 	}
 };
 
@@ -66,14 +58,12 @@ export const addCategoryToItems = async (categoryId, items) => {
 		);
 
 		if (response.data.success === true) {
-			console.log(response.data.message);
+			//
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when adding category to items");
 	}
 };
 
@@ -85,14 +75,12 @@ export const removeCategoryFromItems = async (categoryId, items) => {
 		});
 
 		if (response.data.success === true) {
-			console.log(response.data.message);
+			//
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when removing category from items");
 	}
 };
 
@@ -105,15 +93,11 @@ export const setCategoriesFavItem = async (categoryId, itemId) => {
 		);
 
 		if (response.data.success === true) {
-			console.log(response.data.message);
+			//
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert(
-			"Something went wrong when setting this categories favourite item"
-		);
 	}
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { refreshState } from "../../store/reducers/categoriesReducer";
+import { addNotification } from "../../store/reducers/notificationsReducer";
 import { Link } from "react-router-dom";
 
 import styles from "./CategoryCard.module.css";
@@ -25,6 +26,11 @@ const CategoryCard = ({
 	const onDelete = () => {
 		deleteCategory(categoryId).then(() => {
 			dispatch(refreshState());
+			dispatch(
+				addNotification(
+					`Successfully Deleted the '${categoryName}' Category!`
+				)
+			);
 		});
 	};
 

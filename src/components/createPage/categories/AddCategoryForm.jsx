@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { refreshState } from "../../../store/reducers/categoriesReducer";
+import { addNotification } from "../../../store/reducers/notificationsReducer";
 import { createCategory } from "../../../api/Category";
 
 import styles from "./AddCategoryForm.module.css";
@@ -18,6 +19,11 @@ const AddCategoryForm = () => {
 
 		await createCategory(nameToCreate);
 		dispatch(refreshState());
+		dispatch(
+			addNotification(
+				`Successfully Created the '${nameToCreate}' Category!`
+			)
+		);
 	};
 
 	return (

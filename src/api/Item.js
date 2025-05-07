@@ -5,15 +5,12 @@ export const getAllItems = async () => {
 	try {
 		const response = await ax.get("/item", { withCredentials: true });
 		if (response.data.success === true) {
-			console.log(response.data.message);
 			return response.data.data;
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when getting items");
 	}
 };
 
@@ -37,15 +34,12 @@ export const createItem = async (imageFile) => {
 		});
 
 		if (response.data.success === true) {
-			console.log(response.data.message);
 			return response.data.data;
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert(`Something went wrong when creating an item: ${err}`);
 	}
 };
 
@@ -55,14 +49,12 @@ export const deleteItem = async (itemId) => {
 			withCredentials: true,
 		});
 		if (response.data.success === true) {
-			console.log(response.data.message);
+			//
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when deleting an item");
 	}
 };
 
@@ -72,15 +64,12 @@ export const getCategoriesForItem = async (itemId) => {
 			withCredentials: true,
 		});
 		if (response.data.success === true) {
-			console.log(response.data.message);
 			return response.data.data;
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when geting the categories for an item");
 	}
 };
 
@@ -94,15 +83,12 @@ export const filterItemsByCategories = async (categories) => {
 		});
 
 		if (response.data.success === true) {
-			console.log(response.data.message);
 			return response.data.data;
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when getting filtered items");
 	}
 };
 
@@ -117,14 +103,12 @@ export const addItemToCategories = async (itemId, categories) => {
 		);
 
 		if (response.data.success === true) {
-			console.log(response.data.message);
+			//
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when adding item to categories");
 	}
 };
 
@@ -136,14 +120,12 @@ export const removeItemFromCategories = async (itemId, categories) => {
 		});
 
 		if (response.data.success === true) {
-			console.log(response.data.message);
+			//
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when removing item from categories");
 	}
 };
 
@@ -157,14 +139,11 @@ export const getRandomItemWithCategories = async (categories) => {
 		});
 
 		if (response.data.success === true) {
-			console.log(response.data.message);
 			return response.data.data;
 		} else {
 			console.error(response.data.message);
-			alert(response.data.message);
 		}
 	} catch (err) {
 		console.error(err);
-		alert("Something went wrong when getting a random item");
 	}
 };

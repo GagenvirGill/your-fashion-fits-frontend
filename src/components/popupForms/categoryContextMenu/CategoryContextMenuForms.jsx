@@ -40,6 +40,7 @@ const CategoryContextMenuForms = ({
 					categoryId={categoryId}
 					handleClose={handleClose}
 					categoriesCurrItems={categoriesCurrItems}
+					categoryName={categoryName}
 				/>
 				<br />
 				<br />
@@ -47,6 +48,7 @@ const CategoryContextMenuForms = ({
 					categoryId={categoryId}
 					handleClose={handleClose}
 					categoriesCurrItems={categoriesCurrItems}
+					categoryName={categoryName}
 				/>
 				<br />
 			</div>

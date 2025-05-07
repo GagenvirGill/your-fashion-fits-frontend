@@ -9,10 +9,12 @@ import OutfitsView from "./pages/OutfitsView";
 import Navbar from "./components/nav/Navbar";
 import Welcome from "./pages/Welcome";
 import CreateView from "./pages/CreateView";
+import Notifications from "./components/notifications/Notifications";
 
 import { setCategories } from "./store/reducers/categoriesReducer";
 import { setItems } from "./store/reducers/itemsReducer";
 import { setOutfits } from "./store/reducers/outfitsReducer";
+import { addNotification } from "./store/reducers/notificationsReducer";
 
 import { getAllCategories } from "./api/Category";
 import { getAllItems } from "./api/Item";
@@ -37,6 +39,11 @@ const App = () => {
 				const currentTime = Date.now() / 1000;
 				if (payload.exp && payload.exp > currentTime) {
 					setIsAuthenticated(true);
+					dispatch(
+						addNotification(
+							`Successfully logged in ${payload.email}`
+						)
+					);
 				} else {
 					setIsAuthenticated(false);
 					localStorage.removeItem("token");
@@ -51,7 +58,10 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-		if (!isAuthenticated) return;
+		if (!isAuthenticated) {
+			dispatch(setCategories([]));
+			return;
+		}
 
 		getAllCategories()
 			.then((fetchedCategories) => {
@@ -64,7 +74,10 @@ const App = () => {
 	}, [isAuthenticated, categoriesRefresh]);
 
 	useEffect(() => {
-		if (!isAuthenticated) return;
+		if (!isAuthenticated) {
+			dispatch(setItems([]));
+			return;
+		}
 
 		getAllItems()
 			.then((fetchedItems) => {
@@ -76,7 +89,10 @@ const App = () => {
 	}, [isAuthenticated, itemsRefresh]);
 
 	useEffect(() => {
-		if (!isAuthenticated) return;
+		if (!isAuthenticated) {
+			dispatch(setOutfits([]));
+			return;
+		}
 
 		getAllOutfits()
 			.then((fetchedOutfits) => {
@@ -91,6 +107,7 @@ const App = () => {
 		<Router>
 			<>
 				<Navbar setIsAuthenticated={setIsAuthenticated} />
+				<Notifications />
 				<Routes>
 					<Route
 						path="/"

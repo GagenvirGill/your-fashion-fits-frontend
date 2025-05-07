@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { refreshState as refreshItemsState } from "../../store/reducers/itemsReducer";
 import { refreshState as refreshOutfitsState } from "../../store/reducers/outfitsReducer";
+import { addNotification } from "../../store/reducers/notificationsReducer";
 
 import styles from "./ItemCard.module.css";
 import { deleteItem } from "../../api/Item";
@@ -15,10 +16,20 @@ const ItemCard = ({ itemId, imagePath }) => {
 	const [showForm, setShowForm] = useState(false);
 
 	const onDelete = () => {
-		deleteItem(itemId).then(() => {
-			dispatch(refreshItemsState());
-			dispatch(refreshOutfitsState());
-		});
+		deleteItem(itemId)
+			.then(() => {
+				dispatch(refreshItemsState());
+				dispatch(refreshOutfitsState());
+				dispatch(addNotification("Item Successfully Deleted!"));
+			})
+			.catch((error) => {
+				dispatch(
+					addNotification(
+						"Unfortunately an Error Occured While Deleting Your Item"
+					)
+				);
+				console.error(error);
+			});
 	};
 
 	const handleShowForm = () => {

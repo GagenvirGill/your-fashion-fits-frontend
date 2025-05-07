@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { refreshState } from "../../../store/reducers/categoriesReducer";
+import { addNotification } from "../../../store/reducers/notificationsReducer";
 import { useDispatch } from "react-redux";
 
 import { removeCategoryFromItems } from "../../../api/Category";
@@ -11,6 +12,7 @@ const RemoveCategoryFromItemsForm = ({
 	categoryId,
 	handleClose,
 	categoriesCurrItems,
+	categoryName,
 }) => {
 	const dispatch = useDispatch();
 
@@ -18,6 +20,11 @@ const RemoveCategoryFromItemsForm = ({
 		await removeCategoryFromItems(categoryId, selectedItems);
 		dispatch(refreshState());
 		handleClose();
+		dispatch(
+			addNotification(
+				`Successfully Removed Items from the '${categoryName}' Category!`
+			)
+		);
 	};
 
 	return (

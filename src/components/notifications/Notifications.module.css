@@ -1,0 +1,41 @@
+.notificationsContainer {
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	z-index: 999999;
+}
+
+.notificationPopup {
+	position: absolute;
+	background-color: rgb(255, 255, 255);
+	top: 6px;
+	right: 10px;
+	border: 1px, solid, rgb(180, 180, 180);
+	border-radius: 2px;
+	color: black;
+	font-family: Courier, "Courier New", monospace;
+	font-size: 14px;
+	text-align: center;
+	font-weight: normal;
+	z-index: 999999;
+	padding: 1rem;
+	width: 15vw;
+	animation: slideIn 0.3s ease-out;
+	transition: opacity 0.3s ease;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
