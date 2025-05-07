@@ -1,5 +1,6 @@
 import ax from "./axiosConfig";
 import { processImage } from "./Img";
+import { workerPool } from "../worker/WorkerPool";
 
 export const getAllItems = async () => {
 	try {
@@ -16,9 +17,15 @@ export const getAllItems = async () => {
 
 export const createItem = async (imageFile) => {
 	try {
-		const file = await processImage(imageFile);
-		if (file === undefined) {
-			throw new Error("Error Processsing Image");
+		// const file = await processImage(imageFile);
+		// if (file === undefined) {
+		// 	throw new Error("Error Processsing Image");
+		// }
+		const { success, data, message } = await workerPool.processImage(
+			imageFile
+		);
+		if (!success) {
+			throw new Error(message);
 		}
 
 		const formData = new FormData();
