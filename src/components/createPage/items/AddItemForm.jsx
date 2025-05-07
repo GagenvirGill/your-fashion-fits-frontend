@@ -29,24 +29,22 @@ const AddItemForm = () => {
 		setImages([]);
 		setLoading(true);
 
-		Promise.all(
-			imagesToCreate.map((image) =>
-				createItem(image).then(() => dispatch(refreshState()))
-			)
-		)
-			.then(() => {
-				setLoading(false);
-				dispatch(addNotification("Item(s) Successfully Created!"));
-			})
-			.catch((error) => {
-				dispatch(
-					addNotification(
-						"Unfortunately an Error Occured While Creating Your Item(s)"
-					)
-				);
-				console.error(error);
-				setLoading(false);
-			});
+		try {
+			for (const image of imagesToCreate) {
+				await createItem(image);
+				dispatch(refreshState());
+			}
+			setLoading(false);
+			dispatch(addNotification("Item(s) Successfully Created!"));
+		} catch (error) {
+			dispatch(
+				addNotification(
+					"Unfortunately an Error Occured While Creating Your Item(s)"
+				)
+			);
+			console.error(error);
+			setLoading(false);
+		}
 	};
 
 	return (
