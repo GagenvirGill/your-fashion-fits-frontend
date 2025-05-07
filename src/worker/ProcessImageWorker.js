@@ -1,31 +1,19 @@
 // src/worker/ProcessImageWorker.js
-import {
-	compressImage,
-	imgBackgroundRemoval,
-	removeTransparentEdges,
-} from "../api/Img";
+import { imgBackgroundRemoval } from "../api/Img";
 
 self.onmessage = async (event) => {
 	const { taskId, imageFile } = event.data;
 	try {
-		const initialCompression = await compressImage(imageFile, null, 0.5);
-		const bgrndRemBlob = await imgBackgroundRemoval(initialCompression);
-		const croppedBuffer = await removeTransparentEdges(bgrndRemBlob);
+		const bgrndRemBlob = await imgBackgroundRemoval(imageFile);
 
-		const croppedFile = new File([croppedBuffer], "img.png", {
+		const croppedFile = new File([bgrndRemBlob], "img.png", {
 			type: "image/png",
 		});
-
-		const finalCompressionFile = await compressImage(
-			croppedFile,
-			750,
-			null
-		);
 
 		self.postMessage({
 			taskId,
 			success: true,
-			data: finalCompressionFile,
+			data: croppedFile,
 		});
 	} catch (err) {
 		self.postMessage({
