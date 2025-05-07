@@ -2,7 +2,30 @@ import { removeBackground } from "@imgly/background-removal";
 import { Image } from "image-js";
 import imageCompression from "browser-image-compression";
 
-export const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
+export const processImage = async (imageFile) => {
+	try {
+		const initialCompression = await compressImage(imageFile, null, 0.5);
+		const bgrndRemBlob = await imgBackgroundRemoval(initialCompression);
+		const croppedBuffer = await removeTransparentEdges(bgrndRemBlob);
+
+		const croppedFile = new File([croppedBuffer], "img.png", {
+			type: "image/png",
+		});
+
+		const finalCompressionFile = await compressImage(
+			croppedFile,
+			750,
+			null
+		);
+
+		return finalCompressionFile;
+	} catch (err) {
+		console.error(`Error removing edges: ${err}`);
+		throw err;
+	}
+};
+
+const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
 	try {
 		let compressedImgFile;
 
@@ -22,7 +45,7 @@ export const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
 	}
 };
 
-export const imgBackgroundRemoval = async (imgFile) => {
+const imgBackgroundRemoval = async (imgFile) => {
 	try {
 		const blob = await removeBackground(imgFile, {
 			device: "gpu",
@@ -39,7 +62,7 @@ export const imgBackgroundRemoval = async (imgFile) => {
 	}
 };
 
-export const removeTransparentEdges = async (blob) => {
+const removeTransparentEdges = async (blob) => {
 	try {
 		const arrayBuffer = await blob.arrayBuffer();
 		const img = await Image.load(arrayBuffer);
