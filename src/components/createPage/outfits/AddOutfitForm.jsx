@@ -8,6 +8,7 @@ const AddOutfitForm = () => {
 		<div>
 			<p className={styles.formTitle}>Outfit Creation Sandbox</p>
 			<CreateTemplate />
+			<div className={styles.spacer}></div>
 		</div>
 	);
 };

@@ -9,6 +9,8 @@ import { deleteOutfit } from "../../api/Outfit";
 import Card from "./Card";
 
 const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
+	const MAX_CARD_WIDTH = 350;
+	const MAX_CARD_HEIGHT = 600;
 	const dispatch = useDispatch();
 
 	const onDelete = () => {
@@ -28,6 +30,67 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 			[...item.TemplateItems].sort((a, b) => a.orderNum - b.orderNum)
 		);
 
+	const rowMinScales = [];
+	const rowMaxHeights = [];
+
+	const rowSizes = sortedRows.map((row) => {
+		const rowWeightSum = row.reduce(
+			(sum, item) => sum + item.itemWeight,
+			0
+		);
+
+		const imageRects = row.map((item) => {
+			const baseWidth =
+				((MAX_CARD_WIDTH * (item.itemWeight / rowWeightSum)) /
+					item.Item.imageWidth) *
+				item.Item.imageWidth;
+			const baseHeight =
+				baseWidth * (item.Item.imageHeight / item.Item.imageWidth);
+
+			return {
+				width: baseWidth,
+				height: baseHeight,
+			};
+		});
+
+		const rowMaxWeight = Math.max(...row.map((item) => item.itemWeight));
+		const rowHeight = (rowMaxWeight / totalWeight) * MAX_CARD_HEIGHT;
+
+		const rowMaxImgHeight = Math.max(
+			...imageRects.map((dim) => dim.height)
+		);
+		rowMaxHeights.push(rowMaxImgHeight);
+
+		const rowMinScale = rowMaxImgHeight / rowHeight;
+		rowMinScales.push(rowMinScale);
+
+		return imageRects;
+	});
+
+	const globalWidthScaler = Math.min(...rowMinScales);
+
+	const widthScaledHeight = rowMaxHeights
+		.map(
+			(height, rowIdx) =>
+				(height / rowMinScales[rowIdx]) * globalWidthScaler
+		)
+		.reduce((sum, val) => sum + val, 0);
+
+	const globalHeightScaler = Math.min(1, MAX_CARD_HEIGHT / widthScaledHeight);
+
+	const finalSizes = rowSizes.map((row, rowIdx) =>
+		row.map((item) => ({
+			width:
+				(item.width / rowMinScales[rowIdx]) *
+				globalWidthScaler *
+				globalHeightScaler,
+			height:
+				(item.height / rowMinScales[rowIdx]) *
+				globalWidthScaler *
+				globalHeightScaler,
+		}))
+	);
+
 	return (
 		<>
 			<Card
@@ -38,10 +101,10 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 				type={`'${dateWorn}' Outfit`}
 			>
 				<div className={styles.outfitContainer}>
-					{sortedRows.map((row, rowIndex) => {
+					{sortedRows.map((row, rowIdx) => {
 						return (
 							<div
-								key={`${outfitId}-${rowIndex}`}
+								key={`${outfitId}-${rowIdx}`}
 								className={styles.outfitRowContainer}
 							>
 								{row.map((item, itemIdx) => {
@@ -51,19 +114,8 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 											src={item.Item.imagePath}
 											alt="item-img"
 											style={{
-												maxHeight: `${Math.min(
-													(item.itemWeight /
-														totalWeight) *
-														640,
-													300
-												)}px`,
-												marginLeft:
-													itemIdx > 0
-														? `-${
-																20 +
-																row.length * 5
-														  }%`
-														: "0%",
+												width: `${finalSizes[rowIdx][itemIdx].width}px`,
+												height: `${finalSizes[rowIdx][itemIdx].height}px`,
 											}}
 										/>
 									);
@@ -72,15 +124,11 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 						);
 					})}
 				</div>
-				<p className={styles.outfitDate}>{dateWorn}</p>
-				<p className={styles.outfitDesc}>{desc}</p>
+				<div className={styles.outfitDate}>{dateWorn}</div>
+				<div className={styles.outfitDesc}>{desc}</div>
 			</Card>
 		</>
 	);
 };
 
 export default OutfitCard;
-
-// zIndex: `${
-// 	row.length * -1 + itemIdx + 100
-// }`,

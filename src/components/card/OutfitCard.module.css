@@ -1,7 +1,7 @@
 .outfitCard {
-	width: 500px;
+	width: 360px;
 	display: inline-block;
-	height: 700px;
+	height: 660px;
 	justify-content: center;
 	align-items: center;
 	pointer-events: fill;
@@ -14,9 +14,9 @@
 }
 
 .outfitContainer {
-	width: 490;
+	width: 350;
 	padding: 5px;
-	height: 640px;
+	height: 600px;
 	display: flex;
 	flex-direction: column;
 	pointer-events: fill;
@@ -25,17 +25,10 @@
 }
 
 .outfitRowContainer {
-	width: 490px;
+	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	overflow-x: scroll;
-}
-
-.outfitRowContainer:hover {
-	padding-left: 10px;
-	padding-right: 10px;
-	background-color: rgb(210, 210, 210);
 }
 
 .outfitRowContainer img {
@@ -48,18 +41,14 @@
 	font-family: Courier, "Courier New", monospace;
 	font-size: 14px;
 	text-align: center;
-	border-radius: 1px;
-	transition: 0.3s;
+	padding-top: 10px;
 }
 
 .outfitDesc {
 	position: block;
 	color: rgb(0, 0, 0);
 	font-family: Courier, "Courier New", monospace;
-	font-size: 14px;
 	text-align: center;
-	border-radius: 1px;
-	transition: 0.3s;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
