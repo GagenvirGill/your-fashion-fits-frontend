@@ -25,7 +25,7 @@ export const processImage = async (imageFile) => {
 	}
 };
 
-export const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
+const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
 	try {
 		let compressedImgFile;
 
@@ -45,7 +45,7 @@ export const compressImage = async (imgFile, maxEdgeSize, maxMB) => {
 	}
 };
 
-export const imgBackgroundRemoval = async (imgFile) => {
+const imgBackgroundRemoval = async (imgFile) => {
 	try {
 		const blob = await removeBackground(imgFile, {
 			device: "gpu",
@@ -62,7 +62,7 @@ export const imgBackgroundRemoval = async (imgFile) => {
 	}
 };
 
-export const removeTransparentEdges = async (blob) => {
+const removeTransparentEdges = async (blob) => {
 	try {
 		const arrayBuffer = await blob.arrayBuffer();
 		const img = await ImageJS.load(arrayBuffer);
