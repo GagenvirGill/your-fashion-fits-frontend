@@ -85,7 +85,4 @@ class WorkerPool {
 	}
 }
 
-export const workerPool = new WorkerPool(
-	"../worker/ProcessImageWorker.js",
-	5000
-);
+export const workerPool = new WorkerPool("./ProcessImageWorker.js", 5000);
