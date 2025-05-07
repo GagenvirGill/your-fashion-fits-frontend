@@ -1,5 +1,5 @@
 import { removeBackground } from "@imgly/background-removal";
-import { Image } from "image-js";
+import { Image as ImageJS } from "image-js";
 import imageCompression from "browser-image-compression";
 
 export const processImage = async (imageFile) => {
@@ -65,7 +65,7 @@ export const imgBackgroundRemoval = async (imgFile) => {
 export const removeTransparentEdges = async (blob) => {
 	try {
 		const arrayBuffer = await blob.arrayBuffer();
-		const img = await Image.load(arrayBuffer);
+		const img = await ImageJS.load(arrayBuffer);
 
 		const croppedImg = img.cropAlpha({
 			threshold: 50,
