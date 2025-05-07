@@ -52,6 +52,7 @@ const imgBackgroundRemoval = async (imgFile) => {
 			model: "isnet_fp16",
 			output: {
 				format: "image/png",
+				quality: 0.5,
 			},
 		});
 
