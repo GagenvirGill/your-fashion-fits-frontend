@@ -49,7 +49,7 @@ const imgBackgroundRemoval = async (imgFile) => {
 	try {
 		const blob = await removeBackground(imgFile, {
 			device: "gpu",
-			model: "isnet_quint8",
+			model: "isnet_fp16",
 			output: {
 				format: "image/png",
 			},
