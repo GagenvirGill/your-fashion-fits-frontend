@@ -17,14 +17,26 @@ const RemoveCategoryFromItemsForm = ({
 	const dispatch = useDispatch();
 
 	const handleSubmit = async (selectedItems) => {
-		await removeCategoryFromItems(categoryId, selectedItems);
+		const success = await removeCategoryFromItems(
+			categoryId,
+			selectedItems
+		);
 		dispatch(refreshState());
 		handleClose();
-		dispatch(
-			addNotification(
-				`Successfully Removed Items from the '${categoryName}' Category!`
-			)
-		);
+
+		if (success) {
+			dispatch(
+				addNotification(
+					`Successfully Removed Items from the '${categoryName}' Category!`
+				)
+			);
+		} else {
+			dispatch(
+				addNotification(
+					`An Error Occured Trying to Remove Items from a Category!`
+				)
+			);
+		}
 	};
 
 	return (

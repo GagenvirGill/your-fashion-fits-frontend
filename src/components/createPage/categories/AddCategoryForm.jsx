@@ -17,13 +17,20 @@ const AddCategoryForm = () => {
 		const nameToCreate = name;
 		setName("");
 
-		await createCategory(nameToCreate);
+		const success = await createCategory(nameToCreate);
 		dispatch(refreshState());
-		dispatch(
-			addNotification(
-				`Successfully Created the '${nameToCreate}' Category!`
-			)
-		);
+
+		if (success) {
+			dispatch(
+				addNotification(
+					`Successfully Created the '${nameToCreate}' Category!`
+				)
+			);
+		} else {
+			dispatch(
+				addNotification(`An Error Occured Trying to Create a Category!`)
+			);
+		}
 	};
 
 	return (

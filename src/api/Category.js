@@ -22,11 +22,11 @@ export const createCategory = async (name) => {
 			},
 			{ withCredentials: true }
 		);
-		if (response.data.success === true) {
-			return response.data.data;
-		} else {
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}
@@ -37,11 +37,11 @@ export const deleteCategory = async (categoryId) => {
 		const response = await ax.delete(`/category/${categoryId}`, {
 			withCredentials: true,
 		});
-		if (response.data.success === true) {
-			//
-		} else {
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}
@@ -57,11 +57,11 @@ export const addCategoryToItems = async (categoryId, items) => {
 			{ withCredentials: true }
 		);
 
-		if (response.data.success === true) {
-			//
-		} else {
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}
@@ -74,11 +74,11 @@ export const removeCategoryFromItems = async (categoryId, items) => {
 			withCredentials: true,
 		});
 
-		if (response.data.success === true) {
-			//
-		} else {
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}
@@ -92,11 +92,11 @@ export const setCategoriesFavItem = async (categoryId, itemId) => {
 			{ withCredentials: true }
 		);
 
-		if (response.data.success === true) {
-			//
-		} else {
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}

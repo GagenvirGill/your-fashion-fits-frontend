@@ -23,15 +23,21 @@ const CategoryCard = ({
 	const [showCategoryItemsForm, setShowCategoryItemsForm] = useState(false);
 	const [showCategFavItemForm, setShowCategoryFavItemForm] = useState(false);
 
-	const onDelete = () => {
-		deleteCategory(categoryId).then(() => {
-			dispatch(refreshState());
+	const onDelete = async () => {
+		const success = await deleteCategory(categoryId);
+		dispatch(refreshState());
+
+		if (success) {
 			dispatch(
 				addNotification(
 					`Successfully Deleted the '${categoryName}' Category!`
 				)
 			);
-		});
+		} else {
+			dispatch(
+				addNotification(`An Error Occured Trying to Delete a Category!`)
+			);
+		}
 	};
 
 	const handleShowCategoryItemsForm = () => {
