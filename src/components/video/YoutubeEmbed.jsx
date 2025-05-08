@@ -5,10 +5,10 @@ const YoutubeEmbed = ({ ytVideoId }) => {
 	return (
 		<div>
 			<iframe
-				src={`https://www.youtube.com/embed/${ytVideoId}`}
+				src={`https://www.youtube.com/embed/${ytVideoId}?autoplay=1&mute=1`}
 				title="YouTube video"
 				className={styles.videoEmbed}
-				allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 				allowFullScreen
 			/>
 		</div>
