@@ -97,13 +97,17 @@ const Welcome = ({ setIsAuthenticated, isAuthenticated }) => {
 				</div>
 				<div className={styles.pageText}>
 					Now if you're a more technically inclined individual, and
-					you're curious about whats going on behind the scenes:
+					you're curious about whats going on behind the scenes, you
+					can check out the source code here:
 				</div>
 				<div className={styles.pageText}>
-					Note: If the video below is Never Gonna Give You Up... then
-					the video is coming soon! (sorry)
+					<a href="https://github.com/GagenvirGill/your-fashion-fits-frontend">
+						Frontend Repository
+					</a>
+					<a href="https://github.com/GagenvirGill/your-fashion-fits-backend">
+						Backend Repository
+					</a>
 				</div>
-				<YoutubeEmbed ytVideoId={"dQw4w9WgXcQ"} />
 			</div>
 		</div>
 	);
