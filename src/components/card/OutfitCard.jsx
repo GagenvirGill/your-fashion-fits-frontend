@@ -30,11 +30,6 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 			[...item.TemplateItems].sort((a, b) => a.orderNum - b.orderNum)
 		);
 
-	// const rowWeightSum = row.reduce(
-	// 	(sum, item) => sum + item.itemWeight,
-	// 	0
-	// );
-
 	const rowWidths = [];
 	const rowMaxWidths = [];
 
@@ -57,10 +52,29 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 			.reduce((sum, val) => sum + val, 0);
 		rowWidths.push(rowWidth);
 
-		let maxRowWidth = MAX_CARD_WIDTH;
-		if (row.length > 1) {
-			maxRowWidth = (2 * row.length * MAX_CARD_WIDTH) / (row.length + 1);
+		let maxRowWidth;
+		if (row.length === 0) {
+			maxRowWidth = MAX_CARD_WIDTH;
+		} else {
+			let overlappedWidth = 0;
+			let totalWidth = 0;
+
+			for (let i = 0; i < imageRects.length; i++) {
+				const current = imageRects[i];
+				if (i === 0) {
+					overlappedWidth += current.width;
+				} else {
+					const prev = imageRects[i - 1];
+					overlappedWidth += current.width - 0.5 * prev.width;
+				}
+
+				totalWidth += imageRects[i].width;
+			}
+
+			const overlapRatio = totalWidth / overlappedWidth;
+			maxRowWidth = MAX_CARD_WIDTH * overlapRatio;
 		}
+
 		rowMaxWidths.push(maxRowWidth);
 
 		return imageRects;
