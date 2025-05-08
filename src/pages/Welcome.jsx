@@ -104,6 +104,7 @@ const Welcome = ({ setIsAuthenticated, isAuthenticated }) => {
 					<a href="https://github.com/GagenvirGill/your-fashion-fits-frontend">
 						Frontend Repository
 					</a>
+					<br />
 					<a href="https://github.com/GagenvirGill/your-fashion-fits-backend">
 						Backend Repository
 					</a>
