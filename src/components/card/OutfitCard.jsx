@@ -39,9 +39,15 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 			0
 		);
 
+		let maxRowWidth = MAX_CARD_WIDTH;
+		if (row.length > 1) {
+			maxRowWidth = (2 * row.length * MAX_CARD_WIDTH) / (row.length + 1);
+		}
+		console.log(maxRowWidth);
+
 		const imageRects = row.map((item) => {
 			const baseWidth =
-				((MAX_CARD_WIDTH * (item.itemWeight / rowWeightSum)) /
+				((maxRowWidth * (item.itemWeight / rowWeightSum)) /
 					item.Item.imageWidth) *
 				item.Item.imageWidth;
 			const baseHeight =
@@ -116,6 +122,15 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 											style={{
 												width: `${finalSizes[rowIdx][itemIdx].width}px`,
 												height: `${finalSizes[rowIdx][itemIdx].height}px`,
+												marginLeft:
+													itemIdx !== 0
+														? `-${
+																finalSizes[
+																	rowIdx
+																][itemIdx - 1]
+																	.width / 2
+														  }px`
+														: "0px",
 											}}
 										/>
 									);
