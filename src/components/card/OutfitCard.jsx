@@ -30,70 +30,51 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 			[...item.TemplateItems].sort((a, b) => a.orderNum - b.orderNum)
 		);
 
-	const rowMinScales = [];
-	const rowMaxHeights = [];
+	// const rowWeightSum = row.reduce(
+	// 	(sum, item) => sum + item.itemWeight,
+	// 	0
+	// );
+
+	const rowWidths = [];
+	const rowMaxWidths = [];
 
 	const rowSizes = sortedRows.map((row) => {
-		const rowWeightSum = row.reduce(
-			(sum, item) => sum + item.itemWeight,
-			0
-		);
-
-		let maxRowWidth = MAX_CARD_WIDTH;
-		if (row.length > 1) {
-			maxRowWidth = (2 * row.length * MAX_CARD_WIDTH) / (row.length + 1);
-		}
-		console.log(maxRowWidth);
+		const rowMaxWeight = Math.max(...row.map((item) => item.itemWeight));
+		const rowHeight = (rowMaxWeight / totalWeight) * MAX_CARD_HEIGHT;
 
 		const imageRects = row.map((item) => {
+			const baseHeight = rowHeight * (item.itemWeight / rowMaxWeight);
 			const baseWidth =
-				((maxRowWidth * (item.itemWeight / rowWeightSum)) /
-					item.Item.imageWidth) *
-				item.Item.imageWidth;
-			const baseHeight =
-				baseWidth * (item.Item.imageHeight / item.Item.imageWidth);
-
+				baseHeight * (item.Item.imageWidth / item.Item.imageHeight);
 			return {
 				width: baseWidth,
 				height: baseHeight,
 			};
 		});
 
-		const rowMaxWeight = Math.max(...row.map((item) => item.itemWeight));
-		const rowHeight = (rowMaxWeight / totalWeight) * MAX_CARD_HEIGHT;
+		const rowWidth = imageRects
+			.map((dim) => dim.width)
+			.reduce((sum, val) => sum + val, 0);
+		rowWidths.push(rowWidth);
 
-		const rowMaxImgHeight = Math.max(
-			...imageRects.map((dim) => dim.height)
-		);
-		rowMaxHeights.push(rowMaxImgHeight);
-
-		const rowMinScale = rowMaxImgHeight / rowHeight;
-		rowMinScales.push(rowMinScale);
+		let maxRowWidth = MAX_CARD_WIDTH;
+		if (row.length > 1) {
+			maxRowWidth = (2 * row.length * MAX_CARD_WIDTH) / (row.length + 1);
+		}
+		rowMaxWidths.push(maxRowWidth);
 
 		return imageRects;
 	});
 
-	const globalWidthScaler = Math.min(...rowMinScales);
+	const minScaleVals = rowWidths.map(
+		(width, rowIdx) => rowMaxWidths[rowIdx] / width
+	);
+	const globalWidthScaler = Math.min(1, ...minScaleVals);
 
-	const widthScaledHeight = rowMaxHeights
-		.map(
-			(height, rowIdx) =>
-				(height / rowMinScales[rowIdx]) * globalWidthScaler
-		)
-		.reduce((sum, val) => sum + val, 0);
-
-	const globalHeightScaler = Math.min(1, MAX_CARD_HEIGHT / widthScaledHeight);
-
-	const finalSizes = rowSizes.map((row, rowIdx) =>
+	const finalSizes = rowSizes.map((row) =>
 		row.map((item) => ({
-			width:
-				(item.width / rowMinScales[rowIdx]) *
-				globalWidthScaler *
-				globalHeightScaler,
-			height:
-				(item.height / rowMinScales[rowIdx]) *
-				globalWidthScaler *
-				globalHeightScaler,
+			width: item.width * globalWidthScaler,
+			height: item.height * globalWidthScaler,
 		}))
 	);
 
