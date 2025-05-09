@@ -24,11 +24,12 @@ export const createOutfit = async (dateWorn, description, items) => {
 			},
 			{ withCredentials: true }
 		);
-		if (response.data.success === true) {
-			return response.data.data;
-		} else {
+
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}
@@ -39,11 +40,12 @@ export const deleteOutfit = async (outfitId) => {
 		const response = await ax.delete(`/outfit/${outfitId}`, {
 			withCredentials: true,
 		});
-		if (response.data.success === true) {
-			//
-		} else {
+
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}

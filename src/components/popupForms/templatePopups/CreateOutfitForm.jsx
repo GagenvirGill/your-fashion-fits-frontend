@@ -87,12 +87,21 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 		}
 
 		setShowCreateOutfitForm(false);
-		await createOutfit(date, description, outfitsItems);
+		const success = await createOutfit(date, description, outfitsItems);
 		dispatch(refreshState());
 		dispatch(setWholeTemplate({ newTemplate: [] }));
-		dispatch(
-			addNotification(`Successfully Created an Outfit for ${date}!`)
-		);
+
+		if (success) {
+			dispatch(
+				addNotification(`Successfully Created an Outfit for ${date}!`)
+			);
+		} else {
+			dispatch(
+				addNotification(
+					`An Error Occurred while Creating an Outfit for ${date}!`
+				)
+			);
+		}
 	};
 
 	return (

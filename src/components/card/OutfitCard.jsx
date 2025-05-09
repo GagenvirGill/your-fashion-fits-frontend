@@ -13,15 +13,23 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 	const MAX_CARD_HEIGHT = 600;
 	const dispatch = useDispatch();
 
-	const onDelete = () => {
-		deleteOutfit(outfitId).then(() => {
-			dispatch(refreshState());
+	const onDelete = async () => {
+		const success = await deleteOutfit(outfitId);
+		dispatch(refreshState());
+
+		if (success) {
 			dispatch(
 				addNotification(
 					`Successfully Deleted Outfit Worn on ${dateWorn}!`
 				)
 			);
-		});
+		} else {
+			dispatch(
+				addNotification(
+					`An Error Occurred while Deleting an Outfit Worn on ${dateWorn}!`
+				)
+			);
+		}
 	};
 
 	const sortedRows = [...items]
