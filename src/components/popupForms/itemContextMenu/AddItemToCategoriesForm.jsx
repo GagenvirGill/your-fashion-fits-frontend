@@ -31,12 +31,23 @@ const AddItemToCategoriesForm = ({
 	}, [dispatch, itemsCurrCategories]);
 
 	const handleSubmit = async (selectedCategories) => {
-		await addItemToCategories(itemId, selectedCategories);
+		const success = await addItemToCategories(itemId, selectedCategories);
 		dispatch(refreshState());
 		handleClose();
-		dispatch(
-			addNotification("Successfully Added Those Categories to Your Item")
-		);
+
+		if (success) {
+			dispatch(
+				addNotification(
+					"Successfully Added Those Categories to Your Item"
+				)
+			);
+		} else {
+			dispatch(
+				addNotification(
+					"An Error Occured while trying to Add Item to Categories!"
+				)
+			);
+		}
 	};
 
 	return (

@@ -16,14 +16,26 @@ const RemoveItemFromCategoriesForm = ({
 	const dispatch = useDispatch();
 
 	const handleSubmit = async (selectedCategories) => {
-		await removeItemFromCategories(itemId, selectedCategories);
+		const success = await removeItemFromCategories(
+			itemId,
+			selectedCategories
+		);
 		dispatch(refreshState());
 		handleClose();
-		dispatch(
-			addNotification(
-				"Successfully Removed Those Categories from Your Item"
-			)
-		);
+
+		if (success) {
+			dispatch(
+				addNotification(
+					"Successfully Removed Those Categories from Your Item"
+				)
+			);
+		} else {
+			dispatch(
+				addNotification(
+					"An Error Occured while trying to Remove Item from Categories!"
+				)
+			);
+		}
 	};
 
 	return (

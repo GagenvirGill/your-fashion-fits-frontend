@@ -31,11 +31,11 @@ export const createItem = async (imageFile) => {
 			withCredentials: true,
 		});
 
-		if (response.data.success === true) {
-			return response.data.data;
-		} else {
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}
@@ -46,11 +46,12 @@ export const deleteItem = async (itemId) => {
 		const response = await ax.delete(`/item/${itemId}`, {
 			withCredentials: true,
 		});
-		if (response.data.success === true) {
-			//
-		} else {
+
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}
@@ -100,11 +101,11 @@ export const addItemToCategories = async (itemId, categories) => {
 			{ withCredentials: true }
 		);
 
-		if (response.data.success === true) {
-			//
-		} else {
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}
@@ -117,11 +118,11 @@ export const removeItemFromCategories = async (itemId, categories) => {
 			withCredentials: true,
 		});
 
-		if (response.data.success === true) {
-			//
-		} else {
+		if (response.data.success === false) {
 			console.error(response.data.message);
 		}
+
+		return response.data.success;
 	} catch (err) {
 		console.error(err);
 	}

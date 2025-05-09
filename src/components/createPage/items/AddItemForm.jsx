@@ -29,22 +29,35 @@ const AddItemForm = () => {
 		setImages([]);
 		setLoading(true);
 
-		try {
-			for (const image of imagesToCreate) {
-				await createItem(image);
+		let successCount = 0;
+		let failCount = 0;
+
+		for (const image of imagesToCreate) {
+			try {
+				const success = await createItem(image);
 				dispatch(refreshState());
+
+				if (success) {
+					successCount++;
+				} else {
+					failCount++;
+				}
+			} catch (error) {
+				failCount++;
 			}
-			setLoading(false);
-			dispatch(addNotification("Item(s) Successfully Created!"));
-		} catch (error) {
-			dispatch(
-				addNotification(
-					"Unfortunately an Error Occured While Creating Your Item(s)"
-				)
-			);
-			console.error(error);
-			setLoading(false);
 		}
+
+		if (successCount > 0) {
+			dispatch(
+				addNotification(`${successCount} item(s) created successfully.`)
+			);
+		}
+
+		if (failCount > 0) {
+			dispatch(addNotification(`${failCount} item(s) failed to create.`));
+		}
+
+		setLoading(false);
 	};
 
 	return (
@@ -79,9 +92,15 @@ const AddItemForm = () => {
 				<br />
 			</form>
 			{loading && (
-				<div className={styles.formText}>
-					Processing your Item(s)...
-				</div>
+				<>
+					<div className={styles.formText}>
+						Processing your Item(s)...
+					</div>
+					<div className={styles.formText}>
+						(Note: if you uploaded multiple images it may take a
+						while, please be patient)
+					</div>
+				</>
 			)}
 		</div>
 	);

@@ -15,21 +15,20 @@ const ItemCard = ({ itemId, imagePath }) => {
 	const dispatch = useDispatch();
 	const [showForm, setShowForm] = useState(false);
 
-	const onDelete = () => {
-		deleteItem(itemId)
-			.then(() => {
-				dispatch(refreshItemsState());
-				dispatch(refreshOutfitsState());
-				dispatch(addNotification("Item Successfully Deleted!"));
-			})
-			.catch((error) => {
-				dispatch(
-					addNotification(
-						"Unfortunately an Error Occured While Deleting Your Item"
-					)
-				);
-				console.error(error);
-			});
+	const onDelete = async () => {
+		const success = await deleteItem(itemId);
+		dispatch(refreshItemsState());
+		dispatch(refreshOutfitsState());
+
+		if (success) {
+			dispatch(addNotification("Item Successfully Deleted!"));
+		} else {
+			dispatch(
+				addNotification(
+					"An Error Occured while trying to Delete an Item!"
+				)
+			);
+		}
 	};
 
 	const handleShowForm = () => {
