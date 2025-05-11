@@ -5,6 +5,7 @@
 	justify-content: center;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	width: 100vw;
 }
 
 .pageTitle {
