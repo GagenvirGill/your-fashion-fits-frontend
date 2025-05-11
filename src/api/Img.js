@@ -4,7 +4,7 @@ import imageCompression from "browser-image-compression";
 
 export const processImage = async (imageFile) => {
 	try {
-		const initialCompression = await compressImage(imageFile, null, 0.5);
+		const initialCompression = await compressImage(imageFile, 750, null);
 		const bgrndRemBlob = await imgBackgroundRemoval(initialCompression);
 		const croppedBuffer = await removeTransparentEdges(bgrndRemBlob);
 
@@ -14,8 +14,8 @@ export const processImage = async (imageFile) => {
 
 		const finalCompressionFile = await compressImage(
 			croppedFile,
-			750,
-			null
+			null,
+			0.5
 		);
 
 		return finalCompressionFile;
@@ -52,7 +52,7 @@ const imgBackgroundRemoval = async (imgFile) => {
 			model: "isnet_fp16",
 			output: {
 				format: "image/png",
-				quality: 0.5,
+				quality: 0.8,
 			},
 		});
 
