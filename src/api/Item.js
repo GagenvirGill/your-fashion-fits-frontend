@@ -1,5 +1,5 @@
 import ax from "./axiosConfig";
-import { processImage } from "./Img";
+import { processImage } from "../util/Image";
 
 export const getAllItems = async () => {
 	try {
