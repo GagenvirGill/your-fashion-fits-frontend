@@ -68,6 +68,12 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 					onClick={handleLoadMore}
 				/>
 			)}
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
 		</>
 	);
 };
