@@ -6,7 +6,7 @@ import ItemCardDisplay from "../components/cardDisplay/ItemCardDisplay";
 const CategoryView = ({ categoryId, categoryName }) => {
 	return (
 		<div className={styles.pageContainer}>
-			<div className={styles.pageTitle}>{categoryName}</div>
+			<div className={styles.pageTitle}>{`'${categoryName}' Items`}</div>
 			<br />
 			<ItemCardDisplay selectedCategories={[categoryId]} />
 		</div>

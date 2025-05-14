@@ -62,7 +62,20 @@ const AddItemForm = () => {
 
 	return (
 		<div>
-			<p className={styles.formTitle}>Create a new Closet Item</p>
+			<div className={styles.formTitle}>Create a new Closet Item</div>
+			<br />
+			<div className={styles.formText}>
+				Tip: For the best results:
+				<br />
+				Center the item and ensure the image is clear.
+				<br />
+				Ensure the background is a distinctly different from the colors
+				of your item(s).
+				<br />
+				Good Luck!
+				<br />
+				<br />
+			</div>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="image" className={styles.addFileLabel}>
 					<div className={styles.addFile}>Select Item Image(s)</div>
