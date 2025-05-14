@@ -1,8 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styles from "./CardDisplayStyles.module.css";
+import { Link } from "react-router-dom";
 
 import CategoryCard from "../card/CategoryCard";
+import BigButton from "../buttons/BigButton";
 
 const CategoryCardDisplay = () => {
 	const { categories } = useSelector((state) => state.categories);
@@ -10,13 +12,15 @@ const CategoryCardDisplay = () => {
 
 	return (
 		<div className={styles.cardDisplay}>
-			<CategoryCard
-				key={`all.card`}
-				categoryId={null}
-				categoryName={"All"}
-				urlRoute={`/closet/all`}
-				imagePath={"/dropdown_icon.png"}
-			/>
+			<Link to="/closet/all">
+				<BigButton
+					type="button"
+					text="View All of Your Items"
+					onClick={null}
+				/>
+			</Link>
+			<br />
+			<br />
 			{categories.map((category) => {
 				const item = currItems.find(
 					(item) => item.itemId === category.favoriteItem
