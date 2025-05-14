@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./Card.module.css";
 
 import ContextMenuButton from "../buttons/ContextMenuButton";
+import AreYouSureForm from "../popupForms/cardContextMenu/AreYouSureForm";
 
 const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 	const [showMenu, setShowMenu] = useState(false);
+	const [showAreYouSureForm, setShowAreYouSureForm] = useState(false);
 	const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
 	const handleContextMenu = (e) => {
@@ -13,10 +15,17 @@ const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 		setShowMenu(true);
 	};
 
+	const startDelete = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setShowAreYouSureForm(true);
+		setShowMenu(false);
+	};
+
 	const handleDelete = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		setShowMenu(false);
+		setShowAreYouSureForm(false);
 		if (onDelete) {
 			onDelete(id);
 		}
@@ -47,30 +56,41 @@ const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 	}, [showMenu]);
 
 	return (
-		<div
-			className={`${styles.card} ${className || ""}`}
-			onContextMenu={handleContextMenu}
-			onClick={handleClick}
-		>
-			{children}
-			{showMenu && (
-				<div
-					className={styles.contextMenu}
-					style={{ top: menuPosition.y, left: menuPosition.x }}
-					onClick={handleClick}
-				>
-					<ContextMenuButton
-						onClick={handleDelete}
-						text={`Delete ${type}`}
-					/>
-					{customConMenu}
-					<ContextMenuButton
+		<>
+			<div
+				className={`${styles.card} ${className || ""}`}
+				onContextMenu={handleContextMenu}
+				onClick={handleClick}
+			>
+				{children}
+				{showMenu && (
+					<div
+						className={styles.contextMenu}
+						style={{ top: menuPosition.y, left: menuPosition.x }}
 						onClick={handleClick}
-						text="Close Menu"
-					/>
-				</div>
+					>
+						<ContextMenuButton
+							onClick={startDelete}
+							text={`Delete ${type}`}
+						/>
+						{customConMenu}
+						<ContextMenuButton
+							onClick={handleClick}
+							text="Close Menu"
+						/>
+					</div>
+				)}
+			</div>
+			{showAreYouSureForm && (
+				<AreYouSureForm
+					handleConfirm={handleDelete}
+					handleCancel={() => setShowAreYouSureForm(false)}
+					type={type}
+				>
+					{!type.endsWith("Category") ? <>{children}</> : <></>}
+				</AreYouSureForm>
 			)}
-		</div>
+		</>
 	);
 };
 
