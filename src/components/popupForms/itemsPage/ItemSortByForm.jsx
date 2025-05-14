@@ -4,7 +4,7 @@ import styles from "./ItemSortByForm.module.css";
 import Button from "../../buttons/Button";
 import ContextMenuButton from "../../buttons/ContextMenuButton";
 
-const ItemSortByForm = ({ sortOption, setSortOption }) => {
+const ItemSortByForm = ({ setSortOption }) => {
 	const [isPopupVisible, setPopupVisibility] = useState(false);
 
 	const handleButtonChange = () => {
