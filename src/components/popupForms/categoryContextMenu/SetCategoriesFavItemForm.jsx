@@ -53,7 +53,7 @@ const SetCategoriesFavItemForm = ({
 					preSelectedItemId={currFavItem}
 					formId={"setCategoriesFavItemForm"}
 					returnImagePath={false}
-					filteringCategoryIds={[]}
+					filteringCategoryIds={[categoryId]}
 				/>
 				<br />
 			</div>
