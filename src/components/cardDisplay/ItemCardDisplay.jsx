@@ -30,20 +30,19 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 		if (selectedCategories && selectedCategories.length > 0) {
 			filterItemsByCategories(selectedCategories)
 				.then((fetchedItems) => {
-					setVisibleCount(LOAD_MORE_AMOUNT);
 					setDisplayItems(fetchedItems);
 				})
 				.catch((err) => {
 					console.log(`Error loading items: ${err}`);
 				});
 		} else {
-			setVisibleCount(LOAD_MORE_AMOUNT);
 			setDisplayItems(items);
 		}
 	}, [dispatch, selectedCategories, items]);
 
 	useEffect(() => {
 		const sortedItems = sortItems(outfits, displayItems, sortOption);
+		setVisibleCount(LOAD_MORE_AMOUNT);
 		setSortedDisplayItems(sortedItems);
 	}, [displayItems, sortOption]);
 
