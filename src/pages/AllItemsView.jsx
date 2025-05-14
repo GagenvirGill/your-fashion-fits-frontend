@@ -13,7 +13,10 @@ const AllItemsView = () => {
 
 	return (
 		<div className={styles.pageContainer}>
-			<p className={styles.pageTitle}>All Items</p>
+			<div className={styles.pageTitle}>All of Your Items</div>
+			<div className={styles.pageText}>
+				Filter Your Items by their Categories
+			</div>
 			<FilterItemsForm handleSubmit={handleSubmit} />
 			<ItemCardDisplay selectedCategories={selectedCategories} />
 		</div>

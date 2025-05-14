@@ -1,0 +1,17 @@
+.popupContainer {
+	position: relative;
+	display: inline-block;
+}
+
+.popupContent {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: rgb(255, 255, 255);
+	z-index: 1002;
+	overflow: scroll;
+	border: 1px solid rgb(180, 180, 180);
+	border-radius: 3px;
+	white-space: nowrap;
+}
