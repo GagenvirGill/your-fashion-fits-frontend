@@ -49,10 +49,8 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 
 	return (
 		<>
-			<ItemSortByForm
-				sortOption={sortOption}
-				setSortOption={setSortOption}
-			/>
+			<ItemSortByForm setSortOption={setSortOption} />
+			<br />
 			<br />
 			<div className={styles.cardDisplay}>
 				{sortedDisplayItems.slice(0, visibleCount).map((item) => (
