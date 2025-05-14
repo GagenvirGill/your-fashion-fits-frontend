@@ -7,12 +7,16 @@ import Button from "../buttons/Button";
 import FilterOutfitsByItemForm from "../popupForms/outfitsPage/FilterOufitsByItemForm";
 
 const OutfitCardDisplay = () => {
+	const LOAD_MORE_AMOUNT = 8;
 	const { outfits } = useSelector((state) => state.outfits);
 
 	const [displayedOutfits, setDisplayedOutfits] = useState(outfits);
 	const [showFilterForm, setShowFilterForm] = useState(false);
 
+	const [visibleCount, setVisibleCount] = useState(LOAD_MORE_AMOUNT);
+
 	const handleClose = () => {
+		setVisibleCount(LOAD_MORE_AMOUNT);
 		setShowFilterForm(false);
 	};
 
@@ -21,10 +25,16 @@ const OutfitCardDisplay = () => {
 	};
 
 	const handleReset = () => {
+		setVisibleCount(LOAD_MORE_AMOUNT);
 		setDisplayedOutfits(outfits);
 	};
 
+	const handleLoadMore = () => {
+		setVisibleCount((prev) => prev + LOAD_MORE_AMOUNT);
+	};
+
 	useEffect(() => {
+		setVisibleCount(LOAD_MORE_AMOUNT);
 		setDisplayedOutfits(outfits);
 	}, [outfits]);
 
@@ -36,7 +46,7 @@ const OutfitCardDisplay = () => {
 			<br />
 			<br />
 			<div className={styles.cardDisplay}>
-				{displayedOutfits.map((outfit) => {
+				{displayedOutfits.slice(0, visibleCount).map((outfit) => {
 					return (
 						<OutfitCard
 							key={`${outfit.outfitId}.card`}
@@ -49,6 +59,14 @@ const OutfitCardDisplay = () => {
 					);
 				})}
 			</div>
+			<br />
+			{visibleCount < displayedOutfits.length && (
+				<Button
+					type="submit"
+					text="Load More"
+					onClick={handleLoadMore}
+				/>
+			)}
 			{showFilterForm && (
 				<FilterOutfitsByItemForm
 					handleClose={handleClose}
