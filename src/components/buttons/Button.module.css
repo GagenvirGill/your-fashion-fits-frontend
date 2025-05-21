@@ -6,13 +6,13 @@
 
 	color: rgb(255, 255, 255);
 	font-family: Courier, "Courier New", monospace;
-	font-size: 15px;
+	font-size: 1rem;
 	text-align: center;
 
 	cursor: pointer;
 	user-select: none;
 	transition: 0.3s;
-	border: 1px, solid, rgb(0, 0, 0);
+	border: 1px solid rgb(0, 0, 0);
 	border-radius: 2px;
 }
 
