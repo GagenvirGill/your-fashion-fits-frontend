@@ -15,10 +15,18 @@
 	border-radius: 3px;
 }
 
+@media (max-width: 480px) {
+	.popupContent {
+		right: 0;
+		left: auto;
+		transform: none;
+	}
+}
+
 .emailText {
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 11px;
+	font-size: 0.7rem;
 	padding-left: 20px;
 	padding-right: 20px;
 	white-space: nowrap;
