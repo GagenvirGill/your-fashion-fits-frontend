@@ -12,14 +12,22 @@
 }
 
 .navLogo {
-	width: 40px;
-	height: 40px;
+	max-width: 4vh;
+	max-height: 4vh;
+	width: 10vw;
+	height: 10vw;
 	padding: 5px;
 	border-radius: 3px;
 	object-fit: cover;
 	cursor: pointer;
 	transition: 0.3s;
 	margin-inline: 25px;
+}
+
+@media (max-width: 600px) {
+	.navLogo {
+		margin-inline: 15px;
+	}
 }
 
 .navLogo:hover {

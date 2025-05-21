@@ -1,7 +1,9 @@
 .imgBtn {
 	display: inline-block;
-	width: 40px;
-	height: 40px;
+	max-width: 4vh;
+	max-height: 4vh;
+	width: 10vw;
+	height: 10vw;
 	border-radius: 3px;
 	overflow: hidden;
 	cursor: pointer;
@@ -9,6 +11,12 @@
 	margin-inline: 25px;
 	padding: 5px;
 	z-index: 1002;
+}
+
+@media (max-width: 600px) {
+	.imgBtn {
+		margin-inline: 15px;
+	}
 }
 
 .imgBtn:hover {
