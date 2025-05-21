@@ -1,6 +1,7 @@
 .radioForm {
 	background-color: white;
 	display: flex;
-	width: 70%;
+	width: 80%;
+	max-width: 1000px;
 	margin: 0 auto;
 }

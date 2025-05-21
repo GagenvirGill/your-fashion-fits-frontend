@@ -134,12 +134,20 @@ const TemplateBoxContextMenu = ({
 		};
 	}, [showContextMenu]);
 
+	const menuWidth = Math.min(250, window.innerWidth * 0.6);
+
 	return (
 		<>
 			{showContextMenu && (
 				<div
 					className={styles.contextMenu}
-					style={{ top: menuPosition.y, left: menuPosition.x }}
+					style={{
+						top: menuPosition.y,
+						left:
+							menuPosition.x + menuWidth > window.innerWidth
+								? window.innerWidth - menuWidth
+								: menuPosition.x,
+					}}
 					onClick={handleClick}
 				>
 					<ContextMenuButton

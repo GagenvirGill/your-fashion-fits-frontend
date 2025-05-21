@@ -1,21 +1,29 @@
+.formContainer {
+	width: 90%;
+	max-width: 700px;
+	margin: 0 auto;
+}
+
 .formTitle {
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 18px;
+	font-size: 1rem;
 }
 
 .formText {
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 15px;
+	font-size: 0.9rem;
 }
 
 .textInput {
-	width: 60%;
+	margin-top: 5px;
+	width: 80%;
+	max-width: 400px;
 	padding: 8px 12px;
 	border: 1px solid rgb(200, 200, 200);
 	border-radius: 2px;
-	font-size: 13px;
+	font-size: 0.8rem;
 	font-family: Courier, "Courier New", monospace;
 	outline: none;
 	transition: border-color 0.2s ease-in-out;

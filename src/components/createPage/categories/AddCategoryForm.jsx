@@ -34,7 +34,7 @@ const AddCategoryForm = () => {
 	};
 
 	return (
-		<div>
+		<div className={styles.formContainer}>
 			<p className={styles.formTitle}>Create a new Category</p>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="name" className={styles.formText}>

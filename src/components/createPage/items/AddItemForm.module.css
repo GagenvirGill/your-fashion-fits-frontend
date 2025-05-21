@@ -1,3 +1,9 @@
+.formContainer {
+	width: 90%;
+	max-width: 700px;
+	margin: 0 auto;
+}
+
 .imagesDisplay {
 	display: inline-block;
 	position: relative;
@@ -10,18 +16,19 @@
 .formTitle {
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 18px;
+	font-size: 1rem;
 }
 
 .formText {
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 12px;
+	font-size: 0.75rem;
 }
 
 .addFileLabel {
-	display: inline-block;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .addFileLabel input {
@@ -30,12 +37,12 @@
 
 .addFile {
 	border-radius: 2px;
-	padding: 160px 300px;
+	padding: 20vh 20vw;
 	background-color: rgb(255, 255, 255);
 	border: 1px solid rgb(200, 200, 200);
 
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 15px;
+	font-size: 1rem;
 	text-align: center;
 }

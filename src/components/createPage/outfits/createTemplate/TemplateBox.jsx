@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./TemplateBox.module.css";
 import { useSelector } from "react-redux";
 
@@ -14,6 +14,19 @@ const TemplateBox = ({ rowIndex, boxIndex, handleRandomization }) => {
 	const [showCategoriesForm, setShowCategoriesForm] = useState(false);
 	const [showContextMenu, setShowContextMenu] = useState(false);
 	const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+
+	const [boxWidth, setBoxWidth] = useState(150);
+
+	useEffect(() => {
+		const updateBoxWidth = () => {
+			setBoxWidth(Math.min(150, (window.innerWidth * 0.95) / 5));
+		};
+
+		updateBoxWidth();
+		window.addEventListener("resize", updateBoxWidth);
+
+		return () => window.removeEventListener("resize", updateBoxWidth);
+	}, []);
 
 	const handleContextMenu = (e) => {
 		e.preventDefault();
@@ -33,13 +46,15 @@ const TemplateBox = ({ rowIndex, boxIndex, handleRandomization }) => {
 				style={
 					itemId
 						? {
-								height: `${150 * scale}px`,
-								...(!itemId && { width: `${150 * scale}px` }),
+								height: `${boxWidth * scale}px`,
+								...(!itemId && {
+									width: `${boxWidth * scale}px`,
+								}),
 						  }
 						: {
-								height: `${150 * scale - 10}px`,
+								height: `${boxWidth * scale - 10}px`,
 								...(!itemId && {
-									width: `${150 * scale - 10}px`,
+									width: `${boxWidth * scale - 10}px`,
 								}),
 						  }
 				}

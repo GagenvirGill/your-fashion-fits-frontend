@@ -61,8 +61,8 @@ const AddItemForm = () => {
 	};
 
 	return (
-		<div>
-			<div className={styles.formTitle}>Create a new Closet Item</div>
+		<div className={styles.formContainer}>
+			<p className={styles.formTitle}>Create a new Closet Item</p>
 			<br />
 			<div className={styles.formText}>
 				Tip: For the best results:
