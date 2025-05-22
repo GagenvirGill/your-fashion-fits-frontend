@@ -1,7 +1,7 @@
 .outfitCard {
-	width: 360px;
+	width: 300px;
 	display: inline-block;
-	height: 660px;
+	height: 560px;
 	justify-content: center;
 	align-items: center;
 	pointer-events: fill;
@@ -9,19 +9,20 @@
 	overflow: hidden;
 }
 
-.outfitCard:hover {
-	background-color: rgb(230, 230, 230);
-}
-
 .outfitContainer {
-	width: 350;
+	width: 290;
 	padding: 5px;
-	height: 600px;
+	height: 500px;
 	display: flex;
 	flex-direction: column;
 	pointer-events: fill;
 	justify-content: center;
 	align-items: center;
+	padding-top: 10px;
+}
+
+.outfitCard:hover {
+	background-color: rgb(230, 230, 230);
 }
 
 .outfitRowContainer {
@@ -39,7 +40,7 @@
 	position: block;
 	color: rgb(0, 0, 0);
 	font-family: Courier, "Courier New", monospace;
-	font-size: 14px;
+	font-size: 0.8rem;
 	text-align: center;
 	padding-top: 10px;
 }
@@ -52,5 +53,6 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-size: 10px;
+	font-size: 0.6rem;
+	padding-bottom: 5px;
 }

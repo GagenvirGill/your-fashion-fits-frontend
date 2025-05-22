@@ -32,13 +32,13 @@
 .title {
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 20px;
+	font-size: 1.3rem;
 }
 
 .formTitle {
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 15px;
+	font-size: 0.9rem;
 }
 
 .inputFieldText {

@@ -9,8 +9,8 @@ import { deleteOutfit } from "../../api/Outfit";
 import Card from "./Card";
 
 const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
-	const MAX_CARD_WIDTH = 350;
-	const MAX_CARD_HEIGHT = 600;
+	const MAX_CARD_WIDTH = 290;
+	const MAX_CARD_HEIGHT = 500;
 	const dispatch = useDispatch();
 
 	const onDelete = async () => {

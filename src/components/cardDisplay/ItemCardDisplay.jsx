@@ -10,8 +10,12 @@ import ItemSortByForm from "../popupForms/itemsPage/ItemSortByForm";
 
 import { sortItems } from "../../util/Item";
 
+const calculateLoadAmount = () => {
+	const baseAmount = Math.floor((window.innerWidth * 0.9) / 160) * 4;
+	return baseAmount > 40 ? baseAmount / 2 : baseAmount;
+};
+
 const ItemCardDisplay = ({ selectedCategories }) => {
-	const LOAD_MORE_AMOUNT = 32;
 	const dispatch = useDispatch();
 
 	const { items } = useSelector((state) => state.items);
@@ -19,11 +23,11 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 
 	const [displayItems, setDisplayItems] = useState([]);
 	const [sortedDisplayItems, setSortedDisplayItems] = useState([]);
-	const [visibleCount, setVisibleCount] = useState(LOAD_MORE_AMOUNT);
+	const [visibleCount, setVisibleCount] = useState(calculateLoadAmount());
 	const [sortOption, setSortOption] = useState("none");
 
 	const handleLoadMore = () => {
-		setVisibleCount((prev) => prev + LOAD_MORE_AMOUNT);
+		setVisibleCount((prev) => prev + calculateLoadAmount());
 	};
 
 	useEffect(() => {
@@ -42,9 +46,20 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 
 	useEffect(() => {
 		const sortedItems = sortItems(outfits, displayItems, sortOption);
-		setVisibleCount(LOAD_MORE_AMOUNT);
+		setVisibleCount(calculateLoadAmount());
 		setSortedDisplayItems(sortedItems);
 	}, [displayItems, sortOption]);
+
+	useEffect(() => {
+		const handleUpdateLoadAmount = () => {
+			const newAmount = calculateLoadAmount();
+			setVisibleCount(newAmount);
+		};
+
+		window.addEventListener("resize", handleUpdateLoadAmount);
+		return () =>
+			window.removeEventListener("resize", handleUpdateLoadAmount);
+	}, []);
 
 	return (
 		<>

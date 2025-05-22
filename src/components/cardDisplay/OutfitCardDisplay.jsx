@@ -6,17 +6,21 @@ import OutfitCard from "../card/OutfitCard";
 import Button from "../buttons/Button";
 import FilterOutfitsByItemForm from "../popupForms/outfitsPage/FilterOufitsByItemForm";
 
+const calculateLoadAmount = () => {
+	const baseAmount = Math.floor((window.innerWidth * 0.9) / 300) * 2;
+	return baseAmount < 4 ? baseAmount * 2 : baseAmount;
+};
+
 const OutfitCardDisplay = () => {
-	const LOAD_MORE_AMOUNT = 8;
 	const { outfits } = useSelector((state) => state.outfits);
 
 	const [displayedOutfits, setDisplayedOutfits] = useState(outfits);
 	const [showFilterForm, setShowFilterForm] = useState(false);
 
-	const [visibleCount, setVisibleCount] = useState(LOAD_MORE_AMOUNT);
+	const [visibleCount, setVisibleCount] = useState(calculateLoadAmount());
 
 	const handleClose = () => {
-		setVisibleCount(LOAD_MORE_AMOUNT);
+		setVisibleCount(calculateLoadAmount());
 		setShowFilterForm(false);
 	};
 
@@ -25,27 +29,38 @@ const OutfitCardDisplay = () => {
 	};
 
 	const handleReset = () => {
-		setVisibleCount(LOAD_MORE_AMOUNT);
+		setVisibleCount(calculateLoadAmount());
 		setDisplayedOutfits(outfits);
 	};
 
 	const handleLoadMore = () => {
-		setVisibleCount((prev) => prev + LOAD_MORE_AMOUNT);
+		setVisibleCount((prev) => prev + calculateLoadAmount());
 	};
 
 	useEffect(() => {
-		setVisibleCount(LOAD_MORE_AMOUNT);
+		setVisibleCount(calculateLoadAmount());
 		setDisplayedOutfits(outfits);
 	}, [outfits]);
 
+	useEffect(() => {
+		const handleUpdateLoadAmount = () => {
+			const newAmount = calculateLoadAmount();
+			setVisibleCount(newAmount);
+		};
+
+		window.addEventListener("resize", handleUpdateLoadAmount);
+		return () =>
+			window.removeEventListener("resize", handleUpdateLoadAmount);
+	}, []);
+
 	return (
-		<>
+		<div className={styles.cardDisplay}>
 			<br />
 			<Button type="submit" text="Reset Filters" onClick={handleReset} />
 			<Button type="submit" text="Filter" onClick={handleOpen} />
 			<br />
 			<br />
-			<div className={styles.cardDisplay}>
+			<div>
 				{displayedOutfits.slice(0, visibleCount).map((outfit) => {
 					return (
 						<OutfitCard
@@ -73,7 +88,7 @@ const OutfitCardDisplay = () => {
 					setDisplayedOutfits={setDisplayedOutfits}
 				/>
 			)}
-		</>
+		</div>
 	);
 };
 

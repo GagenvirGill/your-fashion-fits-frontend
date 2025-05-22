@@ -55,6 +55,8 @@ const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 		};
 	}, [showMenu]);
 
+	const menuWidth = 200;
+
 	return (
 		<>
 			<div
@@ -66,7 +68,13 @@ const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 				{showMenu && (
 					<div
 						className={styles.contextMenu}
-						style={{ top: menuPosition.y, left: menuPosition.x }}
+						style={{
+							top: menuPosition.y,
+							left:
+								menuPosition.x + menuWidth > window.innerWidth
+									? window.innerWidth - menuWidth
+									: menuPosition.x,
+						}}
 						onClick={handleClick}
 					>
 						<ContextMenuButton

@@ -1,7 +1,7 @@
 .categoryCard {
 	display: inline-block;
-	width: 160px;
-	height: 200px;
+	width: 140px;
+	height: 175px;
 	justify-content: center;
 	align-items: center;
 	padding: 10px;
@@ -23,7 +23,7 @@
 
 .categoryCardDiv {
 	position: relative;
-	width: 160px;
+	width: 140px;
 }
 
 .categoryCardText {
@@ -33,12 +33,12 @@
 	max-width: 110px;
 	box-sizing: border-box;
 
-	top: -100px;
+	top: -80px;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: rgb(0, 0, 0);
 	font-family: Courier, "Courier New", monospace;
-	font-size: 14px;
+	font-size: 0.8rem;
 	text-align: center;
 	border-radius: 1px;
 

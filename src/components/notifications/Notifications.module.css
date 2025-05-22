@@ -17,11 +17,12 @@
 	border-radius: 2px;
 	color: black;
 	font-family: Courier, "Courier New", monospace;
-	font-size: 14px;
+	font-size: 0.85rem;
 	text-align: center;
 	font-weight: normal;
 	z-index: 999999;
 	padding: 1rem;
+	min-width: 150px;
 	width: 15vw;
 	animation: slideIn 0.3s ease-out;
 	transition: opacity 0.3s ease;
