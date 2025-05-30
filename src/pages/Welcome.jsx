@@ -69,10 +69,6 @@ const Welcome = ({ setIsAuthenticated, isAuthenticated }) => {
 					created a short demo and tutorial video to show you the
 					different features!
 				</div>
-				<div className={styles.pageText}>
-					Note: If the video below is Never Gonna Give You Up... then
-					the video is coming soon! (sorry)
-				</div>
 				<YoutubeEmbed ytVideoId={"bn_x1Z9mhtE"} />
 				<div className={styles.pageText}>
 					For if you don't feel like watching the video, heres a quick
