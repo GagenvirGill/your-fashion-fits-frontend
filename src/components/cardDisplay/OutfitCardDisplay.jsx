@@ -85,23 +85,31 @@ const OutfitCardDisplay = () => {
 		<div className={styles.cardDisplay}>
 			<br />
 			<div>
-				{displayedOutfits
-					.slice(
-						outfitPage * visibleCount,
-						outfitPage * visibleCount + visibleCount
-					)
-					.map((outfit) => {
-						return (
-							<OutfitCard
-								key={`${outfit.outfitId}.card`}
-								outfitId={outfit.outfitId}
-								dateWorn={outfit.dateWorn}
-								desc={outfit.description}
-								items={outfit.OutfitTemplate.TemplateRows}
-								totalWeight={outfit.OutfitTemplate.totalWeight}
-							/>
-						);
-					})}
+				{displayedOutfits.length === 0 ? (
+					<div className={styles.loadingBox}>
+						<div className={styles.text}>Loading...</div>
+					</div>
+				) : (
+					displayedOutfits
+						.slice(
+							outfitPage * visibleCount,
+							outfitPage * visibleCount + visibleCount
+						)
+						.map((outfit) => {
+							return (
+								<OutfitCard
+									key={`${outfit.outfitId}.card`}
+									outfitId={outfit.outfitId}
+									dateWorn={outfit.dateWorn}
+									desc={outfit.description}
+									items={outfit.OutfitTemplate.TemplateRows}
+									totalWeight={
+										outfit.OutfitTemplate.totalWeight
+									}
+								/>
+							);
+						})
+				)}
 				<div className={styles.carouselButtons}>
 					<div
 						className={styles.carouselArrowButton}

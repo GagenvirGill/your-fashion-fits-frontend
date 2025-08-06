@@ -5,8 +5,8 @@
 	justify-content: center;
 	align-items: center;
 	pointer-events: fill;
-	border-radius: 2px;
 	overflow: hidden;
+	transition: all 0.5s ease;
 }
 
 .outfitContainer {
@@ -42,7 +42,7 @@
 	font-family: Courier, "Courier New", monospace;
 	font-size: 0.8rem;
 	text-align: center;
-	padding-top: 10px;
+	padding-top: 5px;
 }
 
 .outfitDesc {
@@ -50,9 +50,9 @@
 	color: rgb(0, 0, 0);
 	font-family: Courier, "Courier New", monospace;
 	text-align: center;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	white-space: wrap;
 	font-size: 0.6rem;
+	padding-left: 15px;
+	padding-right: 15px;
 	padding-bottom: 5px;
 }

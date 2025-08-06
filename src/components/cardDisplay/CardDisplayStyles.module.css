@@ -8,8 +8,10 @@
 
 .carouselButtons {
 	display: flex;
+	position: relative;
 	align-items: center;
 	justify-content: center;
+	top: -4px;
 }
 
 .carouselButton {
@@ -17,6 +19,7 @@
 	width: 50px;
 	height: 50px;
 	padding: 30px 40px;
+	transition: all 0.5s ease;
 }
 
 .carouselArrowButton {
@@ -24,19 +27,24 @@
 	width: 50px;
 	height: 50px;
 	padding: 30px 90px;
+	transition: all 0.5s ease;
 }
 
 @media (max-width: 768px) {
 	.carouselButton {
+		cursor: pointer;
 		width: 50px;
 		height: 50px;
 		padding: 30px 30px;
+		transition: all 0.5s ease;
 	}
 
 	.carouselArrowButton {
+		cursor: pointer;
 		width: 50px;
 		height: 50px;
 		padding: 30px 50px;
+		transition: all 0.5s ease;
 	}
 }
 
@@ -70,4 +78,11 @@
 	font-size: 1rem;
 	text-align: center;
 	font-weight: normal;
+}
+
+.loadingBox {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 564px;
 }
