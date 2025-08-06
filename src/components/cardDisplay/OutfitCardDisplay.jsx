@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import styles from "./CardDisplayStyles.module.css";
 
 import OutfitCard from "../card/OutfitCard";
-import Button from "../buttons/Button";
 import FilterOutfitsByItemForm from "../popupForms/outfitsPage/FilterOufitsByItemForm";
 
 const calculateNumOutfitsPerRow = () => {
