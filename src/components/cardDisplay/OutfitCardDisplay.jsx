@@ -6,9 +6,8 @@ import OutfitCard from "../card/OutfitCard";
 import Button from "../buttons/Button";
 import FilterOutfitsByItemForm from "../popupForms/outfitsPage/FilterOufitsByItemForm";
 
-const calculateLoadAmount = () => {
-	const baseAmount = Math.floor((window.innerWidth * 0.9) / 300) * 2;
-	return baseAmount < 4 ? baseAmount * 2 : baseAmount;
+const calculateNumOutfitsPerRow = () => {
+	return Math.floor((window.innerWidth * 0.9) / 300);
 };
 
 const OutfitCardDisplay = () => {
@@ -16,11 +15,12 @@ const OutfitCardDisplay = () => {
 
 	const [displayedOutfits, setDisplayedOutfits] = useState(outfits);
 	const [showFilterForm, setShowFilterForm] = useState(false);
-
-	const [visibleCount, setVisibleCount] = useState(calculateLoadAmount());
+	const [outfitPage, setOutfitPage] = useState(0);
+	const [visibleCount, setVisibleCount] = useState(
+		calculateNumOutfitsPerRow()
+	);
 
 	const handleClose = () => {
-		setVisibleCount(calculateLoadAmount());
 		setShowFilterForm(false);
 	};
 
@@ -29,59 +29,84 @@ const OutfitCardDisplay = () => {
 	};
 
 	const handleReset = () => {
-		setVisibleCount(calculateLoadAmount());
 		setDisplayedOutfits(outfits);
 	};
 
-	const handleLoadMore = () => {
-		setVisibleCount((prev) => prev + calculateLoadAmount());
+	const handleCarouselLeft = () => {
+		if (outfitPage > 0) {
+			setOutfitPage(outfitPage - 1);
+		}
+	};
+
+	const handleCarouselRight = () => {
+		if (
+			outfitPage <
+			Math.ceil(displayedOutfits.length / visibleCount) - 1
+		) {
+			setOutfitPage(outfitPage + 1);
+		}
 	};
 
 	useEffect(() => {
-		setVisibleCount(calculateLoadAmount());
+		setOutfitPage(0);
+	}, [displayedOutfits]);
+
+	useEffect(() => {
 		setDisplayedOutfits(outfits);
 	}, [outfits]);
 
 	useEffect(() => {
-		const handleUpdateLoadAmount = () => {
-			const newAmount = calculateLoadAmount();
-			setVisibleCount(newAmount);
+		const updateVisibleCount = () => {
+			setVisibleCount(calculateNumOutfitsPerRow());
 		};
 
-		window.addEventListener("resize", handleUpdateLoadAmount);
-		return () =>
-			window.removeEventListener("resize", handleUpdateLoadAmount);
+		window.addEventListener("resize", updateVisibleCount);
+		return () => window.removeEventListener("resize", updateVisibleCount);
 	}, []);
 
 	return (
 		<div className={styles.cardDisplay}>
 			<br />
+			<div>
+				{displayedOutfits
+					.slice(
+						outfitPage * visibleCount,
+						outfitPage * visibleCount + visibleCount
+					)
+					.map((outfit) => {
+						return (
+							<OutfitCard
+								key={`${outfit.outfitId}.card`}
+								outfitId={outfit.outfitId}
+								dateWorn={outfit.dateWorn}
+								desc={outfit.description}
+								items={outfit.OutfitTemplate.TemplateRows}
+								totalWeight={outfit.OutfitTemplate.totalWeight}
+							/>
+						);
+					})}
+				<div className={styles.carouselButtons}>
+					<div
+						className={styles.carouselArrowButton}
+						onClick={handleCarouselLeft}
+					>
+						<img src="left_arrow.png" />
+					</div>
+					<div className={styles.carouselButton} onClick={null}>
+						<img src="filter_icon.png" />
+					</div>
+					<div
+						className={styles.carouselArrowButton}
+						onClick={handleCarouselRight}
+					>
+						<img src="right_arrow.png" />
+					</div>
+				</div>
+			</div>
+			<br />
 			<Button type="submit" text="Reset Filters" onClick={handleReset} />
 			<Button type="submit" text="Filter" onClick={handleOpen} />
 			<br />
-			<br />
-			<div>
-				{displayedOutfits.slice(0, visibleCount).map((outfit) => {
-					return (
-						<OutfitCard
-							key={`${outfit.outfitId}.card`}
-							outfitId={outfit.outfitId}
-							dateWorn={outfit.dateWorn}
-							desc={outfit.description}
-							items={outfit.OutfitTemplate.TemplateRows}
-							totalWeight={outfit.OutfitTemplate.totalWeight}
-						/>
-					);
-				})}
-			</div>
-			<br />
-			{visibleCount < displayedOutfits.length && (
-				<Button
-					type="submit"
-					text="Load More"
-					onClick={handleLoadMore}
-				/>
-			)}
 			{showFilterForm && (
 				<FilterOutfitsByItemForm
 					handleClose={handleClose}
