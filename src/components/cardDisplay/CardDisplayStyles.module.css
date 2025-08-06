@@ -25,6 +25,20 @@
 	padding: 30px 90px;
 }
 
+@media (max-width: 768px) {
+	.carouselButton {
+		width: 50px;
+		height: 50px;
+		padding: 30px 30px;
+	}
+
+	.carouselArrowButton {
+		width: 50px;
+		height: 50px;
+		padding: 30px 50px;
+	}
+}
+
 .carouselArrowButton img {
 	width: 100%;
 	height: auto;
@@ -40,4 +54,19 @@
 .carouselButton:hover,
 .carouselArrowButton:hover {
 	background-color: rgb(230, 230, 230);
+}
+
+.cornerText {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	padding: 1rem;
+}
+
+.text {
+	color: black;
+	font-family: Courier, "Courier New", monospace;
+	font-size: 1rem;
+	text-align: center;
+	font-weight: normal;
 }

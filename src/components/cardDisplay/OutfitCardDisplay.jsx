@@ -58,6 +58,7 @@ const OutfitCardDisplay = () => {
 	useEffect(() => {
 		const updateVisibleCount = () => {
 			setVisibleCount(calculateNumOutfitsPerRow());
+			setOutfitPage(0);
 		};
 
 		window.addEventListener("resize", updateVisibleCount);
@@ -107,6 +108,15 @@ const OutfitCardDisplay = () => {
 			<Button type="submit" text="Reset Filters" onClick={handleReset} />
 			<Button type="submit" text="Filter" onClick={handleOpen} />
 			<br />
+			<div className={`${styles.cornerText} ${styles.text}`}>
+				{visibleCount === 1
+					? outfitPage * visibleCount + 1
+					: `${outfitPage * visibleCount + 1}-${Math.min(
+							outfitPage * visibleCount + visibleCount,
+							displayedOutfits.length
+					  )}`}
+				/{displayedOutfits.length}
+			</div>
 			{showFilterForm && (
 				<FilterOutfitsByItemForm
 					handleClose={handleClose}
