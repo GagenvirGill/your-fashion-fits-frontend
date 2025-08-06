@@ -65,6 +65,22 @@ const OutfitCardDisplay = () => {
 		return () => window.removeEventListener("resize", updateVisibleCount);
 	}, []);
 
+	useEffect(() => {
+		const handleKeyEvent = (event) => {
+			switch (event.key) {
+				case "ArrowLeft":
+					handleCarouselLeft();
+					break;
+				case "ArrowRight":
+					handleCarouselRight();
+					break;
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyEvent);
+		return () => window.removeEventListener("keydown", handleKeyEvent);
+	});
+
 	return (
 		<div className={styles.cardDisplay}>
 			<br />
@@ -90,23 +106,33 @@ const OutfitCardDisplay = () => {
 					<div
 						className={styles.carouselArrowButton}
 						onClick={handleCarouselLeft}
+						title="Previous Page"
 					>
 						<img src="left_arrow.png" />
 					</div>
-					<div className={styles.carouselButton} onClick={null}>
+					<div
+						className={styles.carouselButton}
+						onClick={handleOpen}
+						title="Select Filters"
+					>
 						<img src="filter_icon.png" />
+					</div>
+					<div
+						className={styles.carouselButton}
+						onClick={handleReset}
+						title="Reset Filters"
+					>
+						<img src="reset_icon.png" />
 					</div>
 					<div
 						className={styles.carouselArrowButton}
 						onClick={handleCarouselRight}
+						title="Next Page"
 					>
 						<img src="right_arrow.png" />
 					</div>
 				</div>
 			</div>
-			<br />
-			<Button type="submit" text="Reset Filters" onClick={handleReset} />
-			<Button type="submit" text="Filter" onClick={handleOpen} />
 			<br />
 			<div className={`${styles.cornerText} ${styles.text}`}>
 				{visibleCount === 1

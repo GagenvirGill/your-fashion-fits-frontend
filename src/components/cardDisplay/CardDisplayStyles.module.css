@@ -1,6 +1,5 @@
 .cardDisplay {
 	display: inline-block;
-	position: flex;
 	text-align: center;
 	width: 90vw;
 	overflow-y: auto;
@@ -14,12 +13,14 @@
 }
 
 .carouselButton {
+	cursor: pointer;
 	width: 50px;
 	height: 50px;
 	padding: 30px 40px;
 }
 
 .carouselArrowButton {
+	cursor: pointer;
 	width: 50px;
 	height: 50px;
 	padding: 30px 90px;
