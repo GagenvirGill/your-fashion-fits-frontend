@@ -51,3 +51,14 @@
 	margin: 5px;
 	width: 10%;
 }
+
+.selectedImgs {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.selectedImgs img {
+	max-width: 50px;
+	max-height: 80px;
+}

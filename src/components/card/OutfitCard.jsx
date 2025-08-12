@@ -122,6 +122,7 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 											key={`${item.Item.itemId}-${item.templateItemId}`}
 											src={item.Item.imagePath}
 											alt="item-img"
+											loading="lazy"
 											style={{
 												width: `${finalSizes[rowIdx][itemIdx].width}px`,
 												height: `${finalSizes[rowIdx][itemIdx].height}px`,

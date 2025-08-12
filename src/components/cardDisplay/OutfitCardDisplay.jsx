@@ -4,6 +4,7 @@ import styles from "./CardDisplayStyles.module.css";
 
 import OutfitCard from "../card/OutfitCard";
 import FilterOutfitsByItemForm from "../popupForms/outfitsPage/FilterOufitsByItemForm";
+import SearchOutfitsForm from "../popupForms/outfitsPage/SearchOutfitsForm";
 
 const calculateNumOutfitsPerRow = () => {
 	return Math.floor((window.innerWidth * 0.9) / 300);
@@ -14,17 +15,19 @@ const OutfitCardDisplay = () => {
 
 	const [displayedOutfits, setDisplayedOutfits] = useState(outfits);
 	const [showFilterForm, setShowFilterForm] = useState(false);
+	const [showSearchBar, setShowSearchBar] = useState(false);
 	const [outfitPage, setOutfitPage] = useState(0);
 	const [visibleCount, setVisibleCount] = useState(
 		calculateNumOutfitsPerRow()
 	);
 
-	const handleClose = () => {
-		setShowFilterForm(false);
+	const handleUpdateShowFilterForm = () => {
+		setShowFilterForm(!showFilterForm);
 	};
 
-	const handleOpen = () => {
-		setShowFilterForm(true);
+	const handleUpdateShowSearchBar = () => {
+		setDisplayedOutfits(outfits);
+		setShowSearchBar(!showSearchBar);
 	};
 
 	const handleReset = () => {
@@ -86,7 +89,7 @@ const OutfitCardDisplay = () => {
 			<div>
 				{displayedOutfits.length === 0 ? (
 					<div className={styles.loadingBox}>
-						<div className={styles.text}>Loading...</div>
+						<div className={styles.text}>No Outfits Found</div>
 					</div>
 				) : (
 					displayedOutfits
@@ -119,7 +122,7 @@ const OutfitCardDisplay = () => {
 					</div>
 					<div
 						className={styles.carouselButton}
-						onClick={handleOpen}
+						onClick={handleUpdateShowFilterForm}
 						title="Select Filters"
 					>
 						<img src="filter_icon.png" />
@@ -132,6 +135,13 @@ const OutfitCardDisplay = () => {
 						<img src="reset_icon.png" />
 					</div>
 					<div
+						className={styles.carouselButton}
+						onClick={handleUpdateShowSearchBar}
+						title="Search Key Words"
+					>
+						<img src="search_icon.png" />
+					</div>
+					<div
 						className={styles.carouselArrowButton}
 						onClick={handleCarouselRight}
 						title="Next Page"
@@ -139,6 +149,11 @@ const OutfitCardDisplay = () => {
 						<img src="right_arrow.png" />
 					</div>
 				</div>
+				{showSearchBar && (
+					<SearchOutfitsForm
+						setDisplayedOutfits={setDisplayedOutfits}
+					/>
+				)}
 			</div>
 			<br />
 			<div className={`${styles.cornerText} ${styles.text}`}>
@@ -152,7 +167,7 @@ const OutfitCardDisplay = () => {
 			</div>
 			{showFilterForm && (
 				<FilterOutfitsByItemForm
-					handleClose={handleClose}
+					handleClose={handleUpdateShowFilterForm}
 					setDisplayedOutfits={setDisplayedOutfits}
 				/>
 			)}

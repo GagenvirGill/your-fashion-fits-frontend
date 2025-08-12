@@ -50,3 +50,22 @@ export const deleteOutfit = async (outfitId) => {
 		console.error(err);
 	}
 };
+
+export const searchOutfits = async (query) => {
+	try {
+		const response = await ax.get("/outfit/search", {
+			params: {
+				query: query,
+			},
+			withCredentials: true,
+		});
+
+		if (response.data.success === true) {
+			return response.data.data;
+		} else {
+			console.error(response.data.message);
+		}
+	} catch (err) {
+		console.error(err);
+	}
+};

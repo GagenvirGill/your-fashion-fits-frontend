@@ -1,0 +1,16 @@
+.textInput {
+	margin-top: 5px;
+	width: 80%;
+	max-width: 400px;
+	padding: 8px 12px;
+	border: 1px solid rgb(200, 200, 200);
+	border-radius: 2px;
+	font-size: 0.8rem;
+	font-family: Courier, "Courier New", monospace;
+	outline: none;
+	transition: border-color 0.2s ease-in-out;
+}
+
+.textInput:focus {
+	border-color: #007bff;
+}

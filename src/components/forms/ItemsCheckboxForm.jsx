@@ -38,15 +38,14 @@ const ItemsCheckboxForm = ({
 
 	useEffect(() => {
 		if (filteringCategoryIds) {
-			if (filteringCategoryIds) {
-				filterItemsByCategories(filteringCategoryIds)
-					.then((filteredItems) => {
-						setDisplayItems(filteredItems);
-					})
-					.catch((error) => {
-						console.error("Error filtering items:", error);
-					});
-			}
+			setDisplayItems([]);
+			filterItemsByCategories(filteringCategoryIds)
+				.then((filteredItems) => {
+					setDisplayItems(filteredItems);
+				})
+				.catch((error) => {
+					console.error("Error filtering items:", error);
+				});
 		}
 	}, [filteringCategoryIds]);
 
