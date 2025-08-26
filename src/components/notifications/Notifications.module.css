@@ -10,7 +10,7 @@
 
 .notificationPopup {
 	position: absolute;
-	background-color: rgb(255, 255, 255);
+	background-color: rgb(245, 245, 245);
 	top: 6px;
 	right: 10px;
 	border: 1px, solid, rgb(180, 180, 180);
