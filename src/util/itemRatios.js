@@ -197,7 +197,9 @@ export const updateTemplateWithScales = (
 	templateRows.forEach((row, rowIdx) => {
 		row.forEach((box, boxIdx) => {
 			if (results && results[rowIdx] && results[rowIdx][boxIdx]) {
-				newRows[rowIdx][boxIdx].scale = newScales[rowIdx][boxIdx];
+				newRows[rowIdx][boxIdx].scale = Number(
+					newScales[rowIdx][boxIdx].toFixed(1)
+				);
 			}
 		});
 	});
