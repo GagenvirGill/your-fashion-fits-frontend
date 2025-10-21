@@ -6,7 +6,12 @@ import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateItemSelector from "../../../popupForms/templatePopups/TemplateItemSelector";
 import TemplateCategoriesSelector from "../../../popupForms/templatePopups/TemplateCategoriesSelector";
 
-const TemplateBox = ({ rowIndex, boxIndex, handleRandomization }) => {
+const TemplateBox = ({
+	rowIndex,
+	boxIndex,
+	handleRandomization,
+	ratiosMatrix,
+}) => {
 	const { templateRows } = useSelector((state) => state.outfitTemplate);
 	const { itemId, imagePath, scale } = templateRows[rowIndex][boxIndex];
 
@@ -90,6 +95,7 @@ const TemplateBox = ({ rowIndex, boxIndex, handleRandomization }) => {
 						rowIndex={rowIndex}
 						boxIndex={boxIndex}
 						setShowForm={setShowItemForm}
+						ratiosMatrix={ratiosMatrix}
 					/>
 				</div>
 			)}

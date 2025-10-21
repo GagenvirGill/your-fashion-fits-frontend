@@ -61,7 +61,7 @@ export const createAdjacencyMatrix = (outfits) => {
 	return adjacencyMatrix;
 };
 
-export const getOutfitsRatios = (adjacencyMatrix, outfitRows) => {
+const getOutfitsRatios = (adjacencyMatrix, outfitRows) => {
 	if (outfitRows.length === 0) {
 		return [];
 	}
@@ -171,4 +171,36 @@ const getRatio = (adjacencyMatrix, start, end, maxDepth = 7) => {
 
 	indirectCache[key] = result;
 	return result;
+};
+
+export const updateTemplateWithScales = (
+	templateRows,
+	ratiosMatrix,
+	results
+) => {
+	const newRows = templateRows.map((row) => [...row]);
+
+	templateRows.forEach((row, rowIdx) => {
+		row.forEach((box, boxIdx) => {
+			if (results && results[rowIdx] && results[rowIdx][boxIdx]) {
+				newRows[rowIdx][boxIdx] = {
+					...box,
+					itemId: results[rowIdx][boxIdx].itemId,
+					imagePath: results[rowIdx][boxIdx].imagePath,
+				};
+			}
+		});
+	});
+
+	const newScales = getOutfitsRatios(ratiosMatrix, newRows);
+
+	templateRows.forEach((row, rowIdx) => {
+		row.forEach((box, boxIdx) => {
+			if (results && results[rowIdx] && results[rowIdx][boxIdx]) {
+				newRows[rowIdx][boxIdx].scale = newScales[rowIdx][boxIdx];
+			}
+		});
+	});
+
+	return newRows;
 };

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import styles from "./CreateTemplate.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	setWholeTemplate,
-	setWholeRow,
-} from "../../../../store/reducers/outfitTemplateReducer";
+import { setWholeTemplate } from "../../../../store/reducers/outfitTemplateReducer";
 import { getRandomItemWithCategories } from "../../../../api/Item";
+import {
+	createAdjacencyMatrix,
+	updateTemplateWithScales,
+} from "../../../../util/itemRatios";
 
 import TemplateRow from "./TemplateRow";
 import ImgButton from "../../../buttons/ImgButton";
@@ -13,8 +14,11 @@ import CreateOutfitForm from "../../../popupForms/templatePopups/CreateOutfitFor
 
 const CreateTemplate = () => {
 	const dispatch = useDispatch();
+	const { outfits } = useSelector((state) => state.outfits);
+	const ratiosMatrix = useMemo(() => {
+		return createAdjacencyMatrix(outfits);
+	}, [outfits]);
 	const { templateRows } = useSelector((state) => state.outfitTemplate);
-
 	const [showCreateOutfitForm, setShowCreateOutfitForm] = useState(false);
 
 	const handleRandomizationAll = async (e) => {
@@ -34,22 +38,11 @@ const CreateTemplate = () => {
 
 		const results = await Promise.all(promises);
 
-		const newRows = templateRows.map((row) => [...row]);
-
-		templateRows.map((row, rowIdx) => {
-			row.map((box, boxIdx) => {
-				if (results && results[rowIdx] && results[rowIdx][boxIdx]) {
-					newRows[rowIdx][boxIdx] = {
-						boxId: box.boxId,
-						itemId: results[rowIdx][boxIdx].itemId,
-						imagePath: results[rowIdx][boxIdx].imagePath,
-						scale: box.scale,
-						isLocked: box.isLocked,
-						categories: box.categories,
-					};
-				}
-			});
-		});
+		const newRows = updateTemplateWithScales(
+			templateRows,
+			ratiosMatrix,
+			results
+		);
 
 		dispatch(setWholeTemplate({ newTemplate: newRows }));
 	};
@@ -63,19 +56,21 @@ const CreateTemplate = () => {
 		);
 
 		if (result && result.itemId) {
-			const newRow = [...templateRows[rowIndex]];
-			const box = newRow[boxIndex];
+			const newRows = templateRows.map((row) => [...row]);
 
-			newRow[boxIndex] = {
-				boxId: box.boxId,
+			newRows[rowIndex][boxIndex] = {
+				...newRows[rowIndex][boxIndex],
 				itemId: result.itemId,
 				imagePath: result.imagePath,
-				scale: box.scale,
-				isLocked: box.isLocked,
-				categories: box.categories,
 			};
 
-			dispatch(setWholeRow({ rowIndex: rowIndex, newRow: newRow }));
+			const updatedRows = updateTemplateWithScales(
+				newRows,
+				ratiosMatrix,
+				newRows
+			);
+
+			dispatch(setWholeTemplate({ newTemplate: updatedRows }));
 		}
 	};
 
@@ -136,6 +131,7 @@ const CreateTemplate = () => {
 						key={`templaterow-${rowIndex}`}
 						rowIndex={rowIndex}
 						handleRandomizationOne={handleRandomizationOne}
+						ratiosMatrix={ratiosMatrix}
 					/>
 				))}
 			</div>

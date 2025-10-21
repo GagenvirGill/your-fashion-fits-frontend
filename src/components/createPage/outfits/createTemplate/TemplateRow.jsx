@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import TemplateBox from "./TemplateBox";
 
-const TemplateRow = ({ rowIndex, handleRandomizationOne }) => {
+const TemplateRow = ({ rowIndex, handleRandomizationOne, ratiosMatrix }) => {
 	const { templateRows } = useSelector((state) => state.outfitTemplate);
 	const templateBoxes = templateRows[rowIndex];
 
@@ -16,6 +16,7 @@ const TemplateRow = ({ rowIndex, handleRandomizationOne }) => {
 					rowIndex={rowIndex}
 					boxIndex={boxIndex}
 					handleRandomization={handleRandomizationOne}
+					ratiosMatrix={ratiosMatrix}
 				/>
 			))}
 		</div>
