@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createItem } from "../../../api/Item";
+import { createItem } from "../../../api/actions/item";
+import { processImage } from "../../../util/BackgroundRemoval";
 import { refreshState } from "../../../store/reducers/itemsReducer";
 import { addNotification } from "../../../store/reducers/notificationsReducer";
 
@@ -36,7 +37,13 @@ const AddItemForm = () => {
 
 		for (const image of imagesToCreate) {
 			try {
-				const success = await createItem(image);
+				const file = await processImage(image);
+				if (!file) throw new Error("Error processing image");
+
+				const formData = new FormData();
+				formData.append("image", file);
+
+				const success = await createItem(formData);
 				dispatch(refreshState());
 
 				if (success) {

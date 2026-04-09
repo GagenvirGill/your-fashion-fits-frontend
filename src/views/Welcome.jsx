@@ -1,62 +1,29 @@
 "use client";
 
 import React from "react";
+import { signIn, useSession } from "next-auth/react";
 import styles from "./GenericPageStyles.module.css";
 import Button from "../components/buttons/Button";
 import YoutubeEmbed from "../components/video/YoutubeEmbed";
 
-const Welcome = ({ setIsAuthenticated, isAuthenticated }) => {
-	const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-
-	let payload = null;
-	if (token) {
-		try {
-			payload = JSON.parse(atob(token.split(".")[1]));
-		} catch (error) {
-			console.error("Invalid token format:", error);
-		}
-	}
+const Welcome = () => {
+	const { data: session, status } = useSession();
+	const isAuthenticated = status === "authenticated";
 
 	const handleLogin = (e) => {
 		e.preventDefault();
-
-		const loginWindow = window.open(
-			`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`,
-			"Login with Google",
-			`width=${500},height=${400},top=${100},left=${100}`
-		);
-
-		const handleMessage = (event) => {
-			const backendOrigin = new URL(process.env.NEXT_PUBLIC_BACKEND_URL)
-				.origin;
-
-			if (event.origin !== backendOrigin) {
-				return;
-			}
-
-			const { token } = event.data;
-
-			if (token) {
-				localStorage.setItem("token", token);
-				window.location.href = "/";
-				setIsAuthenticated(true);
-				loginWindow.close();
-				window.removeEventListener("message", handleMessage);
-			}
-		};
-
-		window.addEventListener("message", handleMessage);
+		signIn("google", { callbackUrl: "/closet" });
 	};
 
 	return (
 		<div className={styles.pageContainer}>
 			<div className={styles.pageTitle}>Welcome to Your Fashion Fits</div>
 			<div className={styles.pageText}>
-				{isAuthenticated && payload
-					? `Hello ${payload.email}`
+				{isAuthenticated
+					? `Hello ${session.user.email}`
 					: "Please Log In"}
 			</div>
-			{isAuthenticated && payload ? (
+			{isAuthenticated ? (
 				<Button onClick={handleLogin} text="Switch Accounts" />
 			) : (
 				<Button onClick={handleLogin} text="Login with Google" />

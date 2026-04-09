@@ -5,7 +5,7 @@ import Link from "next/link";
 import styles from "./Navbar.module.css";
 import ProfilePopup from "./profilePopup/ProfilePopup";
 
-const Navbar = ({ setIsAuthenticated }) => {
+const Navbar = () => {
 	return (
 		<nav className={styles.navbar}>
 			<Link href="/outfits">
@@ -36,7 +36,7 @@ const Navbar = ({ setIsAuthenticated }) => {
 					className={styles.navLogo}
 				/>
 			</Link>
-			<ProfilePopup setIsAuthenticated={setIsAuthenticated} />
+			<ProfilePopup />
 		</nav>
 	);
 };

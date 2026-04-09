@@ -4,7 +4,7 @@ import React, { useState, useMemo } from "react";
 import styles from "./CreateTemplate.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setWholeTemplate } from "../../../../store/reducers/outfitTemplateReducer";
-import { getRandomItemWithCategories } from "../../../../api/Item";
+import { getRandomItemWithCategories } from "../../../../api/actions/item";
 import {
 	createAdjacencyMatrix,
 	updateTemplateWithScales,

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
 
-import { filterItemsByCategories } from "../../../api/Item";
+import { filterItemsByCategories } from "../../../api/actions/item";
 
 import Button from "../../buttons/Button";
 import AddCategoryToItemsForm from "./AddCategoryToItemsForm";

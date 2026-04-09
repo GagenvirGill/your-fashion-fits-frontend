@@ -3,12 +3,13 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import CategoryView from "../../../src/views/CategoryView";
-import { useAuth } from "../../AuthContext";
 
 export default function CategoryPage() {
 	const { category } = useParams();
-	const { isAuthenticated, initialCategState } = useAuth();
+	const { status } = useSession();
+	const isAuthenticated = status === "authenticated";
 	const { categories } = useSelector((state) => state.categories);
 
 	const matchedCategory = categories.find(
@@ -21,7 +22,7 @@ export default function CategoryPage() {
 		}
 	}, [matchedCategory]);
 
-	if (!isAuthenticated || !initialCategState) {
+	if (!isAuthenticated) {
 		return null;
 	}
 

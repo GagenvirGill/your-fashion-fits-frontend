@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import ImgCheckboxButton from "../buttons/ImgCheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./FormStyles.module.css";
-import { filterItemsByCategories } from "../../api/Item";
+import { filterItemsByCategories } from "../../api/actions/item";
 
 const ItemsCheckboxForm = ({
 	handleSubmit,

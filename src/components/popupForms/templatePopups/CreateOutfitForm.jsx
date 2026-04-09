@@ -7,7 +7,7 @@ import { refreshState } from "../../../store/reducers/outfitsReducer";
 import { setWholeTemplate } from "../../../store/reducers/outfitTemplateReducer";
 import { addNotification } from "../../../store/reducers/notificationsReducer";
 
-import { createOutfit } from "../../../api/Outfit";
+import { createOutfit } from "../../../api/actions/outfit";
 
 import Button from "../../buttons/Button";
 

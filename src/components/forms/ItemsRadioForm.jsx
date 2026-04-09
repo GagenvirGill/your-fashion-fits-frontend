@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styles from "./FormStyles.module.css";
 
-import { filterItemsByCategories } from "../../api/Item";
+import { filterItemsByCategories } from "../../api/actions/item";
 
 import ImgRadioButton from "../buttons/ImgRadioButton";
 import Button from "../buttons/Button";

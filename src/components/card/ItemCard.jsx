@@ -7,7 +7,7 @@ import { refreshState as refreshOutfitsState } from "../../store/reducers/outfit
 import { addNotification } from "../../store/reducers/notificationsReducer";
 
 import styles from "./ItemCard.module.css";
-import { deleteItem } from "../../api/Item";
+import { deleteItem } from "../../api/actions/item";
 
 import Card from "./Card";
 import ItemContextMenuForms from "../popupForms/itemContextMenu/ItemContextMenuForms";

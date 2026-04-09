@@ -6,7 +6,7 @@ import { refreshState } from "../../../store/reducers/itemsReducer";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../../../store/reducers/notificationsReducer";
 
-import { removeItemFromCategories } from "../../../api/Item";
+import { removeItemFromCategories } from "../../../api/actions/item";
 
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 

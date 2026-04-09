@@ -4,7 +4,7 @@ import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch } from "react-redux";
 
-import { setCategoriesFavItem } from "../../../api/Category";
+import { setCategoriesFavItem } from "../../../api/actions/category";
 import { refreshState } from "../../../store/reducers/categoriesReducer";
 import { addNotification } from "../../../store/reducers/notificationsReducer";
 

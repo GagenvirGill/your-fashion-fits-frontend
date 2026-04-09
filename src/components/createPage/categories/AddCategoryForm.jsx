@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { refreshState } from "../../../store/reducers/categoriesReducer";
 import { addNotification } from "../../../store/reducers/notificationsReducer";
-import { createCategory } from "../../../api/Category";
+import { createCategory } from "../../../api/actions/category";
 
 import styles from "./AddCategoryForm.module.css";
 import Button from "../../buttons/Button";

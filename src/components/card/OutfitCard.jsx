@@ -6,7 +6,7 @@ import { refreshState } from "../../store/reducers/outfitsReducer";
 import { addNotification } from "../../store/reducers/notificationsReducer";
 
 import styles from "./OutfitCard.module.css";
-import { deleteOutfit } from "../../api/Outfit";
+import { deleteOutfit } from "../../api/actions/outfit";
 
 import Card from "./Card";
 
