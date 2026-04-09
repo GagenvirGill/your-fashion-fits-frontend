@@ -1,5 +1,5 @@
 import ax from "./axiosConfig";
-import { processImage } from "../util/Image";
+import { processImage } from "../util/BackgroundRemoval";
 
 export const getAllItems = async () => {
 	try {
