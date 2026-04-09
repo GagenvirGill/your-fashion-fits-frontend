@@ -1,10 +1,12 @@
+"use client";
+
 import React from "react";
 import styles from "./GenericPageStyles.module.css";
 import Button from "../components/buttons/Button";
 import YoutubeEmbed from "../components/video/YoutubeEmbed";
 
 const Welcome = ({ setIsAuthenticated, isAuthenticated }) => {
-	const token = localStorage.getItem("token");
+	const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 	let payload = null;
 	if (token) {
@@ -19,13 +21,13 @@ const Welcome = ({ setIsAuthenticated, isAuthenticated }) => {
 		e.preventDefault();
 
 		const loginWindow = window.open(
-			`${import.meta.env.VITE_BACKEND_URL}/auth/google`,
+			`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`,
 			"Login with Google",
 			`width=${500},height=${400},top=${100},left=${100}`
 		);
 
 		const handleMessage = (event) => {
-			const backendOrigin = new URL(import.meta.env.VITE_BACKEND_URL)
+			const backendOrigin = new URL(process.env.NEXT_PUBLIC_BACKEND_URL)
 				.origin;
 
 			if (event.origin !== backendOrigin) {

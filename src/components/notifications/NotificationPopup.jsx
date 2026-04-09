@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import styles from "./Notifications.module.css";
 import { useDispatch } from "react-redux";

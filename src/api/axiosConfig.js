@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ax = axios.create({
-	baseURL: import.meta.env.VITE_BACKEND_URL,
+	baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},

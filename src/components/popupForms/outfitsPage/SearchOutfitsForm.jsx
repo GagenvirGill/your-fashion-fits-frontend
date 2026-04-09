@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./SearchOutfitsForm.module.css";

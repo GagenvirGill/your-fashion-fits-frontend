@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import styles from "./TemplateBox.module.css";
 import { useSelector } from "react-redux";

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useMemo } from "react";
 import styles from "./CreateTemplate.module.css";
 import { useDispatch, useSelector } from "react-redux";

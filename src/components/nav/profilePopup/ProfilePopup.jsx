@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import styles from "./ProfilePopup.module.css";
 
@@ -7,7 +9,7 @@ import InlineContextMenuButton from "../../buttons/InlineContextMenuButton";
 const ProfilePopup = ({ setIsAuthenticated }) => {
 	const [isPopupVisible, setPopupVisibility] = useState(false);
 
-	const token = localStorage.getItem("token");
+	const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
 	let payload = null;
 	if (token) {

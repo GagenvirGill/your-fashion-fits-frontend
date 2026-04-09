@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { refreshState as refreshItemsState } from "../../store/reducers/itemsReducer";

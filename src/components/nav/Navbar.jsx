@@ -1,38 +1,40 @@
+"use client";
+
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import styles from "./Navbar.module.css";
 import ProfilePopup from "./profilePopup/ProfilePopup";
 
 const Navbar = ({ setIsAuthenticated }) => {
 	return (
 		<nav className={styles.navbar}>
-			<Link to="/outfits">
+			<Link href="/outfits">
 				<img
 					src="/calendar_icon.png"
 					alt="past-outfits"
 					className={styles.navLogo}
-				></img>
+				/>
 			</Link>
-			<Link to="/closet">
+			<Link href="/closet">
 				<img
 					src="/hanger_icon.png"
 					alt="closet"
 					className={styles.navLogo}
-				></img>
+				/>
 			</Link>
-			<Link to="/home">
+			<Link href="/">
 				<img
 					src="/house_icon.png"
 					alt="Home"
 					className={styles.navLogo}
-				></img>
+				/>
 			</Link>
-			<Link to="/create">
+			<Link href="/create">
 				<img
 					src="/plus_icon.png"
 					alt="Create"
 					className={styles.navLogo}
-				></img>
+				/>
 			</Link>
 			<ProfilePopup setIsAuthenticated={setIsAuthenticated} />
 		</nav>

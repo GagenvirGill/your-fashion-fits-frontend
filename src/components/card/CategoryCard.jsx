@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { refreshState } from "../../store/reducers/categoriesReducer";
 import { addNotification } from "../../store/reducers/notificationsReducer";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import styles from "./CategoryCard.module.css";
 import { deleteCategory } from "../../api/Category";
@@ -75,7 +77,7 @@ const CategoryCard = ({
 				}
 				type={`'${categoryName}' Category`}
 			>
-				<Link key={`${categoryId}-link`} to={urlRoute}>
+				<Link key={`${categoryId}-link`} href={urlRoute}>
 					<img src={imagePath} alt="Preview" id={categoryId} />
 				</Link>
 				<div className={styles.categoryCardDiv}>

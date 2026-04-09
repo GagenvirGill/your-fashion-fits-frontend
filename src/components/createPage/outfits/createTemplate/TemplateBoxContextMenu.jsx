@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./TemplateBox.module.css";
@@ -134,7 +136,7 @@ const TemplateBoxContextMenu = ({
 		};
 	}, [showContextMenu]);
 
-	const menuWidth = Math.min(250, window.innerWidth * 0.6);
+	const menuWidth = typeof window !== "undefined" ? Math.min(250, window.innerWidth * 0.6) : 250;
 
 	return (
 		<>
@@ -144,7 +146,7 @@ const TemplateBoxContextMenu = ({
 					style={{
 						top: menuPosition.y,
 						left:
-							menuPosition.x + menuWidth > window.innerWidth
+							typeof window !== "undefined" && menuPosition.x + menuWidth > window.innerWidth
 								? window.innerWidth - menuWidth
 								: menuPosition.x,
 					}}

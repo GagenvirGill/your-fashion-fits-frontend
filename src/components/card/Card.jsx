@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import styles from "./Card.module.css";
 
@@ -71,7 +73,7 @@ const Card = ({ id, onDelete, className, children, customConMenu, type }) => {
 						style={{
 							top: menuPosition.y,
 							left:
-								menuPosition.x + menuWidth > window.innerWidth
+								typeof window !== "undefined" && menuPosition.x + menuWidth > window.innerWidth
 									? window.innerWidth - menuWidth
 									: menuPosition.x,
 						}}

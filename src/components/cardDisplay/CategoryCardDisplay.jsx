@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import { useSelector } from "react-redux";
 import styles from "./CardDisplayStyles.module.css";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import CategoryCard from "../card/CategoryCard";
 import BigButton from "../buttons/BigButton";
@@ -12,7 +14,7 @@ const CategoryCardDisplay = () => {
 
 	return (
 		<div className={styles.cardDisplay}>
-			<Link to="/closet/all">
+			<Link href="/closet/all">
 				<BigButton
 					type="button"
 					text="View All of Your Items"

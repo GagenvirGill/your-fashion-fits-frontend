@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./CardDisplayStyles.module.css";
@@ -11,6 +13,7 @@ import ItemSortByForm from "../popupForms/itemsPage/ItemSortByForm";
 import { sortItems } from "../../util/Item";
 
 const calculateLoadAmount = () => {
+	if (typeof window === "undefined") return 20;
 	const baseAmount = Math.floor((window.innerWidth * 0.9) / 160) * 4;
 	return baseAmount > 40 ? baseAmount / 2 : baseAmount;
 };

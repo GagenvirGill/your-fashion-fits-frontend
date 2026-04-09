@@ -1,4 +1,4 @@
-import SegmentationWorker from "../workers/segmentation.worker.js?worker";
+// Webpack-compatible worker import (replaces Vite's ?worker syntax)
 
 let worker = null;
 let messageId = 0;
@@ -7,7 +7,9 @@ let queue = Promise.resolve();
 
 function getWorker() {
 	if (!worker) {
-		worker = new SegmentationWorker();
+		worker = new Worker(
+			new URL("../workers/segmentation.worker.js", import.meta.url)
+		);
 		worker.onmessage = (e) => {
 			const { id, result, error } = e.data;
 			const resolver = pending.get(id);
