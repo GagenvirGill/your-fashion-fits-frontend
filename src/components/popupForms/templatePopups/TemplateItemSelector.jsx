@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
+import { updateTemplateWithScales } from "../../../util/itemRatios";
 
-import { setBoxItem } from "../../../store/reducers/outfitTemplateReducer";
+import { setWholeTemplate } from "../../../store/reducers/outfitTemplateReducer";
 
 import Button from "../../buttons/Button";
 import ItemsRadioForm from "../../forms/ItemsRadioForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-const TemplateItemSelector = ({ rowIndex, boxIndex, setShowForm }) => {
+const TemplateItemSelector = ({
+	rowIndex,
+	boxIndex,
+	setShowForm,
+	ratiosMatrix,
+}) => {
 	const dispatch = useDispatch();
 	const { templateRows } = useSelector((state) => state.outfitTemplate);
 	const { itemId } = templateRows[rowIndex][boxIndex];
@@ -16,14 +22,22 @@ const TemplateItemSelector = ({ rowIndex, boxIndex, setShowForm }) => {
 	const [filteringCategoryIds, setFilteringCategoryIds] = useState([]);
 
 	const handleItemSubmit = (selectedItemId, selectedItemImagePath) => {
-		dispatch(
-			setBoxItem({
-				rowIndex: rowIndex,
-				boxIndex: boxIndex,
-				itemId: selectedItemId,
-				imagePath: selectedItemImagePath,
-			})
+		const newRows = templateRows.map((row) => [...row]);
+
+		newRows[rowIndex][boxIndex] = {
+			...newRows[rowIndex][boxIndex],
+			itemId: selectedItemId,
+			imagePath: selectedItemImagePath,
+		};
+
+		const updatedRows = updateTemplateWithScales(
+			newRows,
+			ratiosMatrix,
+			newRows
 		);
+
+		dispatch(setWholeTemplate({ newTemplate: updatedRows }));
+
 		handleClose();
 	};
 
