@@ -1,19 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAtomValue } from "jotai";
+import { outfitsAtom } from "@/jotai/outfitsAtom";
 import styles from "./SearchOutfitsForm.module.css";
-import { searchOutfits, getAllOutfits } from "@/api/actions/outfit";
+import { searchOutfits } from "@/api/actions/outfit";
 
 const SearchOutfitsForm = ({ setDisplayedOutfits }) => {
+	const outfits = useAtomValue(outfitsAtom);
 	const [query, setQuery] = useState("");
 
 	const handleSearch = () => {
 		if (query.trim() === "") {
-			getAllOutfits()
-				.then((allOutfits) => {
-					setDisplayedOutfits(allOutfits);
-				})
-				.catch((err) => console.log(err));
+			setDisplayedOutfits(outfits);
 		} else {
 			searchOutfits(query)
 				.then((queriedOutfits) => {

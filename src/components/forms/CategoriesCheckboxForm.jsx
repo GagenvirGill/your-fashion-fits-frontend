@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { getAllCategories } from "@/api/actions/category";
+import React, { useState } from "react";
+import { useAtomValue } from "jotai";
+import { categoriesAtom } from "@/jotai/categoriesAtom";
 import CheckboxButton from "../buttons/CheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./FormStyles.module.css";
@@ -12,15 +13,8 @@ const CategoriesCheckboxForm = ({
 	preSelectedCategoryIds,
 	formId,
 }) => {
-	const [categories, setCategories] = useState(displayCategories || []);
-
-	useEffect(() => {
-		if (!displayCategories) {
-			getAllCategories()
-				.then(setCategories)
-				.catch((err) => console.log(`Error loading categories: ${err}`));
-		}
-	}, [displayCategories]);
+	const allCategories = useAtomValue(categoriesAtom);
+	const categories = displayCategories || allCategories;
 
 	const [selectedCategories, setSelectedCategories] = useState(
 		preSelectedCategoryIds || []

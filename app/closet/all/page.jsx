@@ -3,6 +3,8 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getAllItems } from "@/api/actions/item";
 import { getAllOutfits } from "@/api/actions/outfit";
+import { HydrateItems } from "@/jotai/itemsAtom";
+import { HydrateOutfits } from "@/jotai/outfitsAtom";
 import AllItemsView from "@/views/AllItemsView";
 
 export const metadata = {
@@ -20,5 +22,11 @@ export default async function AllItemsPage() {
 		getAllOutfits(),
 	]);
 
-	return <AllItemsView items={items} outfits={outfits} />;
+	return (
+		<HydrateItems items={items}>
+			<HydrateOutfits outfits={outfits}>
+				<AllItemsView />
+			</HydrateOutfits>
+		</HydrateItems>
+	);
 }

@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getAllOutfits } from "@/api/actions/outfit";
+import { HydrateOutfits } from "@/jotai/outfitsAtom";
 import OutfitsView from "@/views/OutfitsView";
 
 export const metadata = {
@@ -15,5 +16,10 @@ export default async function OutfitsPage() {
 	}
 
 	const outfits = await getAllOutfits();
-	return <OutfitsView outfits={outfits} />;
+
+	return (
+		<HydrateOutfits outfits={outfits}>
+			<OutfitsView />
+		</HydrateOutfits>
+	);
 }

@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useAtomValue } from "jotai";
+import { itemsAtom } from "@/jotai/itemsAtom";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import { addCategoryToItems } from "@/api/actions/category";
-import { getAllItems } from "@/api/actions/item";
 
 import ItemsCheckboxForm from "@/components/forms/ItemsCheckboxForm";
 
@@ -19,14 +20,8 @@ const AddCategoryToItemsForm = ({
 }) => {
 	const dispatch = useDispatch();
 	const router = useRouter();
-	const [items, setItems] = useState([]);
+	const items = useAtomValue(itemsAtom);
 	const [filteredItems, setFilteredItems] = useState([]);
-
-	useEffect(() => {
-		getAllItems()
-			.then(setItems)
-			.catch((err) => console.log(`Error loading items: ${err}`));
-	}, []);
 
 	useEffect(() => {
 		const currItems = new Set();

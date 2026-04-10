@@ -2,6 +2,8 @@
 
 import React, { useState, useMemo } from "react";
 import styles from "./CreateTemplate.module.css";
+import { useAtomValue } from "jotai";
+import { outfitsAtom } from "@/jotai/outfitsAtom";
 import { useDispatch, useSelector } from "react-redux";
 import { setWholeTemplate } from "@/store/reducers/outfitTemplateReducer";
 import { getRandomItemWithCategories } from "@/api/actions/item";
@@ -14,8 +16,9 @@ import TemplateRow from "./TemplateRow";
 import ImgButton from "@/components/buttons/ImgButton";
 import CreateOutfitForm from "@/components/popupForms/templatePopups/CreateOutfitForm";
 
-const CreateTemplate = ({ outfits }) => {
+const CreateTemplate = () => {
 	const dispatch = useDispatch();
+	const outfits = useAtomValue(outfitsAtom);
 	const ratiosMatrix = useMemo(() => {
 		return createAdjacencyMatrix(outfits);
 	}, [outfits]);

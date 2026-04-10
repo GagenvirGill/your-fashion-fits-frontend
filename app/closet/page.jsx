@@ -3,6 +3,8 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getAllCategories } from "@/api/actions/category";
 import { getAllItems } from "@/api/actions/item";
+import { HydrateCategories } from "@/jotai/categoriesAtom";
+import { HydrateItems } from "@/jotai/itemsAtom";
 import Closet from "@/views/Closet";
 
 export const metadata = {
@@ -20,5 +22,11 @@ export default async function ClosetPage() {
 		getAllItems(),
 	]);
 
-	return <Closet categories={categories} items={items} />;
+	return (
+		<HydrateCategories categories={categories}>
+			<HydrateItems items={items}>
+				<Closet />
+			</HydrateItems>
+		</HydrateCategories>
+	);
 }

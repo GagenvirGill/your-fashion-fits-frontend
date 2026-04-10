@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { itemsAtom } from "@/jotai/itemsAtom";
 import styles from "./FormStyles.module.css";
 
-import { filterItemsByCategories, getAllItems } from "@/api/actions/item";
+import { filterItemsByCategories } from "@/api/actions/item";
 
 import ImgRadioButton from "../buttons/ImgRadioButton";
 import Button from "../buttons/Button";
@@ -15,14 +17,13 @@ const ItemsRadioForm = ({
 	returnImagePath,
 	filteringCategoryIds,
 }) => {
+	const allItems = useAtomValue(itemsAtom);
 	const [displayItems, setDisplayItems] = useState([]);
 
 	useEffect(() => {
 		if (filteringCategoryIds) {
 			if (filteringCategoryIds.length === 0) {
-				getAllItems()
-					.then(setDisplayItems)
-					.catch((err) => console.log(`Error loading items: ${err}`));
+				setDisplayItems(allItems);
 			} else {
 				filterItemsByCategories(filteringCategoryIds)
 					.then((filteredItems) => {
@@ -33,7 +34,7 @@ const ItemsRadioForm = ({
 					});
 			}
 		}
-	}, [filteringCategoryIds]);
+	}, [filteringCategoryIds, allItems]);
 
 	const [selectedItemId, setSelectedItemId] = useState(preSelectedItemId);
 	const [selectedItemImagePath, setSelectedItemImagePath] = useState(null);

@@ -1,13 +1,19 @@
 "use client";
 
 import React from "react";
+import { useAtomValue } from "jotai";
+import { categoriesAtom } from "@/jotai/categoriesAtom";
+import { itemsAtom } from "@/jotai/itemsAtom";
 import styles from "./CardDisplayStyles.module.css";
 import Link from "next/link";
 
 import CategoryCard from "../card/CategoryCard";
 import BigButton from "../buttons/BigButton";
 
-const CategoryCardDisplay = ({ categories, items }) => {
+const CategoryCardDisplay = () => {
+	const categories = useAtomValue(categoriesAtom);
+	const items = useAtomValue(itemsAtom);
+
 	return (
 		<div className={styles.cardDisplay}>
 			<Link href="/closet/all">

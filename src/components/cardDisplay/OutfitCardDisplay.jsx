@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { outfitsAtom } from "@/jotai/outfitsAtom";
 import styles from "./CardDisplayStyles.module.css";
 
 import OutfitCard from "../card/OutfitCard";
@@ -12,7 +14,9 @@ const calculateNumOutfitsPerRow = () => {
 	return Math.floor((window.innerWidth * 0.9) / 300);
 };
 
-const OutfitCardDisplay = ({ outfits }) => {
+const OutfitCardDisplay = () => {
+	const outfits = useAtomValue(outfitsAtom);
+
 	const [displayedOutfits, setDisplayedOutfits] = useState(outfits);
 	const [showFilterForm, setShowFilterForm] = useState(false);
 	const [showSearchBar, setShowSearchBar] = useState(false);
@@ -169,7 +173,6 @@ const OutfitCardDisplay = ({ outfits }) => {
 				<FilterOutfitsByItemForm
 					handleClose={handleUpdateShowFilterForm}
 					setDisplayedOutfits={setDisplayedOutfits}
-					outfits={outfits}
 				/>
 			)}
 		</div>

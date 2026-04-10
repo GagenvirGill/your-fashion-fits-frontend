@@ -1,8 +1,11 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getAllCategories } from "@/api/actions/category";
-import { filterItemsByCategories } from "@/api/actions/item";
+import { getAllItems } from "@/api/actions/item";
 import { getAllOutfits } from "@/api/actions/outfit";
+import { HydrateCategories } from "@/jotai/categoriesAtom";
+import { HydrateItems } from "@/jotai/itemsAtom";
+import { HydrateOutfits } from "@/jotai/outfitsAtom";
 import CategoryView from "@/views/CategoryView";
 import { notFound, redirect } from "next/navigation";
 
@@ -24,8 +27,9 @@ export default async function CategoryPage({ params }) {
 	}
 
 	const { category } = await params;
-	const [categories, outfits] = await Promise.all([
+	const [categories, items, outfits] = await Promise.all([
 		getAllCategories(),
+		getAllItems(),
 		getAllOutfits(),
 	]);
 
@@ -37,14 +41,16 @@ export default async function CategoryPage({ params }) {
 		notFound();
 	}
 
-	const items = await filterItemsByCategories([matchedCategory.categoryId]);
-
 	return (
-		<CategoryView
-			categoryId={matchedCategory.categoryId}
-			categoryName={matchedCategory.name}
-			items={items}
-			outfits={outfits}
-		/>
+		<HydrateCategories categories={categories}>
+			<HydrateItems items={items}>
+				<HydrateOutfits outfits={outfits}>
+					<CategoryView
+						categoryId={matchedCategory.categoryId}
+						categoryName={matchedCategory.name}
+					/>
+				</HydrateOutfits>
+			</HydrateItems>
+		</HydrateCategories>
 	);
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategories } from "@/api/actions/category";
+import { useAtomValue } from "jotai";
+import { categoriesAtom } from "@/jotai/categoriesAtom";
 import styles from "./TemplateBox.module.css";
 
 import {
@@ -36,13 +37,7 @@ const TemplateBoxContextMenu = ({
 		categories: templateCategories,
 	} = templateRows[rowIndex][boxIndex];
 
-	const [categories, setCategories] = useState([]);
-
-	useEffect(() => {
-		getAllCategories()
-			.then(setCategories)
-			.catch((err) => console.log(`Error loading categories: ${err}`));
-	}, []);
+	const categories = useAtomValue(categoriesAtom);
 
 	const categoryNames = categories
 		.filter((category) => templateCategories.includes(category.categoryId))

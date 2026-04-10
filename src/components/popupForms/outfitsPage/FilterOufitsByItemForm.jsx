@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { useAtomValue } from "jotai";
+import { outfitsAtom } from "@/jotai/outfitsAtom";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useState } from "react";
 
@@ -10,7 +12,8 @@ import CategoriesCheckboxForm from "@/components/forms/CategoriesCheckboxForm";
 
 import { filterOutfitsByItem } from "@/lib/outfit-utils";
 
-const FilterOutfitsByItemForm = ({ handleClose, setDisplayedOutfits, outfits }) => {
+const FilterOutfitsByItemForm = ({ handleClose, setDisplayedOutfits }) => {
+	const outfits = useAtomValue(outfitsAtom);
 	const [filtCategoryIds, setFiltCategoryIds] = useState([]);
 
 	const handleItemsSubmit = (selectedItemIds) => {

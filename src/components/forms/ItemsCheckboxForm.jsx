@@ -1,19 +1,22 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useAtomValue } from "jotai";
+import { itemsAtom } from "@/jotai/itemsAtom";
 
 import ImgCheckboxButton from "../buttons/ImgCheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./FormStyles.module.css";
-import { filterItemsByCategories, getAllItems } from "@/api/actions/item";
+import { filterItemsByCategories } from "@/api/actions/item";
 
 const ItemsCheckboxForm = ({
 	handleSubmit,
 	displayItems,
 	filteringCategoryIds,
 }) => {
+	const allItems = useAtomValue(itemsAtom);
 	const [selectedItems, setSelectedItems] = useState([]);
-	const [display_items, setDisplayItems] = useState(displayItems || []);
+	const [display_items, setDisplayItems] = useState(displayItems || allItems);
 
 	const handleCheckboxChange = (itemId, checked) => {
 		setSelectedItems((prevState) => {
@@ -34,11 +37,9 @@ const ItemsCheckboxForm = ({
 		if (displayItems) {
 			setDisplayItems(displayItems);
 		} else if (!filteringCategoryIds) {
-			getAllItems()
-				.then(setDisplayItems)
-				.catch((err) => console.log(`Error loading items: ${err}`));
+			setDisplayItems(allItems);
 		}
-	}, [displayItems]);
+	}, [displayItems, allItems]);
 
 	useEffect(() => {
 		if (filteringCategoryIds) {
