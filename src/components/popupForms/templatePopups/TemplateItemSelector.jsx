@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { updateTemplateWithScales } from "../../../lib/item-ratios";
+import { updateTemplateWithScales } from "@/lib/item-ratios";
 
-import { setWholeTemplate } from "../../../store/reducers/outfitTemplateReducer";
+import { setWholeTemplate } from "@/store/reducers/outfitTemplateReducer";
 
-import Button from "../../buttons/Button";
-import ItemsRadioForm from "../../forms/ItemsRadioForm";
-import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
+import Button from "@/components/buttons/Button";
+import ItemsRadioForm from "@/components/forms/ItemsRadioForm";
+import CategoriesCheckboxForm from "@/components/forms/CategoriesCheckboxForm";
 
 const TemplateItemSelector = ({
 	rowIndex,

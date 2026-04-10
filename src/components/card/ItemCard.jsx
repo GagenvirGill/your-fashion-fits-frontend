@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { refreshState as refreshItemsState } from "../../store/reducers/itemsReducer";
-import { refreshState as refreshOutfitsState } from "../../store/reducers/outfitsReducer";
-import { addNotification } from "../../store/reducers/notificationsReducer";
+import { refreshState as refreshItemsState } from "@/store/reducers/itemsReducer";
+import { refreshState as refreshOutfitsState } from "@/store/reducers/outfitsReducer";
+import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import styles from "./ItemCard.module.css";
-import { deleteItem } from "../../api/actions/item";
+import { deleteItem } from "@/api/actions/item";
 
 import Card from "./Card";
 import ItemContextMenuForms from "../popupForms/itemContextMenu/ItemContextMenuForms";

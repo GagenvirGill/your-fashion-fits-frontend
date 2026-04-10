@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./CardDisplayStyles.module.css";
 
-import { filterItemsByCategories } from "../../api/actions/item";
+import { filterItemsByCategories } from "@/api/actions/item";
 
 import Button from "../buttons/Button";
 import ItemCard from "../card/ItemCard";
 import ItemSortByForm from "../popupForms/itemsPage/ItemSortByForm";
 
-import { sortItems } from "../../lib/item-utils";
+import { sortItems } from "@/lib/item-utils";
 
 const calculateLoadAmount = () => {
 	if (typeof window === "undefined") return 20;

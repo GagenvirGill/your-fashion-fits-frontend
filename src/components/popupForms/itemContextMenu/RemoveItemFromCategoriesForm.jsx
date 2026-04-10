@@ -2,13 +2,13 @@
 
 import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { refreshState } from "../../../store/reducers/itemsReducer";
+import { refreshState } from "@/store/reducers/itemsReducer";
 import { useDispatch } from "react-redux";
-import { addNotification } from "../../../store/reducers/notificationsReducer";
+import { addNotification } from "@/store/reducers/notificationsReducer";
 
-import { removeItemFromCategories } from "../../../api/actions/item";
+import { removeItemFromCategories } from "@/api/actions/item";
 
-import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
+import CategoriesCheckboxForm from "@/components/forms/CategoriesCheckboxForm";
 
 const RemoveItemFromCategoriesForm = ({
 	itemId,

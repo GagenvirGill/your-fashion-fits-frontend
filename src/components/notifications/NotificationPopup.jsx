@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Notifications.module.css";
 import { useDispatch } from "react-redux";
-import { removeNotification } from "../../store/reducers/notificationsReducer";
+import { removeNotification } from "@/store/reducers/notificationsReducer";
 
 const NotificationPopup = ({ id, message }) => {
 	const dispatch = useDispatch();

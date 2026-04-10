@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { refreshState } from "../../store/reducers/categoriesReducer";
-import { addNotification } from "../../store/reducers/notificationsReducer";
+import { refreshState } from "@/store/reducers/categoriesReducer";
+import { addNotification } from "@/store/reducers/notificationsReducer";
 import Link from "next/link";
 
 import styles from "./CategoryCard.module.css";
-import { deleteCategory } from "../../api/actions/category";
+import { deleteCategory } from "@/api/actions/category";
 
 import Card from "./Card";
 import CategoryContextMenuForms from "../popupForms/categoryContextMenu/CategoryContextMenuForms";

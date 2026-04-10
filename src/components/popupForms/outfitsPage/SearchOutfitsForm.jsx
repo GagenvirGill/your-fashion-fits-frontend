@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./SearchOutfitsForm.module.css";
-import { searchOutfits } from "../../../api/actions/outfit";
+import { searchOutfits } from "@/api/actions/outfit";
 
 const SearchOutfitsForm = ({ setDisplayedOutfits }) => {
 	const { outfits } = useSelector((state) => state.outfits);

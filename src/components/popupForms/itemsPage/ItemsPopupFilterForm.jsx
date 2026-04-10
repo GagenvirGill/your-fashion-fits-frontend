@@ -3,8 +3,8 @@
 import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 
-import Button from "../../buttons/Button";
-import FilterItemsForm from "../../forms/FilterItemsForm";
+import Button from "@/components/buttons/Button";
+import FilterItemsForm from "@/components/forms/FilterItemsForm";
 
 const ItemsPopupFilterForm = ({ handleClose, setSelectedCategories }) => {
 	const handleSubmit = async (selCategories) => {

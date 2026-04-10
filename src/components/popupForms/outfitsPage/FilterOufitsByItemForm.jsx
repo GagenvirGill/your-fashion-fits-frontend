@@ -5,11 +5,11 @@ import styles from "../ContextMenuPopUpStyles.module.css";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
-import Button from "../../buttons/Button";
-import ItemsCheckboxForm from "../../forms/ItemsCheckboxForm";
-import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
+import Button from "@/components/buttons/Button";
+import ItemsCheckboxForm from "@/components/forms/ItemsCheckboxForm";
+import CategoriesCheckboxForm from "@/components/forms/CategoriesCheckboxForm";
 
-import { filterOutfitsByItem } from "../../../lib/outfit-utils";
+import { filterOutfitsByItem } from "@/lib/outfit-utils";
 
 const FilterOutfitsByItemForm = ({ handleClose, setDisplayedOutfits }) => {
 	const { outfits } = useSelector((state) => state.outfits);

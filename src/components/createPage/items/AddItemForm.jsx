@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createItem } from "../../../api/actions/item";
-import { processImage } from "../../../lib/background-removal";
-import { refreshState } from "../../../store/reducers/itemsReducer";
-import { addNotification } from "../../../store/reducers/notificationsReducer";
+import { createItem } from "@/api/actions/item";
+import { processImage } from "@/lib/background-removal";
+import { refreshState } from "@/store/reducers/itemsReducer";
+import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import styles from "./AddItemForm.module.css";
-import Button from "../../buttons/Button";
+import Button from "@/components/buttons/Button";
 
 const AddItemForm = () => {
 	const [images, setImages] = useState([]);

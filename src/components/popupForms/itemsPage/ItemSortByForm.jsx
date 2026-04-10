@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import styles from "./ItemSortByForm.module.css";
 
-import Button from "../../buttons/Button";
-import ContextMenuButton from "../../buttons/ContextMenuButton";
+import Button from "@/components/buttons/Button";
+import ContextMenuButton from "@/components/buttons/ContextMenuButton";
 
 const ItemSortByForm = ({ setSortOption }) => {
 	const [isPopupVisible, setPopupVisibility] = useState(false);

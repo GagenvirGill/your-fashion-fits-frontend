@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
 
-import { getCategoriesForItem } from "../../../api/actions/item";
+import { getCategoriesForItem } from "@/api/actions/item";
 
-import Button from "../../buttons/Button";
+import Button from "@/components/buttons/Button";
 import AddItemToCategoriesForm from "./AddItemToCategoriesForm";
 import RemoveItemFromCategoriesForm from "./RemoveItemFromCategoriesForm";
 

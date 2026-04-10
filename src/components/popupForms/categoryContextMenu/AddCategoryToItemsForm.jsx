@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshState } from "../../../store/reducers/categoriesReducer";
-import { addNotification } from "../../../store/reducers/notificationsReducer";
+import { refreshState } from "@/store/reducers/categoriesReducer";
+import { addNotification } from "@/store/reducers/notificationsReducer";
 
-import { addCategoryToItems } from "../../../api/actions/category";
+import { addCategoryToItems } from "@/api/actions/category";
 
-import ItemsCheckboxForm from "../../forms/ItemsCheckboxForm";
+import ItemsCheckboxForm from "@/components/forms/ItemsCheckboxForm";
 
 const AddCategoryToItemsForm = ({
 	categoryId,

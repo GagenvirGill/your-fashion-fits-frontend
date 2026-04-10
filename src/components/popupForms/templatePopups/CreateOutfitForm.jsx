@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshState } from "../../../store/reducers/outfitsReducer";
-import { setWholeTemplate } from "../../../store/reducers/outfitTemplateReducer";
-import { addNotification } from "../../../store/reducers/notificationsReducer";
+import { refreshState } from "@/store/reducers/outfitsReducer";
+import { setWholeTemplate } from "@/store/reducers/outfitTemplateReducer";
+import { addNotification } from "@/store/reducers/notificationsReducer";
 
-import { createOutfit } from "../../../api/actions/outfit";
+import { createOutfit } from "@/api/actions/outfit";
 
-import Button from "../../buttons/Button";
+import Button from "@/components/buttons/Button";
 
 const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 	const dispatch = useDispatch();

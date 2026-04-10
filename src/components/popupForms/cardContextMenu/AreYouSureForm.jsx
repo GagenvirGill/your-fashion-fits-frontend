@@ -3,7 +3,7 @@
 import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 
-import Button from "../../buttons/Button";
+import Button from "@/components/buttons/Button";
 
 const AreYouSureForm = ({ handleConfirm, handleCancel, type, children }) => {
 	return (

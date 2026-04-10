@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import styles from "./ProfilePopup.module.css";
 
-import ImgButton from "../../buttons/ImgButton";
-import InlineContextMenuButton from "../../buttons/InlineContextMenuButton";
+import ImgButton from "@/components/buttons/ImgButton";
+import InlineContextMenuButton from "@/components/buttons/InlineContextMenuButton";
 
 const ProfilePopup = () => {
 	const [isPopupVisible, setPopupVisibility] = useState(false);

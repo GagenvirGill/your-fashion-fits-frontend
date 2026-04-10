@@ -7,10 +7,10 @@ import styles from "../ContextMenuPopUpStyles.module.css";
 import {
 	setBoxCategories,
 	setBoxItem,
-} from "../../../store/reducers/outfitTemplateReducer";
+} from "@/store/reducers/outfitTemplateReducer";
 
-import Button from "../../buttons/Button";
-import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
+import Button from "@/components/buttons/Button";
+import CategoriesCheckboxForm from "@/components/forms/CategoriesCheckboxForm";
 
 const TemplateCategoriesSelector = ({ rowIndex, boxIndex, setShowForm }) => {
 	const dispatch = useDispatch();

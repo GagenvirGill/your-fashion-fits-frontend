@@ -3,16 +3,16 @@
 import React, { useState, useMemo } from "react";
 import styles from "./CreateTemplate.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setWholeTemplate } from "../../../../store/reducers/outfitTemplateReducer";
-import { getRandomItemWithCategories } from "../../../../api/actions/item";
+import { setWholeTemplate } from "@/store/reducers/outfitTemplateReducer";
+import { getRandomItemWithCategories } from "@/api/actions/item";
 import {
 	createAdjacencyMatrix,
 	updateTemplateWithScales,
-} from "../../../../lib/item-ratios";
+} from "@/lib/item-ratios";
 
 import TemplateRow from "./TemplateRow";
-import ImgButton from "../../../buttons/ImgButton";
-import CreateOutfitForm from "../../../popupForms/templatePopups/CreateOutfitForm";
+import ImgButton from "@/components/buttons/ImgButton";
+import CreateOutfitForm from "@/components/popupForms/templatePopups/CreateOutfitForm";
 
 const CreateTemplate = () => {
 	const dispatch = useDispatch();
