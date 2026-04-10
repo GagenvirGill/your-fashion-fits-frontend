@@ -18,7 +18,7 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
 	};
 }
 
-export async function backendGet(path: string, params?: Record<string, string>) {
+export async function get(path: string, params?: Record<string, string>) {
 	const headers = await getAuthHeaders();
 	const url = new URL(`${BACKEND_URL}${path}`);
 
@@ -37,7 +37,7 @@ export async function backendGet(path: string, params?: Record<string, string>) 
 	return res.json();
 }
 
-export async function backendPost(path: string, body?: any, options?: { isFormData?: boolean }) {
+export async function post(path: string, body?: any, options?: { isFormData?: boolean }) {
 	const headers = await getAuthHeaders();
 
 	if (options?.isFormData) {
@@ -57,7 +57,7 @@ export async function backendPost(path: string, body?: any, options?: { isFormDa
 	return res.json();
 }
 
-export async function backendDelete(path: string, body?: any) {
+export async function del(path: string, body?: any) {
 	const headers = await getAuthHeaders();
 
 	const res = await fetch(`${BACKEND_URL}${path}`, {
