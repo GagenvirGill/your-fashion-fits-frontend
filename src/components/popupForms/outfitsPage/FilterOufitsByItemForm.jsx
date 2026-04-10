@@ -9,7 +9,7 @@ import Button from "../../buttons/Button";
 import ItemsCheckboxForm from "../../forms/ItemsCheckboxForm";
 import CategoriesCheckboxForm from "../../forms/CategoriesCheckboxForm";
 
-import { filterOutfitsByItem } from "../../../util/Outfits";
+import { filterOutfitsByItem } from "../../../lib/outfit-utils";
 
 const FilterOutfitsByItemForm = ({ handleClose, setDisplayedOutfits }) => {
 	const { outfits } = useSelector((state) => state.outfits);

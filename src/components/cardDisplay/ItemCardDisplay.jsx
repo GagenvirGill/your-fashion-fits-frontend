@@ -10,7 +10,7 @@ import Button from "../buttons/Button";
 import ItemCard from "../card/ItemCard";
 import ItemSortByForm from "../popupForms/itemsPage/ItemSortByForm";
 
-import { sortItems } from "../../util/Item";
+import { sortItems } from "../../lib/item-utils";
 
 const calculateLoadAmount = () => {
 	if (typeof window === "undefined") return 20;

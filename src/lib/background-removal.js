@@ -8,7 +8,7 @@ let queue = Promise.resolve();
 function getWorker() {
 	if (!worker) {
 		worker = new Worker(
-			new URL("../workers/segmentation.worker.js", import.meta.url)
+			new URL("./segmentation-worker.js", import.meta.url)
 		);
 		worker.onmessage = (e) => {
 			const { id, result, error } = e.data;

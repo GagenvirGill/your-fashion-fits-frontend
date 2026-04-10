@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { updateTemplateWithScales } from "../../../util/itemRatios";
+import { updateTemplateWithScales } from "../../../lib/item-ratios";
 
 import { setWholeTemplate } from "../../../store/reducers/outfitTemplateReducer";
 

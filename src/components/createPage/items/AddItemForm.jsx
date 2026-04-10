@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createItem } from "../../../api/actions/item";
-import { processImage } from "../../../util/BackgroundRemoval";
+import { processImage } from "../../../lib/background-removal";
 import { refreshState } from "../../../store/reducers/itemsReducer";
 import { addNotification } from "../../../store/reducers/notificationsReducer";
 

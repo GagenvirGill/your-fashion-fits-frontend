@@ -1,5 +1,5 @@
 import * as ort from "onnxruntime-web";
-import { fetchModel } from "../util/modelCache.js";
+import { fetchModel } from "./model-cache.js";
 
 const IDLE_TIMEOUT_MS = 60_000;
 const MODEL_INPUT_SIZE = 1024;

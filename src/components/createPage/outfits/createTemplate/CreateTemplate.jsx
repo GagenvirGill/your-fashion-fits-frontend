@@ -8,7 +8,7 @@ import { getRandomItemWithCategories } from "../../../../api/actions/item";
 import {
 	createAdjacencyMatrix,
 	updateTemplateWithScales,
-} from "../../../../util/itemRatios";
+} from "../../../../lib/item-ratios";
 
 import TemplateRow from "./TemplateRow";
 import ImgButton from "../../../buttons/ImgButton";
