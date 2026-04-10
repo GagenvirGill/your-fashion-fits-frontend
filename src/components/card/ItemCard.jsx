@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { useSetAtom } from "jotai";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
-import { useRouter } from "next/navigation";
-
 import styles from "./ItemCard.module.css";
 import { deleteItem } from "@/api/actions/item";
+import { refetchItemsAtom } from "@/jotai/itemsAtom";
+import { refetchOutfitsAtom } from "@/jotai/outfitsAtom";
 
 import Card from "./Card";
 import ItemContextMenuForms from "../popupForms/itemContextMenu/ItemContextMenuForms";
@@ -14,12 +14,14 @@ import ContextMenuButton from "../buttons/ContextMenuButton";
 
 const ItemCard = ({ itemId, imagePath }) => {
 	const addNotification = useSetAtom(addNotificationAtom);
-	const router = useRouter();
+	const refetchItems = useSetAtom(refetchItemsAtom);
+	const refetchOutfits = useSetAtom(refetchOutfitsAtom);
 	const [showForm, setShowForm] = useState(false);
 
 	const onDelete = async () => {
 		const success = await deleteItem(itemId);
-		router.refresh();
+		await refetchItems();
+		await refetchOutfits();
 
 		if (success) {
 			addNotification("Item Successfully Deleted!");

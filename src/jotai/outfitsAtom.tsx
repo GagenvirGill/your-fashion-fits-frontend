@@ -1,18 +1,15 @@
-"use client";
-
-import type { ReactNode } from "react";
 import { atom } from "jotai";
-import { useHydrateAtoms } from "jotai/utils";
 import type { Outfit } from "@/types/outfit";
+import { getAllOutfits } from "@/api/actions/outfit";
 
 export const outfitsAtom = atom<Outfit[]>([]);
+export const outfitsLoadingAtom = atom<boolean>(true);
 
-interface HydrateOutfitsProps {
-	outfits: Outfit[];
-	children: ReactNode;
-}
-
-export function HydrateOutfits({ outfits, children }: HydrateOutfitsProps) {
-	useHydrateAtoms([[outfitsAtom, outfits]]);
-	return children;
-}
+export const refetchOutfitsAtom = atom(null, async (get, set) => {
+	try {
+		const data = await getAllOutfits();
+		set(outfitsAtom, data);
+	} catch (err) {
+		console.error("Error fetching outfits:", err);
+	}
+});

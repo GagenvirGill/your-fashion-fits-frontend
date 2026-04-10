@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import { useSetAtom } from "jotai";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
-import { useRouter } from "next/navigation";
 import { createCategory } from "@/api/actions/category";
+import { refetchCategoriesAtom } from "@/jotai/categoriesAtom";
 
 import styles from "./AddCategoryForm.module.css";
 import Button from "@/components/buttons/Button";
 
 const AddCategoryForm = () => {
 	const addNotification = useSetAtom(addNotificationAtom);
-	const router = useRouter();
+	const refetchCategories = useSetAtom(refetchCategoriesAtom);
 	const [name, setName] = useState("");
 
 	const handleSubmit = async (event) => {
@@ -21,7 +21,7 @@ const AddCategoryForm = () => {
 		setName("");
 
 		const success = await createCategory(nameToCreate);
-		router.refresh();
+		await refetchCategories();
 
 		if (success) {
 			addNotification(

@@ -3,19 +3,19 @@
 import React, { useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useRouter } from "next/navigation";
 import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfitTemplateAtom";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
 
 import { createOutfit } from "@/api/actions/outfit";
+import { refetchOutfitsAtom } from "@/jotai/outfitsAtom";
 
 import Button from "@/components/buttons/Button";
 
 const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
-	const router = useRouter();
 	const templateRows = useAtomValue(templateRowsAtom);
 	const setWholeTemplate = useSetAtom(setWholeTemplateAtom);
 	const addNotification = useSetAtom(addNotificationAtom);
+	const refetchOutfits = useSetAtom(refetchOutfitsAtom);
 
 	const [description, setDescription] = useState("");
 	const [date, setDate] = useState("");
@@ -82,7 +82,7 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 
 		setShowCreateOutfitForm(false);
 		const success = await createOutfit(date, description, outfitsItems);
-		router.refresh();
+		await refetchOutfits();
 		setWholeTemplate({ newTemplate: [] });
 
 		if (success) {

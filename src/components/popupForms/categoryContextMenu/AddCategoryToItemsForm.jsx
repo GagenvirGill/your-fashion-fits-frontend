@@ -5,9 +5,9 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { itemsAtom } from "@/jotai/itemsAtom";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { useRouter } from "next/navigation";
-
 import { addCategoryToItems } from "@/api/actions/category";
+import { refetchCategoriesAtom } from "@/jotai/categoriesAtom";
+import { refetchItemsAtom } from "@/jotai/itemsAtom";
 
 import ItemsCheckboxForm from "@/components/forms/ItemsCheckboxForm";
 
@@ -18,7 +18,8 @@ const AddCategoryToItemsForm = ({
 	categoryName,
 }) => {
 	const addNotification = useSetAtom(addNotificationAtom);
-	const router = useRouter();
+	const refetchCategories = useSetAtom(refetchCategoriesAtom);
+	const refetchItems = useSetAtom(refetchItemsAtom);
 	const items = useAtomValue(itemsAtom);
 	const [filteredItems, setFilteredItems] = useState([]);
 
@@ -37,7 +38,8 @@ const AddCategoryToItemsForm = ({
 
 	const handleSubmit = async (selectedItems) => {
 		const success = await addCategoryToItems(categoryId, selectedItems);
-		router.refresh();
+		await refetchCategories();
+		await refetchItems();
 		handleClose();
 
 		if (success) {

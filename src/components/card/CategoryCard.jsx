@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import { useSetAtom } from "jotai";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import styles from "./CategoryCard.module.css";
 import { deleteCategory } from "@/api/actions/category";
+import { refetchCategoriesAtom } from "@/jotai/categoriesAtom";
 
 import Card from "./Card";
 import CategoryContextMenuForms from "../popupForms/categoryContextMenu/CategoryContextMenuForms";
@@ -22,13 +22,13 @@ const CategoryCard = ({
 	favItemId,
 }) => {
 	const addNotification = useSetAtom(addNotificationAtom);
-	const router = useRouter();
+	const refetchCategories = useSetAtom(refetchCategoriesAtom);
 	const [showCategoryItemsForm, setShowCategoryItemsForm] = useState(false);
 	const [showCategFavItemForm, setShowCategoryFavItemForm] = useState(false);
 
 	const onDelete = async () => {
 		const success = await deleteCategory(categoryId);
-		router.refresh();
+		await refetchCategories();
 
 		if (success) {
 			addNotification(

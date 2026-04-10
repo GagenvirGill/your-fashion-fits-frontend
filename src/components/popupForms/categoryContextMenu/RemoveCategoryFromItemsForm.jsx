@@ -4,9 +4,9 @@ import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useSetAtom } from "jotai";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
-import { useRouter } from "next/navigation";
-
 import { removeCategoryFromItems } from "@/api/actions/category";
+import { refetchCategoriesAtom } from "@/jotai/categoriesAtom";
+import { refetchItemsAtom } from "@/jotai/itemsAtom";
 
 import ItemsCheckboxForm from "@/components/forms/ItemsCheckboxForm";
 
@@ -17,14 +17,15 @@ const RemoveCategoryFromItemsForm = ({
 	categoryName,
 }) => {
 	const addNotification = useSetAtom(addNotificationAtom);
-	const router = useRouter();
-
+	const refetchCategories = useSetAtom(refetchCategoriesAtom);
+	const refetchItems = useSetAtom(refetchItemsAtom);
 	const handleSubmit = async (selectedItems) => {
 		const success = await removeCategoryFromItems(
 			categoryId,
 			selectedItems
 		);
-		router.refresh();
+		await refetchCategories();
+		await refetchItems();
 		handleClose();
 
 		if (success) {

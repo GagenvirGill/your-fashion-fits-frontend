@@ -1,7 +1,7 @@
 import "./globals.css";
-import SessionWrapper from "./SessionWrapper";
-import Navbar from "../src/components/nav/Navbar";
-import Notifications from "../src/components/notifications/Notifications";
+import Providers from "@/providers";
+import Navbar from "@/components/nav/Navbar";
+import Notifications from "@/components/notifications/Notifications";
 
 export const metadata = {
 	title: {
@@ -19,11 +19,11 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body>
-				<SessionWrapper>
+				<Providers>
 					<Navbar />
 					<Notifications />
 					{children}
-				</SessionWrapper>
+				</Providers>
 			</body>
 		</html>
 	);

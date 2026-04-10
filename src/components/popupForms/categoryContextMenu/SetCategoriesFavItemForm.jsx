@@ -4,9 +4,8 @@ import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useSetAtom } from "jotai";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
-import { useRouter } from "next/navigation";
-
 import { setCategoriesFavItem } from "@/api/actions/category";
+import { refetchCategoriesAtom } from "@/jotai/categoriesAtom";
 
 import Button from "@/components/buttons/Button";
 import ItemsRadioForm from "@/components/forms/ItemsRadioForm";
@@ -18,11 +17,10 @@ const SetCategoriesFavItemForm = ({
 	categoryName,
 }) => {
 	const addNotification = useSetAtom(addNotificationAtom);
-	const router = useRouter();
-
+	const refetchCategories = useSetAtom(refetchCategoriesAtom);
 	const handleSubmit = async (selectedItemId) => {
 		const success = await setCategoriesFavItem(categoryId, selectedItemId);
-		router.refresh();
+		await refetchCategories();
 		handleClose();
 
 		if (success) {

@@ -3,10 +3,9 @@
 import React from "react";
 import { useSetAtom } from "jotai";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
-import { useRouter } from "next/navigation";
-
 import styles from "./OutfitCard.module.css";
 import { deleteOutfit } from "@/api/actions/outfit";
+import { refetchOutfitsAtom } from "@/jotai/outfitsAtom";
 
 import Card from "./Card";
 
@@ -14,11 +13,10 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 	const MAX_CARD_WIDTH = 290;
 	const MAX_CARD_HEIGHT = 500;
 	const addNotification = useSetAtom(addNotificationAtom);
-	const router = useRouter();
-
+	const refetchOutfits = useSetAtom(refetchOutfitsAtom);
 	const onDelete = async () => {
 		const success = await deleteOutfit(outfitId);
-		router.refresh();
+		await refetchOutfits();
 
 		if (success) {
 			addNotification(

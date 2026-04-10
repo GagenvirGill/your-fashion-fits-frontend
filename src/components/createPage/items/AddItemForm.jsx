@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { useSetAtom } from "jotai";
 import { addNotificationAtom } from "@/jotai/notificationsAtom";
-import { useRouter } from "next/navigation";
 import { createItem } from "@/api/actions/item";
 import { removeBackground } from "@/lib/segmentation/background-removal";
+import { refetchItemsAtom } from "@/jotai/itemsAtom";
 
 import styles from "./AddItemForm.module.css";
 import Button from "@/components/buttons/Button";
@@ -14,8 +14,7 @@ const AddItemForm = () => {
 	const [images, setImages] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const addNotification = useSetAtom(addNotificationAtom);
-	const router = useRouter();
-
+	const refetchItems = useSetAtom(refetchItemsAtom);
 	const handleImage = async (event) => {
 		const files = Array.from(event.target.files);
 		setImages(files);
@@ -45,7 +44,6 @@ const AddItemForm = () => {
 				formData.append("image", file);
 
 				const success = await createItem(formData);
-				router.refresh();
 
 				if (success) {
 					successCount++;
@@ -56,6 +54,8 @@ const AddItemForm = () => {
 				failCount++;
 			}
 		}
+
+		await refetchItems();
 
 		if (successCount > 0) {
 			addNotification(`${successCount} item(s) created successfully.`);
