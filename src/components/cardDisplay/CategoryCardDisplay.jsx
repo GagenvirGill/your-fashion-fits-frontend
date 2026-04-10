@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useAtomValue } from "jotai";
-import { categoriesAtom } from "@/jotai/categoriesAtom";
-import { itemsAtom } from "@/jotai/itemsAtom";
+import { categoriesAtom } from "@/jotai/categories-atom";
+import { itemsAtom } from "@/jotai/items-atom";
 import styles from "./CardDisplayStyles.module.css";
 import Link from "next/link";
 

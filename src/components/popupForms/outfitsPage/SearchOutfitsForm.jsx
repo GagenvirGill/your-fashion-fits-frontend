@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAtomValue } from "jotai";
-import { outfitsAtom } from "@/jotai/outfitsAtom";
+import { outfitsAtom } from "@/jotai/outfits-atom";
 import styles from "./SearchOutfitsForm.module.css";
 import { searchOutfits } from "@/api/actions/outfit";
 

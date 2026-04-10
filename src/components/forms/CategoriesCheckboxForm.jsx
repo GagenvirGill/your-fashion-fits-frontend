@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAtomValue } from "jotai";
-import { categoriesAtom } from "@/jotai/categoriesAtom";
+import { categoriesAtom } from "@/jotai/categories-atom";
 import CheckboxButton from "../buttons/CheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./FormStyles.module.css";

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useAtomValue } from "jotai";
-import { itemsAtom } from "@/jotai/itemsAtom";
+import { itemsAtom } from "@/jotai/items-atom";
 import styles from "./FormStyles.module.css";
 
 import { filterItemsByCategories } from "@/api/actions/item";

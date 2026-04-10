@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
-import { itemsAtom } from "@/jotai/itemsAtom";
-import { outfitsAtom } from "@/jotai/outfitsAtom";
+import { itemsAtom } from "@/jotai/items-atom";
+import { outfitsAtom } from "@/jotai/outfits-atom";
 import styles from "./CardDisplayStyles.module.css";
 
 import { filterItemsByCategories } from "@/api/actions/item";

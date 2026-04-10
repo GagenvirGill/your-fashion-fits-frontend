@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { itemsAtom } from "@/jotai/itemsAtom";
-import { addNotificationAtom } from "@/jotai/notificationsAtom";
+import { itemsAtom } from "@/jotai/items-atom";
+import { addNotificationAtom } from "@/jotai/notifications-atom";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { addCategoryToItems } from "@/api/actions/category";
-import { refetchCategoriesAtom } from "@/jotai/categoriesAtom";
-import { refetchItemsAtom } from "@/jotai/itemsAtom";
+import { refetchCategoriesAtom } from "@/jotai/categories-atom";
+import { refetchItemsAtom } from "@/jotai/items-atom";
 
 import ItemsCheckboxForm from "@/components/forms/ItemsCheckboxForm";
 

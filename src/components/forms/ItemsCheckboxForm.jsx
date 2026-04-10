@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useAtomValue } from "jotai";
-import { itemsAtom } from "@/jotai/itemsAtom";
+import { itemsAtom } from "@/jotai/items-atom";
 
 import ImgCheckboxButton from "../buttons/ImgCheckboxButton";
 import Button from "../buttons/Button";

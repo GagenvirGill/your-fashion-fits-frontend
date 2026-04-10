@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useAtomValue } from "jotai";
-import { outfitsAtom } from "@/jotai/outfitsAtom";
+import { outfitsAtom } from "@/jotai/outfits-atom";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useState } from "react";
 

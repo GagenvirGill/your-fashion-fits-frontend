@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfitTemplateAtom";
+import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfit-template-atom";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { updateTemplateWithScales } from "@/lib/item-ratios";
 

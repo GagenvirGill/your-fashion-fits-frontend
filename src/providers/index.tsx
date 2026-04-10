@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import SessionWrapper from "./SessionWrapper";
-import DataLoader from "./DataLoader";
+import SessionWrapper from "./session-wrapper";
+import DataLoader from "./data-loader";
 
 interface ProvidersProps {
 	children: ReactNode;

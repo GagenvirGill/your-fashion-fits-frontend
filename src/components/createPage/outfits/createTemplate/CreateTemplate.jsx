@@ -3,8 +3,8 @@
 import React, { useState, useMemo } from "react";
 import styles from "./CreateTemplate.module.css";
 import { useAtomValue, useSetAtom } from "jotai";
-import { outfitsAtom } from "@/jotai/outfitsAtom";
-import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfitTemplateAtom";
+import { outfitsAtom } from "@/jotai/outfits-atom";
+import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfit-template-atom";
 import { getRandomItemWithCategories } from "@/api/actions/item";
 import {
 	createAdjacencyMatrix,

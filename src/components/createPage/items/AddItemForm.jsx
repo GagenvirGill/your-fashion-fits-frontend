@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { useSetAtom } from "jotai";
-import { addNotificationAtom } from "@/jotai/notificationsAtom";
+import { addNotificationAtom } from "@/jotai/notifications-atom";
 import { createItem } from "@/api/actions/item";
 import { removeBackground } from "@/lib/segmentation/background-removal";
-import { refetchItemsAtom } from "@/jotai/itemsAtom";
+import { refetchItemsAtom } from "@/jotai/items-atom";
 
 import styles from "./AddItemForm.module.css";
 import Button from "@/components/buttons/Button";

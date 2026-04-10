@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { useSetAtom } from "jotai";
-import { addNotificationAtom } from "@/jotai/notificationsAtom";
+import { addNotificationAtom } from "@/jotai/notifications-atom";
 import { createCategory } from "@/api/actions/category";
-import { refetchCategoriesAtom } from "@/jotai/categoriesAtom";
+import { refetchCategoriesAtom } from "@/jotai/categories-atom";
 
 import styles from "./AddCategoryForm.module.css";
 import Button from "@/components/buttons/Button";

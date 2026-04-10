@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import type { ReactNode } from "react";
 import { useSetAtom } from "jotai";
 import { useSession } from "next-auth/react";
-import { itemsAtom, itemsLoadingAtom, refetchItemsAtom } from "@/jotai/itemsAtom";
-import { categoriesAtom, categoriesLoadingAtom, refetchCategoriesAtom } from "@/jotai/categoriesAtom";
-import { outfitsAtom, outfitsLoadingAtom, refetchOutfitsAtom } from "@/jotai/outfitsAtom";
+import { itemsAtom, itemsLoadingAtom, refetchItemsAtom } from "@/jotai/items-atom";
+import { categoriesAtom, categoriesLoadingAtom, refetchCategoriesAtom } from "@/jotai/categories-atom";
+import { outfitsAtom, outfitsLoadingAtom, refetchOutfitsAtom } from "@/jotai/outfits-atom";
 
 interface DataLoaderProps {
 	children: ReactNode;

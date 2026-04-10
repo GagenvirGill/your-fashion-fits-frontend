@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./TemplateBox.module.css";
 import { useAtomValue } from "jotai";
-import { templateRowsAtom } from "@/jotai/outfitTemplateAtom";
+import { templateRowsAtom } from "@/jotai/outfit-template-atom";
 
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateItemSelector from "@/components/popupForms/templatePopups/TemplateItemSelector";

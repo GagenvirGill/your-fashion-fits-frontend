@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useAtomValue } from "jotai";
-import { outfitsAtom } from "@/jotai/outfitsAtom";
+import { outfitsAtom } from "@/jotai/outfits-atom";
 import styles from "./CardDisplayStyles.module.css";
 
 import OutfitCard from "../card/OutfitCard";

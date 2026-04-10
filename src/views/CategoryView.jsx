@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useAtomValue } from "jotai";
-import { categoriesAtom, categoriesLoadingAtom } from "@/jotai/categoriesAtom";
+import { categoriesAtom, categoriesLoadingAtom } from "@/jotai/categories-atom";
 import styles from "./GenericPageStyles.module.css";
 
 import ItemCardDisplay from "../components/cardDisplay/ItemCardDisplay";

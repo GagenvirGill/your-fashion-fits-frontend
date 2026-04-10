@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { templateRowsAtom, setBoxCategoriesAtom, setBoxItemAtom } from "@/jotai/outfitTemplateAtom";
+import { templateRowsAtom, setBoxCategoriesAtom, setBoxItemAtom } from "@/jotai/outfit-template-atom";
 import styles from "../ContextMenuPopUpStyles.module.css";
 
 import Button from "@/components/buttons/Button";

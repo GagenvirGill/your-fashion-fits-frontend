@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useAtomValue, useSetAtom } from "jotai";
-import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfitTemplateAtom";
-import { addNotificationAtom } from "@/jotai/notificationsAtom";
+import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfit-template-atom";
+import { addNotificationAtom } from "@/jotai/notifications-atom";
 
 import { createOutfit } from "@/api/actions/outfit";
-import { refetchOutfitsAtom } from "@/jotai/outfitsAtom";
+import { refetchOutfitsAtom } from "@/jotai/outfits-atom";
 
 import Button from "@/components/buttons/Button";
 

@@ -3,7 +3,7 @@
 import React from "react";
 import styles from "./Notifications.module.css";
 import { useAtomValue } from "jotai";
-import { notificationsAtom } from "@/jotai/notificationsAtom";
+import { notificationsAtom } from "@/jotai/notifications-atom";
 import NotificationPopup from "./NotificationPopup";
 
 const Notifications = () => {

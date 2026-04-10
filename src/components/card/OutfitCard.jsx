@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useSetAtom } from "jotai";
-import { addNotificationAtom } from "@/jotai/notificationsAtom";
+import { addNotificationAtom } from "@/jotai/notifications-atom";
 import styles from "./OutfitCard.module.css";
 import { deleteOutfit } from "@/api/actions/outfit";
-import { refetchOutfitsAtom } from "@/jotai/outfitsAtom";
+import { refetchOutfitsAtom } from "@/jotai/outfits-atom";
 
 import Card from "./Card";
 

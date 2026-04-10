@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { categoriesAtom } from "@/jotai/categoriesAtom";
+import { categoriesAtom } from "@/jotai/categories-atom";
 import {
 	templateRowsAtom,
 	setBoxLockedStatusAtom,
@@ -12,7 +12,7 @@ import {
 	addTemplateRowBeforeAtom,
 	addTemplateRowAfterAtom,
 	setBoxScaleAtom,
-} from "@/jotai/outfitTemplateAtom";
+} from "@/jotai/outfit-template-atom";
 import styles from "./TemplateBox.module.css";
 
 import ContextMenuButton from "@/components/buttons/ContextMenuButton";

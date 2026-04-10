@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Notifications.module.css";
 import { useSetAtom } from "jotai";
-import { removeNotificationAtom } from "@/jotai/notificationsAtom";
+import { removeNotificationAtom } from "@/jotai/notifications-atom";
 
 const NotificationPopup = ({ id, message }) => {
 	const removeNotification = useSetAtom(removeNotificationAtom);

@@ -3,7 +3,7 @@
 import React from "react";
 import styles from "./TemplateRow.module.css";
 import { useAtomValue } from "jotai";
-import { templateRowsAtom } from "@/jotai/outfitTemplateAtom";
+import { templateRowsAtom } from "@/jotai/outfit-template-atom";
 
 import TemplateBox from "./TemplateBox";
 
