@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./TemplateBox.module.css";
-import { useSelector } from "react-redux";
+import { useAtomValue } from "jotai";
+import { templateRowsAtom } from "@/jotai/outfitTemplateAtom";
 
 import TemplateBoxContextMenu from "./TemplateBoxContextMenu";
 import TemplateItemSelector from "@/components/popupForms/templatePopups/TemplateItemSelector";
@@ -14,7 +15,7 @@ const TemplateBox = ({
 	handleRandomization,
 	ratiosMatrix,
 }) => {
-	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const templateRows = useAtomValue(templateRowsAtom);
 	const { itemId, imagePath, scale } = templateRows[rowIndex][boxIndex];
 
 	const [showItemForm, setShowItemForm] = useState(false);

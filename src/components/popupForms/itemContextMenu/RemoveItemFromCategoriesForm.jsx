@@ -2,9 +2,9 @@
 
 import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { useDispatch } from "react-redux";
+import { useSetAtom } from "jotai";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import { useRouter } from "next/navigation";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import { removeItemFromCategories } from "@/api/actions/item";
 
@@ -15,7 +15,7 @@ const RemoveItemFromCategoriesForm = ({
 	handleClose,
 	itemsCurrCategories,
 }) => {
-	const dispatch = useDispatch();
+	const addNotification = useSetAtom(addNotificationAtom);
 	const router = useRouter();
 
 	const handleSubmit = async (selectedCategories) => {
@@ -27,16 +27,12 @@ const RemoveItemFromCategoriesForm = ({
 		handleClose();
 
 		if (success) {
-			dispatch(
-				addNotification(
-					"Successfully Removed Those Categories from Your Item"
-				)
+			addNotification(
+				"Successfully Removed Those Categories from Your Item"
 			);
 		} else {
-			dispatch(
-				addNotification(
-					"An Error Occured while trying to Remove Item from Categories!"
-				)
+			addNotification(
+				"An Error Occured while trying to Remove Item from Categories!"
 			);
 		}
 	};

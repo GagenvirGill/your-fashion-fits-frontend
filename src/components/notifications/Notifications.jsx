@@ -2,11 +2,12 @@
 
 import React from "react";
 import styles from "./Notifications.module.css";
-import { useSelector } from "react-redux";
+import { useAtomValue } from "jotai";
+import { notificationsAtom } from "@/jotai/notificationsAtom";
 import NotificationPopup from "./NotificationPopup";
 
 const Notifications = () => {
-	const { notifications } = useSelector((state) => state.notifications);
+	const notifications = useAtomValue(notificationsAtom);
 
 	return (
 		<div className={styles.notificationsContainer}>

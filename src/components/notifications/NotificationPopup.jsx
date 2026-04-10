@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./Notifications.module.css";
-import { useDispatch } from "react-redux";
-import { removeNotification } from "@/store/reducers/notificationsReducer";
+import { useSetAtom } from "jotai";
+import { removeNotificationAtom } from "@/jotai/notificationsAtom";
 
 const NotificationPopup = ({ id, message }) => {
-	const dispatch = useDispatch();
+	const removeNotification = useSetAtom(removeNotificationAtom);
 	const [exiting, setExiting] = useState(false);
 
 	useEffect(() => {
@@ -20,7 +20,7 @@ const NotificationPopup = ({ id, message }) => {
 	useEffect(() => {
 		if (exiting) {
 			const timer = setTimeout(() => {
-				dispatch(removeNotification(id));
+				removeNotification(id);
 			}, 300);
 
 			return () => clearTimeout(timer);

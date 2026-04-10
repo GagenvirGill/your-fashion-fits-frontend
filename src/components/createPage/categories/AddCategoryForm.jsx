@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSetAtom } from "jotai";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import { useRouter } from "next/navigation";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 import { createCategory } from "@/api/actions/category";
 
 import styles from "./AddCategoryForm.module.css";
 import Button from "@/components/buttons/Button";
 
 const AddCategoryForm = () => {
-	const dispatch = useDispatch();
+	const addNotification = useSetAtom(addNotificationAtom);
 	const router = useRouter();
 	const [name, setName] = useState("");
 
@@ -24,15 +24,11 @@ const AddCategoryForm = () => {
 		router.refresh();
 
 		if (success) {
-			dispatch(
-				addNotification(
-					`Successfully Created the '${nameToCreate}' Category!`
-				)
+			addNotification(
+				`Successfully Created the '${nameToCreate}' Category!`
 			);
 		} else {
-			dispatch(
-				addNotification(`An Error Occured Trying to Create a Category!`)
-			);
+			addNotification(`An Error Occured Trying to Create a Category!`);
 		}
 	};
 

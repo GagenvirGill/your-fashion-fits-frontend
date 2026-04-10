@@ -2,10 +2,9 @@
 
 import React, { useState, useMemo } from "react";
 import styles from "./CreateTemplate.module.css";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { outfitsAtom } from "@/jotai/outfitsAtom";
-import { useDispatch, useSelector } from "react-redux";
-import { setWholeTemplate } from "@/store/reducers/outfitTemplateReducer";
+import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfitTemplateAtom";
 import { getRandomItemWithCategories } from "@/api/actions/item";
 import {
 	createAdjacencyMatrix,
@@ -17,12 +16,12 @@ import ImgButton from "@/components/buttons/ImgButton";
 import CreateOutfitForm from "@/components/popupForms/templatePopups/CreateOutfitForm";
 
 const CreateTemplate = () => {
-	const dispatch = useDispatch();
 	const outfits = useAtomValue(outfitsAtom);
+	const templateRows = useAtomValue(templateRowsAtom);
+	const setWholeTemplate = useSetAtom(setWholeTemplateAtom);
 	const ratiosMatrix = useMemo(() => {
 		return createAdjacencyMatrix(outfits);
 	}, [outfits]);
-	const { templateRows } = useSelector((state) => state.outfitTemplate);
 	const [showCreateOutfitForm, setShowCreateOutfitForm] = useState(false);
 
 	const handleRandomizationAll = async (e) => {
@@ -48,7 +47,7 @@ const CreateTemplate = () => {
 			results
 		);
 
-		dispatch(setWholeTemplate({ newTemplate: newRows }));
+		setWholeTemplate({ newTemplate: newRows });
 	};
 
 	const handleRandomizationOne = async (rowIndex, boxIndex) => {
@@ -74,7 +73,7 @@ const CreateTemplate = () => {
 				newRows
 			);
 
-			dispatch(setWholeTemplate({ newTemplate: updatedRows }));
+			setWholeTemplate({ newTemplate: updatedRows });
 		}
 	};
 
@@ -105,7 +104,7 @@ const CreateTemplate = () => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		dispatch(setWholeTemplate({ newTemplate: [] }));
+		setWholeTemplate({ newTemplate: [] });
 	};
 
 	return (

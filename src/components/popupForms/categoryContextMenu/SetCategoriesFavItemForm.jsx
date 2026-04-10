@@ -2,11 +2,11 @@
 
 import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { useDispatch } from "react-redux";
+import { useSetAtom } from "jotai";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import { useRouter } from "next/navigation";
 
 import { setCategoriesFavItem } from "@/api/actions/category";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import Button from "@/components/buttons/Button";
 import ItemsRadioForm from "@/components/forms/ItemsRadioForm";
@@ -17,7 +17,7 @@ const SetCategoriesFavItemForm = ({
 	currFavItem,
 	categoryName,
 }) => {
-	const dispatch = useDispatch();
+	const addNotification = useSetAtom(addNotificationAtom);
 	const router = useRouter();
 
 	const handleSubmit = async (selectedItemId) => {
@@ -26,16 +26,12 @@ const SetCategoriesFavItemForm = ({
 		handleClose();
 
 		if (success) {
-			dispatch(
-				addNotification(
-					`Successfully Set the Favorite Item of the '${categoryName}' Category!`
-				)
+			addNotification(
+				`Successfully Set the Favorite Item of the '${categoryName}' Category!`
 			);
 		} else {
-			dispatch(
-				addNotification(
-					`An Error Occured Trying to Set the Favorite Item of a Category!`
-				)
+			addNotification(
+				`An Error Occured Trying to Set the Favorite Item of a Category!`
 			);
 		}
 	};

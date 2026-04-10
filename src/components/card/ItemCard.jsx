@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSetAtom } from "jotai";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import { useRouter } from "next/navigation";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import styles from "./ItemCard.module.css";
 import { deleteItem } from "@/api/actions/item";
@@ -13,7 +13,7 @@ import ItemContextMenuForms from "../popupForms/itemContextMenu/ItemContextMenuF
 import ContextMenuButton from "../buttons/ContextMenuButton";
 
 const ItemCard = ({ itemId, imagePath }) => {
-	const dispatch = useDispatch();
+	const addNotification = useSetAtom(addNotificationAtom);
 	const router = useRouter();
 	const [showForm, setShowForm] = useState(false);
 
@@ -22,12 +22,10 @@ const ItemCard = ({ itemId, imagePath }) => {
 		router.refresh();
 
 		if (success) {
-			dispatch(addNotification("Item Successfully Deleted!"));
+			addNotification("Item Successfully Deleted!");
 		} else {
-			dispatch(
-				addNotification(
-					"An Error Occured while trying to Delete an Item!"
-				)
+			addNotification(
+				"An Error Occured while trying to Delete an Item!"
 			);
 		}
 	};

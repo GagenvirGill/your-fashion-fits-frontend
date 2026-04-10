@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useSetAtom } from "jotai";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import { useRouter } from "next/navigation";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import styles from "./OutfitCard.module.css";
 import { deleteOutfit } from "@/api/actions/outfit";
@@ -13,7 +13,7 @@ import Card from "./Card";
 const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 	const MAX_CARD_WIDTH = 290;
 	const MAX_CARD_HEIGHT = 500;
-	const dispatch = useDispatch();
+	const addNotification = useSetAtom(addNotificationAtom);
 	const router = useRouter();
 
 	const onDelete = async () => {
@@ -21,16 +21,12 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 		router.refresh();
 
 		if (success) {
-			dispatch(
-				addNotification(
-					`Successfully Deleted Outfit Worn on ${dateWorn}!`
-				)
+			addNotification(
+				`Successfully Deleted Outfit Worn on ${dateWorn}!`
 			);
 		} else {
-			dispatch(
-				addNotification(
-					`An Error Occurred while Deleting an Outfit Worn on ${dateWorn}!`
-				)
+			addNotification(
+				`An Error Occurred while Deleting an Outfit Worn on ${dateWorn}!`
 			);
 		}
 	};

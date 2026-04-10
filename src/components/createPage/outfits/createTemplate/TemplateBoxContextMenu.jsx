@@ -1,20 +1,19 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { categoriesAtom } from "@/jotai/categoriesAtom";
-import styles from "./TemplateBox.module.css";
-
 import {
-	setBoxLockedStatus,
-	removeTemplateBox,
-	addTemplateBoxBefore,
-	addTemplateRowBefore,
-	addTemplateBoxAfter,
-	addTemplateRowAfter,
-	setBoxScale,
-} from "@/store/reducers/outfitTemplateReducer";
+	templateRowsAtom,
+	setBoxLockedStatusAtom,
+	removeTemplateBoxAtom,
+	addTemplateBoxBeforeAtom,
+	addTemplateBoxAfterAtom,
+	addTemplateRowBeforeAtom,
+	addTemplateRowAfterAtom,
+	setBoxScaleAtom,
+} from "@/jotai/outfitTemplateAtom";
+import styles from "./TemplateBox.module.css";
 
 import ContextMenuButton from "@/components/buttons/ContextMenuButton";
 import InlineContextMenuButton from "@/components/buttons/InlineContextMenuButton";
@@ -29,8 +28,14 @@ const TemplateBoxContextMenu = ({
 	setShowCategoriesForm,
 	handleRandomization,
 }) => {
-	const dispatch = useDispatch();
-	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const templateRows = useAtomValue(templateRowsAtom);
+	const setBoxLockedStatus = useSetAtom(setBoxLockedStatusAtom);
+	const removeTemplateBox = useSetAtom(removeTemplateBoxAtom);
+	const addTemplateBoxBefore = useSetAtom(addTemplateBoxBeforeAtom);
+	const addTemplateBoxAfter = useSetAtom(addTemplateBoxAfterAtom);
+	const addTemplateRowBefore = useSetAtom(addTemplateRowBeforeAtom);
+	const addTemplateRowAfter = useSetAtom(addTemplateRowAfterAtom);
+	const setBoxScale = useSetAtom(setBoxScaleAtom);
 	const {
 		scale,
 		isLocked,
@@ -67,64 +72,56 @@ const TemplateBoxContextMenu = ({
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(removeTemplateBox({ rowIndex: rowIndex, boxIndex: boxIndex }));
+		removeTemplateBox({ rowIndex: rowIndex, boxIndex: boxIndex });
 	};
 
 	const handleLocked = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(
-			setBoxLockedStatus({
-				rowIndex: rowIndex,
-				boxIndex: boxIndex,
-				isLocked: !isLocked,
-			})
-		);
+		setBoxLockedStatus({
+			rowIndex: rowIndex,
+			boxIndex: boxIndex,
+			isLocked: !isLocked,
+		});
 	};
 
 	const handleAddBoxBefore = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(
-			addTemplateBoxBefore({ rowIndex: rowIndex, boxIndex: boxIndex })
-		);
+		addTemplateBoxBefore({ rowIndex: rowIndex, boxIndex: boxIndex });
 	};
 
 	const handleAddBoxAfter = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(
-			addTemplateBoxAfter({ rowIndex: rowIndex, boxIndex: boxIndex })
-		);
+		addTemplateBoxAfter({ rowIndex: rowIndex, boxIndex: boxIndex });
 	};
 
 	const handleAddRowBefore = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(addTemplateRowBefore({ rowIndex: rowIndex }));
+		addTemplateRowBefore({ rowIndex: rowIndex });
 	};
 
 	const handleAddRowAfter = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		setShowContextMenu(false);
-		dispatch(addTemplateRowAfter({ rowIndex: rowIndex }));
+		addTemplateRowAfter({ rowIndex: rowIndex });
 	};
 
 	const handleImageScale = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		dispatch(
-			setBoxScale({
-				rowIndex: rowIndex,
-				boxIndex: boxIndex,
-				scale: parseFloat(e.target.value),
-			})
-		);
+		setBoxScale({
+			rowIndex: rowIndex,
+			boxIndex: boxIndex,
+			scale: parseFloat(e.target.value),
+		});
 	};
 
 	useEffect(() => {

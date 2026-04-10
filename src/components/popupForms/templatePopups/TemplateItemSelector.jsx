@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAtomValue, useSetAtom } from "jotai";
+import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfitTemplateAtom";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { updateTemplateWithScales } from "@/lib/item-ratios";
-
-import { setWholeTemplate } from "@/store/reducers/outfitTemplateReducer";
 
 import Button from "@/components/buttons/Button";
 import ItemsRadioForm from "@/components/forms/ItemsRadioForm";
@@ -17,8 +16,8 @@ const TemplateItemSelector = ({
 	setShowForm,
 	ratiosMatrix,
 }) => {
-	const dispatch = useDispatch();
-	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const templateRows = useAtomValue(templateRowsAtom);
+	const setWholeTemplate = useSetAtom(setWholeTemplateAtom);
 	const { itemId } = templateRows[rowIndex][boxIndex];
 
 	const [filteringCategoryIds, setFilteringCategoryIds] = useState([]);
@@ -38,7 +37,7 @@ const TemplateItemSelector = ({
 			newRows
 		);
 
-		dispatch(setWholeTemplate({ newTemplate: updatedRows }));
+		setWholeTemplate({ newTemplate: updatedRows });
 
 		handleClose();
 	};

@@ -2,19 +2,20 @@
 
 import React, { useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
-import { setWholeTemplate } from "@/store/reducers/outfitTemplateReducer";
-import { addNotification } from "@/store/reducers/notificationsReducer";
+import { templateRowsAtom, setWholeTemplateAtom } from "@/jotai/outfitTemplateAtom";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 
 import { createOutfit } from "@/api/actions/outfit";
 
 import Button from "@/components/buttons/Button";
 
 const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
-	const dispatch = useDispatch();
 	const router = useRouter();
-	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const templateRows = useAtomValue(templateRowsAtom);
+	const setWholeTemplate = useSetAtom(setWholeTemplateAtom);
+	const addNotification = useSetAtom(addNotificationAtom);
 
 	const [description, setDescription] = useState("");
 	const [date, setDate] = useState("");
@@ -37,10 +38,8 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 
 			for (const box of row) {
 				if (!box.itemId) {
-					dispatch(
-						addNotification(
-							"Please select items for all boxes or remove them."
-						)
+					addNotification(
+						"Please select items for all boxes or remove them."
 					);
 					return;
 				}
@@ -51,10 +50,8 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 			}
 
 			if (rowItems.length > 5) {
-				dispatch(
-					addNotification(
-						"You can only select up to 5 items per row."
-					)
+				addNotification(
+					"You can only select up to 5 items per row."
 				);
 				return;
 			}
@@ -63,46 +60,36 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 		}
 
 		if (outfitsItems.length === 0) {
-			dispatch(
-				addNotification(
-					"Please select at least one item to create an outfit."
-				)
+			addNotification(
+				"Please select at least one item to create an outfit."
 			);
 			return;
 		}
 		if (outfitsItems.length > 8) {
-			dispatch(
-				addNotification("You can only have up to 8 rows of items.")
-			);
+			addNotification("You can only have up to 8 rows of items.");
 			return;
 		}
 		if (outfitsItems.length !== templateRows.length) {
-			dispatch(
-				addNotification(
-					"Please select items for the empty boxes or remove them."
-				)
+			addNotification(
+				"Please select items for the empty boxes or remove them."
 			);
 			return;
 		}
 		if (date === "") {
-			dispatch(addNotification("Please select a date."));
+			addNotification("Please select a date.");
 			return;
 		}
 
 		setShowCreateOutfitForm(false);
 		const success = await createOutfit(date, description, outfitsItems);
 		router.refresh();
-		dispatch(setWholeTemplate({ newTemplate: [] }));
+		setWholeTemplate({ newTemplate: [] });
 
 		if (success) {
-			dispatch(
-				addNotification(`Successfully Created an Outfit for ${date}!`)
-			);
+			addNotification(`Successfully Created an Outfit for ${date}!`);
 		} else {
-			dispatch(
-				addNotification(
-					`An Error Occurred while Creating an Outfit for ${date}!`
-				)
+			addNotification(
+				`An Error Occurred while Creating an Outfit for ${date}!`
 			);
 		}
 	};

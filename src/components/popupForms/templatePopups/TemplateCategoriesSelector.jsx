@@ -1,38 +1,31 @@
 "use client";
 
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAtomValue, useSetAtom } from "jotai";
+import { templateRowsAtom, setBoxCategoriesAtom, setBoxItemAtom } from "@/jotai/outfitTemplateAtom";
 import styles from "../ContextMenuPopUpStyles.module.css";
-
-import {
-	setBoxCategories,
-	setBoxItem,
-} from "@/store/reducers/outfitTemplateReducer";
 
 import Button from "@/components/buttons/Button";
 import CategoriesCheckboxForm from "@/components/forms/CategoriesCheckboxForm";
 
 const TemplateCategoriesSelector = ({ rowIndex, boxIndex, setShowForm }) => {
-	const dispatch = useDispatch();
-	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const templateRows = useAtomValue(templateRowsAtom);
+	const setBoxCategories = useSetAtom(setBoxCategoriesAtom);
+	const setBoxItem = useSetAtom(setBoxItemAtom);
 	const { categories } = templateRows[rowIndex][boxIndex];
 
 	const handleTemplateCategorySubmit = (selectedCategoryIds) => {
-		dispatch(
-			setBoxCategories({
-				rowIndex: rowIndex,
-				boxIndex: boxIndex,
-				categories: selectedCategoryIds,
-			})
-		);
-		dispatch(
-			setBoxItem({
-				rowIndex: rowIndex,
-				boxIndex: boxIndex,
-				itemId: null,
-				imagePath: null,
-			})
-		);
+		setBoxCategories({
+			rowIndex: rowIndex,
+			boxIndex: boxIndex,
+			categories: selectedCategoryIds,
+		});
+		setBoxItem({
+			rowIndex: rowIndex,
+			boxIndex: boxIndex,
+			itemId: null,
+			imagePath: null,
+		});
 		handleClose();
 	};
 

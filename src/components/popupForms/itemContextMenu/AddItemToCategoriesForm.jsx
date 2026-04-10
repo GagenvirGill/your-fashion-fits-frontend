@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { categoriesAtom } from "@/jotai/categoriesAtom";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import { addItemToCategories } from "@/api/actions/item";
 
@@ -17,7 +16,7 @@ const AddItemToCategoriesForm = ({
 	handleClose,
 	itemsCurrCategories,
 }) => {
-	const dispatch = useDispatch();
+	const addNotification = useSetAtom(addNotificationAtom);
 	const router = useRouter();
 	const categories = useAtomValue(categoriesAtom);
 	const [filteredCategories, setFilteredCategories] = useState([]);
@@ -41,16 +40,12 @@ const AddItemToCategoriesForm = ({
 		handleClose();
 
 		if (success) {
-			dispatch(
-				addNotification(
-					"Successfully Added Those Categories to Your Item"
-				)
+			addNotification(
+				"Successfully Added Those Categories to Your Item"
 			);
 		} else {
-			dispatch(
-				addNotification(
-					"An Error Occured while trying to Add Item to Categories!"
-				)
+			addNotification(
+				"An Error Occured while trying to Add Item to Categories!"
 			);
 		}
 	};

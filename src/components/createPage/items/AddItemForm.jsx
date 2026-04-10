@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSetAtom } from "jotai";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import { useRouter } from "next/navigation";
 import { createItem } from "@/api/actions/item";
 import { removeBackground } from "@/lib/segmentation/background-removal";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import styles from "./AddItemForm.module.css";
 import Button from "@/components/buttons/Button";
@@ -13,7 +13,7 @@ import Button from "@/components/buttons/Button";
 const AddItemForm = () => {
 	const [images, setImages] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const dispatch = useDispatch();
+	const addNotification = useSetAtom(addNotificationAtom);
 	const router = useRouter();
 
 	const handleImage = async (event) => {
@@ -58,13 +58,11 @@ const AddItemForm = () => {
 		}
 
 		if (successCount > 0) {
-			dispatch(
-				addNotification(`${successCount} item(s) created successfully.`)
-			);
+			addNotification(`${successCount} item(s) created successfully.`);
 		}
 
 		if (failCount > 0) {
-			dispatch(addNotification(`${failCount} item(s) failed to create.`));
+			addNotification(`${failCount} item(s) failed to create.`);
 		}
 
 		setLoading(false);

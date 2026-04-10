@@ -2,12 +2,13 @@
 
 import React from "react";
 import styles from "./TemplateRow.module.css";
-import { useSelector } from "react-redux";
+import { useAtomValue } from "jotai";
+import { templateRowsAtom } from "@/jotai/outfitTemplateAtom";
 
 import TemplateBox from "./TemplateBox";
 
 const TemplateRow = ({ rowIndex, handleRandomizationOne, ratiosMatrix }) => {
-	const { templateRows } = useSelector((state) => state.outfitTemplate);
+	const templateRows = useAtomValue(templateRowsAtom);
 	const templateBoxes = templateRows[rowIndex];
 
 	return (

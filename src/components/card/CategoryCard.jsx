@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSetAtom } from "jotai";
+import { addNotificationAtom } from "@/jotai/notificationsAtom";
 import { useRouter } from "next/navigation";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 import Link from "next/link";
 
 import styles from "./CategoryCard.module.css";
@@ -21,7 +21,7 @@ const CategoryCard = ({
 	urlRoute,
 	favItemId,
 }) => {
-	const dispatch = useDispatch();
+	const addNotification = useSetAtom(addNotificationAtom);
 	const router = useRouter();
 	const [showCategoryItemsForm, setShowCategoryItemsForm] = useState(false);
 	const [showCategFavItemForm, setShowCategoryFavItemForm] = useState(false);
@@ -31,15 +31,11 @@ const CategoryCard = ({
 		router.refresh();
 
 		if (success) {
-			dispatch(
-				addNotification(
-					`Successfully Deleted the '${categoryName}' Category!`
-				)
+			addNotification(
+				`Successfully Deleted the '${categoryName}' Category!`
 			);
 		} else {
-			dispatch(
-				addNotification(`An Error Occured Trying to Delete a Category!`)
-			);
+			addNotification(`An Error Occured Trying to Delete a Category!`);
 		}
 	};
 
