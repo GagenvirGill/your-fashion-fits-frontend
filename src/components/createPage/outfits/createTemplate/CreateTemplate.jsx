@@ -14,9 +14,8 @@ import TemplateRow from "./TemplateRow";
 import ImgButton from "@/components/buttons/ImgButton";
 import CreateOutfitForm from "@/components/popupForms/templatePopups/CreateOutfitForm";
 
-const CreateTemplate = () => {
+const CreateTemplate = ({ outfits }) => {
 	const dispatch = useDispatch();
-	const { outfits } = useSelector((state) => state.outfits);
 	const ratiosMatrix = useMemo(() => {
 		return createAdjacencyMatrix(outfits);
 	}, [outfits]);

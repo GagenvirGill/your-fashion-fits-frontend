@@ -1,17 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import styles from "./SearchOutfitsForm.module.css";
-import { searchOutfits } from "@/api/actions/outfit";
+import { searchOutfits, getAllOutfits } from "@/api/actions/outfit";
 
 const SearchOutfitsForm = ({ setDisplayedOutfits }) => {
-	const { outfits } = useSelector((state) => state.outfits);
 	const [query, setQuery] = useState("");
 
 	const handleSearch = () => {
 		if (query.trim() === "") {
-			setDisplayedOutfits(outfits);
+			getAllOutfits()
+				.then((allOutfits) => {
+					setDisplayedOutfits(allOutfits);
+				})
+				.catch((err) => console.log(err));
 		} else {
 			searchOutfits(query)
 				.then((queriedOutfits) => {

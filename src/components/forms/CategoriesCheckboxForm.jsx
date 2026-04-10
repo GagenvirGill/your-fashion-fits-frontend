@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { getAllCategories } from "@/api/actions/category";
 import CheckboxButton from "../buttons/CheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./FormStyles.module.css";
@@ -12,13 +12,15 @@ const CategoriesCheckboxForm = ({
 	preSelectedCategoryIds,
 	formId,
 }) => {
-	const { categories } = useSelector((state) => state.categories);
-	let display_categories;
-	if (displayCategories) {
-		display_categories = displayCategories;
-	} else {
-		display_categories = categories;
-	}
+	const [categories, setCategories] = useState(displayCategories || []);
+
+	useEffect(() => {
+		if (!displayCategories) {
+			getAllCategories()
+				.then(setCategories)
+				.catch((err) => console.log(`Error loading categories: ${err}`));
+		}
+	}, [displayCategories]);
 
 	const [selectedCategories, setSelectedCategories] = useState(
 		preSelectedCategoryIds || []
@@ -45,7 +47,7 @@ const CategoriesCheckboxForm = ({
 			className={styles.form}
 			onSubmit={handleCheckboxSubmit}
 		>
-			{display_categories.map((category) => (
+			{categories.map((category) => (
 				<CheckboxButton
 					key={`${formId}-${category.categoryId}`}
 					text={category.name}

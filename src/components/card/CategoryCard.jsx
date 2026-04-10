@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { refreshState } from "@/store/reducers/categoriesReducer";
+import { useRouter } from "next/navigation";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 import Link from "next/link";
 
@@ -22,12 +22,13 @@ const CategoryCard = ({
 	favItemId,
 }) => {
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const [showCategoryItemsForm, setShowCategoryItemsForm] = useState(false);
 	const [showCategFavItemForm, setShowCategoryFavItemForm] = useState(false);
 
 	const onDelete = async () => {
 		const success = await deleteCategory(categoryId);
-		dispatch(refreshState());
+		router.refresh();
 
 		if (success) {
 			dispatch(

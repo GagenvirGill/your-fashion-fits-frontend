@@ -1,12 +1,19 @@
-"use client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { getAllOutfits } from "@/api/actions/outfit";
+import OutfitsView from "@/views/OutfitsView";
 
-import { useEffect } from "react";
-import OutfitsView from "../../src/views/OutfitsView";
+export const metadata = {
+	title: "Your Outfits",
+};
 
-export default function OutfitsPage() {
-	useEffect(() => {
-		document.title = "Your Outfits | Your Fashion Fits";
-	}, []);
+export default async function OutfitsPage() {
+	const session = await getServerSession(authOptions);
+	if (!session) {
+		redirect("/");
+	}
 
-	return <OutfitsView />;
+	const outfits = await getAllOutfits();
+	return <OutfitsView outfits={outfits} />;
 }

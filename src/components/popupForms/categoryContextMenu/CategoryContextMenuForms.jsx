@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "../ContextMenuPopUpStyles.module.css";
 
 import { filterItemsByCategories } from "@/api/actions/item";
@@ -15,8 +14,6 @@ const CategoryContextMenuForms = ({
 	categoryName,
 	handleClose,
 }) => {
-	const dispatch = useDispatch();
-	const { refresh } = useSelector((state) => state.items);
 	const [categoriesCurrItems, setCategoriesCurrItems] = useState([]);
 
 	useEffect(() => {
@@ -27,7 +24,7 @@ const CategoryContextMenuForms = ({
 			.catch((err) => {
 				console.log(`Error loading items: ${err}`);
 			});
-	}, [dispatch, refresh]);
+	}, [categoryId]);
 
 	return (
 		<>
@@ -40,9 +37,9 @@ const CategoryContextMenuForms = ({
 				<p className={styles.title}>{categoryName}</p>
 				<AddCategoryToItemsForm
 					categoryId={categoryId}
+					categoryName={categoryName}
 					handleClose={handleClose}
 					categoriesCurrItems={categoriesCurrItems}
-					categoryName={categoryName}
 				/>
 				<br />
 				<br />

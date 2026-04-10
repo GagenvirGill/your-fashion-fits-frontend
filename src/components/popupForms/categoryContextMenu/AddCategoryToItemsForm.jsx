@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { refreshState } from "@/store/reducers/categoriesReducer";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import { addCategoryToItems } from "@/api/actions/category";
+import { getAllItems } from "@/api/actions/item";
 
 import ItemsCheckboxForm from "@/components/forms/ItemsCheckboxForm";
 
@@ -17,8 +18,15 @@ const AddCategoryToItemsForm = ({
 	categoryName,
 }) => {
 	const dispatch = useDispatch();
-	const { items } = useSelector((state) => state.items);
+	const router = useRouter();
+	const [items, setItems] = useState([]);
 	const [filteredItems, setFilteredItems] = useState([]);
+
+	useEffect(() => {
+		getAllItems()
+			.then(setItems)
+			.catch((err) => console.log(`Error loading items: ${err}`));
+	}, []);
 
 	useEffect(() => {
 		const currItems = new Set();
@@ -35,7 +43,7 @@ const AddCategoryToItemsForm = ({
 
 	const handleSubmit = async (selectedItems) => {
 		const success = await addCategoryToItems(categoryId, selectedItems);
-		dispatch(refreshState());
+		router.refresh();
 		handleClose();
 
 		if (success) {

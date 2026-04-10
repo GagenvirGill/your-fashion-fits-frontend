@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshState } from "@/store/reducers/outfitsReducer";
+import { useRouter } from "next/navigation";
 import { setWholeTemplate } from "@/store/reducers/outfitTemplateReducer";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 
@@ -13,6 +13,7 @@ import Button from "@/components/buttons/Button";
 
 const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const { templateRows } = useSelector((state) => state.outfitTemplate);
 
 	const [description, setDescription] = useState("");
@@ -90,7 +91,7 @@ const CreateOutfitForm = ({ setShowCreateOutfitForm }) => {
 
 		setShowCreateOutfitForm(false);
 		const success = await createOutfit(date, description, outfitsItems);
-		dispatch(refreshState());
+		router.refresh();
 		dispatch(setWholeTemplate({ newTemplate: [] }));
 
 		if (success) {

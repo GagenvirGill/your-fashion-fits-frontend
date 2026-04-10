@@ -1,21 +1,19 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 import ImgCheckboxButton from "../buttons/ImgCheckboxButton";
 import Button from "../buttons/Button";
 import styles from "./FormStyles.module.css";
-import { filterItemsByCategories } from "@/api/actions/item";
+import { filterItemsByCategories, getAllItems } from "@/api/actions/item";
 
 const ItemsCheckboxForm = ({
 	handleSubmit,
 	displayItems,
 	filteringCategoryIds,
 }) => {
-	const { items } = useSelector((state) => state.items);
 	const [selectedItems, setSelectedItems] = useState([]);
-	const [display_items, setDisplayItems] = useState(items);
+	const [display_items, setDisplayItems] = useState(displayItems || []);
 
 	const handleCheckboxChange = (itemId, checked) => {
 		setSelectedItems((prevState) => {
@@ -35,6 +33,10 @@ const ItemsCheckboxForm = ({
 	useEffect(() => {
 		if (displayItems) {
 			setDisplayItems(displayItems);
+		} else if (!filteringCategoryIds) {
+			getAllItems()
+				.then(setDisplayItems)
+				.catch((err) => console.log(`Error loading items: ${err}`));
 		}
 	}, [displayItems]);
 

@@ -2,9 +2,9 @@
 
 import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
-import { refreshState } from "@/store/reducers/categoriesReducer";
-import { addNotification } from "@/store/reducers/notificationsReducer";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import { removeCategoryFromItems } from "@/api/actions/category";
 
@@ -17,13 +17,14 @@ const RemoveCategoryFromItemsForm = ({
 	categoryName,
 }) => {
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	const handleSubmit = async (selectedItems) => {
 		const success = await removeCategoryFromItems(
 			categoryId,
 			selectedItems
 		);
-		dispatch(refreshState());
+		router.refresh();
 		handleClose();
 
 		if (success) {

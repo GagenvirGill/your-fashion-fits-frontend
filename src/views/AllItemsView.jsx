@@ -7,7 +7,7 @@ import ItemCardDisplay from "../components/cardDisplay/ItemCardDisplay";
 import ItemsPopupFilterForm from "../components/popupForms/itemsPage/ItemsPopupFilterForm";
 import Button from "../components/buttons/Button";
 
-const AllItemsView = () => {
+const AllItemsView = ({ items, outfits }) => {
 	const [selectedCategories, setSelectedCategories] = useState([]);
 	const [showFilterForm, setShowFilterForm] = useState(false);
 
@@ -25,7 +25,11 @@ const AllItemsView = () => {
 				<div className={styles.pageTitle}>All of Your Items</div>
 				<br />
 				<Button type="submit" text="Filter" onClick={handleOpen} />
-				<ItemCardDisplay selectedCategories={selectedCategories} />
+				<ItemCardDisplay
+					selectedCategories={selectedCategories}
+					items={items}
+					outfits={outfits}
+				/>
 			</div>
 			{showFilterForm && (
 				<ItemsPopupFilterForm

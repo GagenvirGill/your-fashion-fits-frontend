@@ -5,11 +5,11 @@ import styles from "./GenericPageStyles.module.css";
 
 import OutfitCardDisplay from "../components/cardDisplay/OutfitCardDisplay";
 
-const OutfitsView = () => {
+const OutfitsView = ({ outfits }) => {
 	return (
 		<div className={styles.pageContainer}>
 			<div className={styles.pageTitle}>Your Past Outfits</div>
-			<OutfitCardDisplay />
+			<OutfitCardDisplay outfits={outfits} />
 		</div>
 	);
 };

@@ -3,9 +3,9 @@
 import React from "react";
 import styles from "../ContextMenuPopUpStyles.module.css";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 import { setCategoriesFavItem } from "@/api/actions/category";
-import { refreshState } from "@/store/reducers/categoriesReducer";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import Button from "@/components/buttons/Button";
@@ -18,10 +18,11 @@ const SetCategoriesFavItemForm = ({
 	categoryName,
 }) => {
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	const handleSubmit = async (selectedItemId) => {
-		await setCategoriesFavItem(categoryId, selectedItemId);
-		dispatch(refreshState());
+		const success = await setCategoriesFavItem(categoryId, selectedItemId);
+		router.refresh();
 		handleClose();
 
 		if (success) {

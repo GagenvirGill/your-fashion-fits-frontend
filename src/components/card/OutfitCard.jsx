@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useDispatch } from "react-redux";
-import { refreshState } from "@/store/reducers/outfitsReducer";
+import { useRouter } from "next/navigation";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import styles from "./OutfitCard.module.css";
@@ -14,10 +14,11 @@ const OutfitCard = ({ outfitId, dateWorn, desc, items, totalWeight }) => {
 	const MAX_CARD_WIDTH = 290;
 	const MAX_CARD_HEIGHT = 500;
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	const onDelete = async () => {
 		const success = await deleteOutfit(outfitId);
-		dispatch(refreshState());
+		router.refresh();
 
 		if (success) {
 			dispatch(

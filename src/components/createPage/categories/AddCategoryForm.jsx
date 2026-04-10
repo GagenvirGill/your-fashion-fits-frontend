@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { refreshState } from "@/store/reducers/categoriesReducer";
+import { useRouter } from "next/navigation";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 import { createCategory } from "@/api/actions/category";
 
@@ -11,6 +11,7 @@ import Button from "@/components/buttons/Button";
 
 const AddCategoryForm = () => {
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const [name, setName] = useState("");
 
 	const handleSubmit = async (event) => {
@@ -20,7 +21,7 @@ const AddCategoryForm = () => {
 		setName("");
 
 		const success = await createCategory(nameToCreate);
-		dispatch(refreshState());
+		router.refresh();
 
 		if (success) {
 			dispatch(

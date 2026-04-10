@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import styles from "./CardDisplayStyles.module.css";
 
 import { filterItemsByCategories } from "@/api/actions/item";
@@ -18,12 +17,7 @@ const calculateLoadAmount = () => {
 	return baseAmount > 40 ? baseAmount / 2 : baseAmount;
 };
 
-const ItemCardDisplay = ({ selectedCategories }) => {
-	const dispatch = useDispatch();
-
-	const { items } = useSelector((state) => state.items);
-	const { outfits } = useSelector((state) => state.outfits);
-
+const ItemCardDisplay = ({ selectedCategories, items, outfits }) => {
 	const [displayItems, setDisplayItems] = useState([]);
 	const [sortedDisplayItems, setSortedDisplayItems] = useState([]);
 	const [visibleCount, setVisibleCount] = useState(calculateLoadAmount());
@@ -45,7 +39,7 @@ const ItemCardDisplay = ({ selectedCategories }) => {
 		} else {
 			setDisplayItems(items);
 		}
-	}, [dispatch, selectedCategories, items]);
+	}, [selectedCategories, items]);
 
 	useEffect(() => {
 		const sortedItems = sortItems(outfits, displayItems, sortOption);

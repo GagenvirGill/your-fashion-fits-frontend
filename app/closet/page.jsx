@@ -1,12 +1,24 @@
-"use client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { getAllCategories } from "@/api/actions/category";
+import { getAllItems } from "@/api/actions/item";
+import Closet from "@/views/Closet";
 
-import { useEffect } from "react";
-import Closet from "../../src/views/Closet";
+export const metadata = {
+	title: "Your Closet",
+};
 
-export default function ClosetPage() {
-	useEffect(() => {
-		document.title = "Your Closet | Your Fashion Fits";
-	}, []);
+export default async function ClosetPage() {
+	const session = await getServerSession(authOptions);
+	if (!session) {
+		redirect("/");
+	}
 
-	return <Closet />;
+	const [categories, items] = await Promise.all([
+		getAllCategories(),
+		getAllItems(),
+	]);
+
+	return <Closet categories={categories} items={items} />;
 }

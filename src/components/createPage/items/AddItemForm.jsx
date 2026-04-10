@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import { createItem } from "@/api/actions/item";
 import { removeBackground } from "@/lib/segmentation/background-removal";
-import { refreshState } from "@/store/reducers/itemsReducer";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import styles from "./AddItemForm.module.css";
@@ -14,6 +14,7 @@ const AddItemForm = () => {
 	const [images, setImages] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	const handleImage = async (event) => {
 		const files = Array.from(event.target.files);
@@ -44,7 +45,7 @@ const AddItemForm = () => {
 				formData.append("image", file);
 
 				const success = await createItem(formData);
-				dispatch(refreshState());
+				router.refresh();
 
 				if (success) {
 					successCount++;

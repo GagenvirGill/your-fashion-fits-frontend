@@ -1,12 +1,24 @@
-"use client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { getAllItems } from "@/api/actions/item";
+import { getAllOutfits } from "@/api/actions/outfit";
+import AllItemsView from "@/views/AllItemsView";
 
-import { useEffect } from "react";
-import AllItemsView from "../../../src/views/AllItemsView";
+export const metadata = {
+	title: "All Items",
+};
 
-export default function AllItemsPage() {
-	useEffect(() => {
-		document.title = "All Items | Your Fashion Fits";
-	}, []);
+export default async function AllItemsPage() {
+	const session = await getServerSession(authOptions);
+	if (!session) {
+		redirect("/");
+	}
 
-	return <AllItemsView />;
+	const [items, outfits] = await Promise.all([
+		getAllItems(),
+		getAllOutfits(),
+	]);
+
+	return <AllItemsView items={items} outfits={outfits} />;
 }

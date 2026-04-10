@@ -9,7 +9,7 @@ import AddItemForm from "../components/createPage/items/AddItemForm";
 import AddCategoryForm from "../components/createPage/categories/AddCategoryForm";
 import { preloadModel } from "../lib/segmentation/background-removal";
 
-const CreateView = () => {
+const CreateView = ({ outfits }) => {
 	const [selectedForm, setSelectedForm] = useState("addItem");
 
 	useEffect(() => {
@@ -18,7 +18,7 @@ const CreateView = () => {
 
 	const renderForm = (selectedOption) => {
 		if (selectedOption === "addOutfit") {
-			return <AddOutfitForm />;
+			return <AddOutfitForm outfits={outfits} />;
 		} else if (selectedOption === "addItem") {
 			return <AddItemForm />;
 		} else if (selectedOption === "addCategory") {

@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import styles from "./FormStyles.module.css";
 
-import { filterItemsByCategories } from "@/api/actions/item";
+import { filterItemsByCategories, getAllItems } from "@/api/actions/item";
 
 import ImgRadioButton from "../buttons/ImgRadioButton";
 import Button from "../buttons/Button";
@@ -16,13 +15,14 @@ const ItemsRadioForm = ({
 	returnImagePath,
 	filteringCategoryIds,
 }) => {
-	const { items } = useSelector((state) => state.items);
 	const [displayItems, setDisplayItems] = useState([]);
 
 	useEffect(() => {
 		if (filteringCategoryIds) {
 			if (filteringCategoryIds.length === 0) {
-				setDisplayItems(items);
+				getAllItems()
+					.then(setDisplayItems)
+					.catch((err) => console.log(`Error loading items: ${err}`));
 			} else {
 				filterItemsByCategories(filteringCategoryIds)
 					.then((filteredItems) => {

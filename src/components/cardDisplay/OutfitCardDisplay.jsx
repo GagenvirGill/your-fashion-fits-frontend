@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import styles from "./CardDisplayStyles.module.css";
 
 import OutfitCard from "../card/OutfitCard";
@@ -13,9 +12,7 @@ const calculateNumOutfitsPerRow = () => {
 	return Math.floor((window.innerWidth * 0.9) / 300);
 };
 
-const OutfitCardDisplay = () => {
-	const { outfits } = useSelector((state) => state.outfits);
-
+const OutfitCardDisplay = ({ outfits }) => {
 	const [displayedOutfits, setDisplayedOutfits] = useState(outfits);
 	const [showFilterForm, setShowFilterForm] = useState(false);
 	const [showSearchBar, setShowSearchBar] = useState(false);
@@ -172,6 +169,7 @@ const OutfitCardDisplay = () => {
 				<FilterOutfitsByItemForm
 					handleClose={handleUpdateShowFilterForm}
 					setDisplayedOutfits={setDisplayedOutfits}
+					outfits={outfits}
 				/>
 			)}
 		</div>

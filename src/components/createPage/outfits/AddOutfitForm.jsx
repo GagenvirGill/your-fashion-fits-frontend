@@ -5,11 +5,11 @@ import styles from "./AddOutfitForm.module.css";
 
 import CreateTemplate from "./createTemplate/CreateTemplate";
 
-const AddOutfitForm = () => {
+const AddOutfitForm = ({ outfits }) => {
 	return (
 		<div className={styles.formContainer}>
 			<p className={styles.formTitle}>Outfit Creation Sandbox</p>
-			<CreateTemplate />
+			<CreateTemplate outfits={outfits} />
 			<div className={styles.spacer}></div>
 		</div>
 	);

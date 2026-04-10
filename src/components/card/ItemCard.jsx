@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { refreshState as refreshItemsState } from "@/store/reducers/itemsReducer";
-import { refreshState as refreshOutfitsState } from "@/store/reducers/outfitsReducer";
+import { useRouter } from "next/navigation";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 
 import styles from "./ItemCard.module.css";
@@ -15,12 +14,12 @@ import ContextMenuButton from "../buttons/ContextMenuButton";
 
 const ItemCard = ({ itemId, imagePath }) => {
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const [showForm, setShowForm] = useState(false);
 
 	const onDelete = async () => {
 		const success = await deleteItem(itemId);
-		dispatch(refreshItemsState());
-		dispatch(refreshOutfitsState());
+		router.refresh();
 
 		if (success) {
 			dispatch(addNotification("Item Successfully Deleted!"));

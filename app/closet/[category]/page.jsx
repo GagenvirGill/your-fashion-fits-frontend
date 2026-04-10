@@ -1,39 +1,50 @@
-"use client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { getAllCategories } from "@/api/actions/category";
+import { filterItemsByCategories } from "@/api/actions/item";
+import { getAllOutfits } from "@/api/actions/outfit";
+import CategoryView from "@/views/CategoryView";
+import { notFound, redirect } from "next/navigation";
 
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "next/navigation";
-import { useSession } from "next-auth/react";
-import CategoryView from "../../../src/views/CategoryView";
+export async function generateMetadata({ params }) {
+	const { category } = await params;
+	const categories = await getAllCategories();
+	const matched = categories.find(
+		(cat) => cat.name.toLowerCase().replace(/\s+/g, "") === category
+	);
+	return {
+		title: matched ? matched.name : "Category",
+	};
+}
 
-export default function CategoryPage() {
-	const { category } = useParams();
-	const { status } = useSession();
-	const isAuthenticated = status === "authenticated";
-	const { categories } = useSelector((state) => state.categories);
+export default async function CategoryPage({ params }) {
+	const session = await getServerSession(authOptions);
+	if (!session) {
+		redirect("/");
+	}
+
+	const { category } = await params;
+	const [categories, outfits] = await Promise.all([
+		getAllCategories(),
+		getAllOutfits(),
+	]);
 
 	const matchedCategory = categories.find(
 		(cat) => cat.name.toLowerCase().replace(/\s+/g, "") === category
 	);
 
-	useEffect(() => {
-		if (matchedCategory) {
-			document.title = `${matchedCategory.name} | Your Fashion Fits`;
-		}
-	}, [matchedCategory]);
-
-	if (!isAuthenticated) {
-		return null;
-	}
-
 	if (!matchedCategory) {
-		return null;
+		notFound();
 	}
+
+	const items = await filterItemsByCategories([matchedCategory.categoryId]);
 
 	return (
 		<CategoryView
 			categoryId={matchedCategory.categoryId}
 			categoryName={matchedCategory.name}
+			items={items}
+			outfits={outfits}
 		/>
 	);
 }

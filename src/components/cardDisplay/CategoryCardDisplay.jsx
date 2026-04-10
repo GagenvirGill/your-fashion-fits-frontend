@@ -1,17 +1,13 @@
 "use client";
 
 import React from "react";
-import { useSelector } from "react-redux";
 import styles from "./CardDisplayStyles.module.css";
 import Link from "next/link";
 
 import CategoryCard from "../card/CategoryCard";
 import BigButton from "../buttons/BigButton";
 
-const CategoryCardDisplay = () => {
-	const { categories } = useSelector((state) => state.categories);
-	const { items: currItems } = useSelector((state) => state.items);
-
+const CategoryCardDisplay = ({ categories, items }) => {
 	return (
 		<div className={styles.cardDisplay}>
 			<Link href="/closet/all">
@@ -24,7 +20,7 @@ const CategoryCardDisplay = () => {
 			<br />
 			<br />
 			{categories.map((category) => {
-				const item = currItems.find(
+				const item = items.find(
 					(item) => item.itemId === category.favoriteItem
 				);
 
