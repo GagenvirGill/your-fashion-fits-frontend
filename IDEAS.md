@@ -14,3 +14,6 @@ Generate a shareable image or link of an outfit. Good stepping stone toward soci
 
 ## Wardrobe Analytics Dashboard
 Cost-per-wear tracking, most/least worn items, category breakdown charts, seasonal trends. Wear data is already tracked — surface it meaningfully.
+
+## Full SSR Migration
+All pages are Client Components that fetch data on mount via Redux useEffects in ClientShell. Convert pages to Server Components that fetch via `backendClient.ts` and pass data as props. Eliminates loading spinners, reduces JS bundle, and lets the 3 data-cache reducers (items, categories, outfits) be removed — leaving only the 2 that manage client-only UI state (outfitTemplate, notifications).
