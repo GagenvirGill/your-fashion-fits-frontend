@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createItem } from "@/api/actions/item";
-import { processImage } from "@/lib/background-removal";
+import { removeBackground } from "@/lib/segmentation/background-removal";
 import { refreshState } from "@/store/reducers/itemsReducer";
 import { addNotification } from "@/store/reducers/notificationsReducer";
 
@@ -37,7 +37,7 @@ const AddItemForm = () => {
 
 		for (const image of imagesToCreate) {
 			try {
-				const file = await processImage(image);
+				const file = await removeBackground(image);
 				if (!file) throw new Error("Error processing image");
 
 				const formData = new FormData();

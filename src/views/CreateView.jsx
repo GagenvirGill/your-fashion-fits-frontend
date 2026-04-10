@@ -7,13 +7,13 @@ import FormSelectorRadioButtons from "../components/createPage/FormSelectorRadio
 import AddOutfitForm from "../components/createPage/outfits/AddOutfitForm";
 import AddItemForm from "../components/createPage/items/AddItemForm";
 import AddCategoryForm from "../components/createPage/categories/AddCategoryForm";
-import { preloadSession } from "../lib/background-removal";
+import { preloadModel } from "../lib/segmentation/background-removal";
 
 const CreateView = () => {
 	const [selectedForm, setSelectedForm] = useState("addItem");
 
 	useEffect(() => {
-		preloadSession();
+		preloadModel();
 	}, []);
 
 	const renderForm = (selectedOption) => {
