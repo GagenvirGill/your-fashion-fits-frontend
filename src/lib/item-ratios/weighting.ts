@@ -25,7 +25,10 @@ const computePairRecency = (pairDates: Date[]): { lambda: number; mostRecent: nu
 	if (gaps.length === 0) return { lambda: 0, mostRecent };
 
 	gaps.sort((a, b) => a - b);
-	const medianGap = gaps[Math.floor(gaps.length / 2)];
+	const mid = Math.floor(gaps.length / 2);
+	const medianGap = gaps.length % 2 === 0
+		? (gaps[mid - 1] + gaps[mid]) / 2
+		: gaps[mid];
 	const halfLife = medianGap * HALF_LIFE_MULTIPLIER;
 
 	return { lambda: Math.log(2) / halfLife, mostRecent };
@@ -54,7 +57,10 @@ const computeOutlierPenalties = (
 			const q1 = logRatios[Math.floor(logRatios.length * 0.25)];
 			const q3 = logRatios[Math.floor(logRatios.length * 0.75)];
 			const iqr = q3 - q1;
-			const median = logRatios[Math.floor(logRatios.length / 2)];
+			const medIdx = Math.floor(logRatios.length / 2);
+			const median = logRatios.length % 2 === 0
+				? (logRatios[medIdx - 1] + logRatios[medIdx]) / 2
+				: logRatios[medIdx];
 
 			penalties.set(
 				key,

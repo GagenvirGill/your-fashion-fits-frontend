@@ -19,17 +19,19 @@ export const createAdjacencyMatrix = (outfits: Outfit[]): ObservationMatrix => {
 
 		for (const row of outfit.OutfitTemplate.TemplateRows) {
 			for (const currItemData of row.TemplateItems) {
-				const currId = currItemData.Item.itemId;
+				const currId = currItemData.Item?.itemId;
 				const currWeight = currItemData.itemWeight;
+
+				if (!currId || currWeight <= 0) continue;
 
 				if (!matrix[currId]) matrix[currId] = {};
 
 				for (const innerRow of outfit.OutfitTemplate.TemplateRows) {
 					for (const checkItemData of innerRow.TemplateItems) {
-						const checkId = checkItemData.Item.itemId;
+						const checkId = checkItemData.Item?.itemId;
 						const checkWeight = checkItemData.itemWeight;
 
-						if (currId === checkId) continue;
+						if (!checkId || checkWeight <= 0 || currId === checkId) continue;
 
 						if (!matrix[currId][checkId]) matrix[currId][checkId] = [];
 
@@ -82,25 +84,17 @@ const getOutfitsRatios = (
 		})
 	);
 
-	// Clamp to [MIN_ITEM_SCALE, MAX_ITEM_SCALE]
-	const flat = result.flat();
-	const minVal = Math.min(...flat);
-	const maxVal = Math.max(...flat);
-
-	if (minVal < MIN_ITEM_SCALE || maxVal > MAX_ITEM_SCALE) {
-		const scale =
-			minVal < MIN_ITEM_SCALE
-				? MIN_ITEM_SCALE / minVal
-				: MAX_ITEM_SCALE / maxVal;
-		result = result.map((row) => row.map((v) => v * scale));
-	}
-
 	// Normalize to average FOR_SURE_SCALE_FACTOR
-	const newFlat = result.flat();
-	const sum = newFlat.reduce((a, b) => a + b, 0);
-	const avg = sum / newFlat.length;
+	const flat = result.flat();
+	const sum = flat.reduce((a, b) => a + b, 0);
+	const avg = sum / flat.length;
 	const avgScale = FOR_SURE_SCALE_FACTOR / avg;
 	result = result.map((row) => row.map((v) => v * avgScale));
+
+	// Clamp each value to [MIN_ITEM_SCALE, MAX_ITEM_SCALE] after normalization
+	result = result.map((row) =>
+		row.map((v) => Math.min(Math.max(v, MIN_ITEM_SCALE), MAX_ITEM_SCALE))
+	);
 
 	return result;
 };
@@ -127,9 +121,10 @@ export const updateTemplateWithScales = (
 
 	const newScales = getOutfitsRatios(ratiosMatrix, newRows);
 
-	templateRows.forEach((row, rowIdx) => {
+	// Apply scales to all items, not just ones with new results
+	newRows.forEach((row, rowIdx) => {
 		row.forEach((_, boxIdx) => {
-			if (results?.[rowIdx]?.[boxIdx] && newScales[rowIdx]?.[boxIdx] !== undefined) {
+			if (newScales[rowIdx]?.[boxIdx] !== undefined) {
 				newRows[rowIdx][boxIdx].scale = Number(
 					newScales[rowIdx][boxIdx].toFixed(1)
 				);
