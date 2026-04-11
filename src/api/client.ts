@@ -18,13 +18,18 @@ async function getAuthHeaders(): Promise<Record<string, string>> {
 	};
 }
 
-export async function get(path: string, params?: Record<string, string>) {
+// Sends a GET request to the backend with optional query parameters
+export async function get(path: string, params?: Record<string, string | string[]>) {
 	const headers = await getAuthHeaders();
 	const url = new URL(`${BACKEND_URL}${path}`);
 
 	if (params) {
 		Object.entries(params).forEach(([key, value]) => {
-			url.searchParams.append(key, value);
+			if (Array.isArray(value)) {
+				value.forEach((v) => url.searchParams.append(key, v));
+			} else {
+				url.searchParams.append(key, value);
+			}
 		});
 	}
 

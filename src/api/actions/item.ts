@@ -43,7 +43,7 @@ export async function getCategoriesForItem(itemId: string) {
 }
 
 export async function filterItemsByCategories(categories: string[]) {
-	const data = await get("/item", { categories: categories.join(",") });
+	const data = await get("/item", { categories });
 
 	if (!data.success) {
 		throw new Error(data.message);
