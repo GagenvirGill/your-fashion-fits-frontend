@@ -1,21 +1,4 @@
-import type { ObservationMatrix, WeightedObservation } from "./types";
-
-/**
- * Counts total observations per item across all pairings.
- * Reflects how well-known an item is overall — an item in 20 outfits
- * with different partners is well-established even if each pairing happened once.
- */
-export const computeItemCounts = (matrix: ObservationMatrix): Map<string, number> => {
-	const counts = new Map<string, number>();
-	for (const idA in matrix) {
-		for (const idB in matrix[idA]) {
-			const n = matrix[idA][idB].length;
-			counts.set(idA, (counts.get(idA) ?? 0) + n);
-			counts.set(idB, (counts.get(idB) ?? 0) + n);
-		}
-	}
-	return counts;
-};
+import type { WeightedObservation } from "./types";
 
 /**
  * Solves the system ATA * x = ATb via Gaussian elimination with partial pivoting.
@@ -70,8 +53,7 @@ const solveNormalEquations = (ATA: number[][], ATb: number[]): number[] => {
  * Pins the first item to 0 to remove the degree of freedom.
  */
 export const solveGlobalWeights = (
-	observations: WeightedObservation[],
-	itemCounts: Map<string, number>
+	observations: WeightedObservation[]
 ): Map<string, number> => {
 	const result = new Map<string, number>();
 	if (observations.length === 0) return result;
@@ -105,13 +87,8 @@ export const solveGlobalWeights = (
 		const iA = itemIndex.get(obs.idA)!;
 		const iB = itemIndex.get(obs.idB)!;
 
-		// Per-item count factor: geometric mean of both items' observation counts
-		const countA = itemCounts.get(obs.idA) ?? 1;
-		const countB = itemCounts.get(obs.idB) ?? 1;
-		const countFactor = Math.log(1 + Math.sqrt(countA * countB));
-
-		// Final weight: item-level count × pair-level (recency × outlier)
-		const w = countFactor * obs.weight;
+		// Weight is purely pair-level: recency × outlier penalty
+		const w = obs.weight;
 
 		const row = new Array(n).fill(0);
 		if (iA !== 0) row[iA - 1] = 1;

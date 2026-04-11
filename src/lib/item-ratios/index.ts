@@ -1,7 +1,7 @@
 import type { Outfit } from "@/types/outfit";
 import type { TemplateBox } from "@/jotai/outfit-template-atom";
 import type { ObservationMatrix } from "./types";
-import { solveGlobalWeights, computeItemCounts } from "./solver";
+import { solveGlobalWeights } from "./solver";
 import { buildWeightedObservations } from "./weighting";
 import { computeCategoryPriors, estimateFromPriors } from "./priors";
 
@@ -56,8 +56,7 @@ const getOutfitsRatios = (
 	if (outfitRows.length === 0) return [];
 
 	const weighted = buildWeightedObservations(observationMatrix);
-	const itemCounts = computeItemCounts(observationMatrix);
-	const weightMap = solveGlobalWeights(weighted, itemCounts);
+	const weightMap = solveGlobalWeights(weighted);
 
 	// Build item→categories map from template boxes for prior estimation
 	const itemCategories = new Map<string, string[]>();
