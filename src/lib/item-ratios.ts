@@ -275,6 +275,56 @@ const buildWeightedObservations = (
 	return weighted;
 };
 
+// --- Bayesian Priors ---
+
+/**
+ * Computes category-level average log-weights from solved item weights.
+ * For items with no observations, we fall back to the average weight
+ * of items that share their categories.
+ */
+const computeCategoryPriors = (
+	weightMap: Map<string, number>,
+	itemCategories: Map<string, string[]>
+): Map<string, number> => {
+	const categoryWeights = new Map<string, number[]>();
+
+	for (const [itemId, logWeight] of weightMap) {
+		const categories = itemCategories.get(itemId);
+		if (!categories) continue;
+		for (const cat of categories) {
+			if (!categoryWeights.has(cat)) categoryWeights.set(cat, []);
+			categoryWeights.get(cat)!.push(logWeight);
+		}
+	}
+
+	const priors = new Map<string, number>();
+	for (const [cat, weights] of categoryWeights) {
+		priors.set(cat, weights.reduce((a, b) => a + b, 0) / weights.length);
+	}
+
+	return priors;
+};
+
+/**
+ * Estimates a log-weight for an unknown item based on its categories.
+ * Averages the category priors for all categories the item belongs to.
+ */
+const estimateFromPriors = (
+	categories: string[],
+	categoryPriors: Map<string, number>
+): number | null => {
+	if (categories.length === 0) return null;
+
+	const matchingPriors: number[] = [];
+	for (const cat of categories) {
+		const prior = categoryPriors.get(cat);
+		if (prior !== undefined) matchingPriors.push(prior);
+	}
+
+	if (matchingPriors.length === 0) return null;
+	return matchingPriors.reduce((a, b) => a + b, 0) / matchingPriors.length;
+};
+
 // --- Public API ---
 
 export const createAdjacencyMatrix = (outfits: Outfit[]): ObservationMatrix => {
@@ -321,11 +371,28 @@ const getOutfitsRatios = (
 	const weighted = buildWeightedObservations(observationMatrix);
 	const weightMap = solveGlobalWeights(weighted);
 
+	// Build item→categories map from template boxes for prior estimation
+	const itemCategories = new Map<string, string[]>();
+	for (const row of outfitRows) {
+		for (const box of row) {
+			if (box.itemId && box.categories.length > 0) {
+				itemCategories.set(box.itemId, box.categories);
+			}
+		}
+	}
+
+	const categoryPriors = computeCategoryPriors(weightMap, itemCategories);
+
 	let result = outfitRows.map((row) =>
 		row.map((item) => {
 			const logWeight = weightMap.get(item.itemId ?? "");
-			if (logWeight === undefined) return DEFAULT_SCALE_VAL;
-			return Math.exp(logWeight);
+			if (logWeight !== undefined) return Math.exp(logWeight);
+
+			// Bayesian prior: estimate from category averages
+			const prior = estimateFromPriors(item.categories, categoryPriors);
+			if (prior !== null) return Math.exp(prior);
+
+			return DEFAULT_SCALE_VAL;
 		})
 	);
 
