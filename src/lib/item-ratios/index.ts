@@ -73,27 +73,35 @@ const getOutfitsRatios = (
 	let result = outfitRows.map((row) =>
 		row.map((item) => {
 			const logWeight = weightMap.get(item.itemId ?? "");
-			if (logWeight !== undefined) return Math.exp(logWeight);
+			if (logWeight !== undefined) return Math.exp(-logWeight);
 
 			// Bayesian prior: estimate from category averages
 			const prior = estimateFromPriors(item.categories, categoryPriors);
-			if (prior !== null) return Math.exp(prior);
+			if (prior !== null) return Math.exp(-prior);
 
 			return DEFAULT_SCALE_VAL;
 		})
 	);
 
-	// Normalize to average FOR_SURE_SCALE_FACTOR
+	// Scale proportionally to keep extremes within bounds (preserves ratios)
 	const flat = result.flat();
-	const sum = flat.reduce((a, b) => a + b, 0);
-	const avg = sum / flat.length;
+	const minVal = Math.min(...flat);
+	const maxVal = Math.max(...flat);
+
+	if (minVal < MIN_ITEM_SCALE || maxVal > MAX_ITEM_SCALE) {
+		const scale =
+			minVal < MIN_ITEM_SCALE
+				? MIN_ITEM_SCALE / minVal
+				: MAX_ITEM_SCALE / maxVal;
+		result = result.map((row) => row.map((v) => v * scale));
+	}
+
+	// Normalize to average FOR_SURE_SCALE_FACTOR
+	const newFlat = result.flat();
+	const sum = newFlat.reduce((a, b) => a + b, 0);
+	const avg = sum / newFlat.length;
 	const avgScale = FOR_SURE_SCALE_FACTOR / avg;
 	result = result.map((row) => row.map((v) => v * avgScale));
-
-	// Clamp each value to [MIN_ITEM_SCALE, MAX_ITEM_SCALE] after normalization
-	result = result.map((row) =>
-		row.map((v) => Math.min(Math.max(v, MIN_ITEM_SCALE), MAX_ITEM_SCALE))
-	);
 
 	return result;
 };
