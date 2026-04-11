@@ -6,14 +6,25 @@ const FOR_SURE_SCALE_FACTOR = 1.3;
 const MIN_ITEM_SCALE = 0.5;
 const MAX_ITEM_SCALE = 3;
 
+// Gaussian decay: penalty = 0.5 at 1.5×IQR from median → k = ln(2) / 1.5²
+const OUTLIER_K = Math.log(2) / (1.5 * 1.5);
+// Half-life = 3× the user's median outfit cadence
+const HALF_LIFE_MULTIPLIER = 3;
+
 // --- Types ---
 
-type AdjacencyMatrix = Record<string, Record<string, number>>;
+interface PairObservation {
+	ratio: number;
+	date: Date;
+}
 
-interface Observation {
+type ObservationMatrix = Record<string, Record<string, PairObservation[]>>;
+
+interface WeightedObservation {
 	idA: string;
 	idB: string;
 	logRatio: number;
+	weight: number;
 }
 
 // --- Linear Algebra Solver ---
@@ -24,12 +35,9 @@ interface Observation {
  */
 const solveNormalEquations = (ATA: number[][], ATb: number[]): number[] => {
 	const n = ATA.length;
-	// Build augmented matrix [ATA | ATb]
 	const aug: number[][] = ATA.map((row, i) => [...row, ATb[i]]);
 
-	// Forward elimination with partial pivoting
 	for (let col = 0; col < n; col++) {
-		// Find pivot
 		let maxVal = Math.abs(aug[col][col]);
 		let maxRow = col;
 		for (let row = col + 1; row < n; row++) {
@@ -39,17 +47,12 @@ const solveNormalEquations = (ATA: number[][], ATb: number[]): number[] => {
 			}
 		}
 
-		// Swap rows
 		if (maxRow !== col) {
 			[aug[col], aug[maxRow]] = [aug[maxRow], aug[col]];
 		}
 
-		// Skip if pivot is effectively zero (disconnected component)
-		if (Math.abs(aug[col][col]) < 1e-12) {
-			continue;
-		}
+		if (Math.abs(aug[col][col]) < 1e-12) continue;
 
-		// Eliminate below
 		for (let row = col + 1; row < n; row++) {
 			const factor = aug[row][col] / aug[col][col];
 			for (let j = col; j <= n; j++) {
@@ -58,11 +61,10 @@ const solveNormalEquations = (ATA: number[][], ATb: number[]): number[] => {
 		}
 	}
 
-	// Back substitution
 	const x = new Array(n).fill(0);
 	for (let i = n - 1; i >= 0; i--) {
 		if (Math.abs(aug[i][i]) < 1e-12) {
-			x[i] = 0; // disconnected item — will get DEFAULT_SCALE_VAL
+			x[i] = 0;
 			continue;
 		}
 		let sum = aug[i][n];
@@ -76,18 +78,16 @@ const solveNormalEquations = (ATA: number[][], ATb: number[]): number[] => {
 };
 
 /**
- * Solves for global log-weights from pairwise observations.
- * Each observation: log(w_idA) - log(w_idB) = logRatio.
+ * Solves for global log-weights from weighted pairwise observations.
+ * Each observation: log(w_idA) - log(w_idB) = logRatio, with importance weight.
  * Pins the first item to 0 to remove the degree of freedom.
- * Returns Map<itemId, logWeight>.
  */
 const solveGlobalWeights = (
-	observations: Observation[]
+	observations: WeightedObservation[]
 ): Map<string, number> => {
 	const result = new Map<string, number>();
 	if (observations.length === 0) return result;
 
-	// Assign each unique item an index
 	const itemIds: string[] = [];
 	const itemIndex = new Map<string, number>();
 	for (const obs of observations) {
@@ -107,13 +107,7 @@ const solveGlobalWeights = (
 		return result;
 	}
 
-	// Pin item 0 to weight 0 — solve for items 1..n-1
-	const n = totalItems - 1; // number of unknowns
-	const m = observations.length; // number of equations
-
-	// Build A (m × n) and b (m) directly into normal equations
-	// A[row][col]: for observation row, col maps to item index - 1 (since item 0 is pinned)
-	// Instead of building full A matrix, form ATA and ATb directly for efficiency
+	const n = totalItems - 1;
 	const ATA: number[][] = Array.from({ length: n }, () =>
 		new Array(n).fill(0)
 	);
@@ -122,32 +116,24 @@ const solveGlobalWeights = (
 	for (const obs of observations) {
 		const iA = itemIndex.get(obs.idA)!;
 		const iB = itemIndex.get(obs.idB)!;
+		const w = obs.weight;
 
-		// Equation: x_iA - x_iB = logRatio
-		// In reduced system (pinned item 0 removed):
-		// If iA === 0: -x_iB = logRatio → coefficient for iB-1 is -1
-		// If iB === 0: x_iA = logRatio → coefficient for iA-1 is +1
-		// Otherwise: x_(iA-1) - x_(iB-1) = logRatio
-
-		// Build the row coefficients for the reduced system
 		const row = new Array(n).fill(0);
 		if (iA !== 0) row[iA - 1] = 1;
 		if (iB !== 0) row[iB - 1] = -1;
 
-		// Accumulate into ATA and ATb
 		for (let i = 0; i < n; i++) {
 			if (row[i] === 0) continue;
-			ATb[i] += row[i] * obs.logRatio;
+			ATb[i] += w * row[i] * obs.logRatio;
 			for (let j = 0; j < n; j++) {
 				if (row[j] === 0) continue;
-				ATA[i][j] += row[i] * row[j];
+				ATA[i][j] += w * row[i] * row[j];
 			}
 		}
 	}
 
 	const x = solveNormalEquations(ATA, ATb);
 
-	// Item 0 has logWeight = 0 (pinned)
 	result.set(itemIds[0], 0);
 	for (let i = 0; i < n; i++) {
 		result.set(itemIds[i + 1], x[i]);
@@ -156,84 +142,185 @@ const solveGlobalWeights = (
 	return result;
 };
 
+// --- Observation Weighting ---
+
+/**
+ * Derives per-pair recency decay lambda from that pair's observation dates.
+ * Half-life = HALF_LIFE_MULTIPLIER × median days between that pair's observations.
+ * Decay is relative to the pair's most recent observation, not "now".
+ */
+const computePairRecency = (pairDates: Date[]): { lambda: number; mostRecent: number } => {
+	const sorted = [...pairDates].sort((a, b) => a.getTime() - b.getTime());
+	const mostRecent = sorted[sorted.length - 1].getTime();
+
+	if (sorted.length < 2) return { lambda: 0, mostRecent };
+
+	const gaps: number[] = [];
+	for (let i = 1; i < sorted.length; i++) {
+		const daysDiff =
+			(sorted[i].getTime() - sorted[i - 1].getTime()) / (1000 * 60 * 60 * 24);
+		if (daysDiff > 0) gaps.push(daysDiff);
+	}
+
+	if (gaps.length === 0) return { lambda: 0, mostRecent };
+
+	gaps.sort((a, b) => a - b);
+	const medianGap = gaps[Math.floor(gaps.length / 2)];
+	const halfLife = medianGap * HALF_LIFE_MULTIPLIER;
+
+	return { lambda: Math.log(2) / halfLife, mostRecent };
+};
+
+/**
+ * Computes IQR-based outlier penalties for each pair's observations.
+ * Returns a Map from "idA:idB" to an array of penalties (one per observation).
+ */
+const computeOutlierPenalties = (
+	matrix: ObservationMatrix
+): Map<string, number[]> => {
+	const penalties = new Map<string, number[]>();
+
+	for (const idA in matrix) {
+		for (const idB in matrix[idA]) {
+			const obs = matrix[idA][idB];
+			const key = `${idA}:${idB}`;
+
+			if (obs.length < 4) {
+				// Too few observations for meaningful IQR — trust them all
+				penalties.set(key, obs.map(() => 1));
+				continue;
+			}
+
+			const logRatios = obs.map((o) => Math.log(o.ratio)).sort((a, b) => a - b);
+			const q1 = logRatios[Math.floor(logRatios.length * 0.25)];
+			const q3 = logRatios[Math.floor(logRatios.length * 0.75)];
+			const iqr = q3 - q1;
+			const median = logRatios[Math.floor(logRatios.length / 2)];
+
+			penalties.set(
+				key,
+				obs.map((o) => {
+					const lr = Math.log(o.ratio);
+					if (iqr < 1e-12) return 1; // all observations are identical
+					const distanceInIqrs = (lr - median) / iqr;
+					return Math.exp(-OUTLIER_K * distanceInIqrs * distanceInIqrs);
+				})
+			);
+		}
+	}
+
+	return penalties;
+};
+
+/**
+ * Counts total observations per item across all pairings.
+ * An item in 20 outfits with different partners is well-known,
+ * even if each specific pairing only happened once.
+ */
+const computeItemCounts = (matrix: ObservationMatrix): Map<string, number> => {
+	const counts = new Map<string, number>();
+	for (const idA in matrix) {
+		for (const idB in matrix[idA]) {
+			const n = matrix[idA][idB].length;
+			counts.set(idA, (counts.get(idA) ?? 0) + n);
+			counts.set(idB, (counts.get(idB) ?? 0) + n);
+		}
+	}
+	return counts;
+};
+
+/**
+ * Flattens the observation matrix into weighted observations for the solver.
+ * Combined weight = itemCountFactor × perPairRecency × perPairOutlierPenalty
+ *   - Count: per-item (how well-known is this item overall)
+ *   - Recency: per-pair (is this pairing's data still fresh)
+ *   - Outlier: per-pair (is this observation weird for this pairing)
+ */
+const buildWeightedObservations = (
+	matrix: ObservationMatrix
+): WeightedObservation[] => {
+	const outlierPenalties = computeOutlierPenalties(matrix);
+	const itemCounts = computeItemCounts(matrix);
+	const weighted: WeightedObservation[] = [];
+
+	for (const idA in matrix) {
+		for (const idB in matrix[idA]) {
+			const obs = matrix[idA][idB];
+			const penalties = outlierPenalties.get(`${idA}:${idB}`)!;
+
+			// Per-item count: average of both items' counts (geometric mean in log-space)
+			const countA = itemCounts.get(idA) ?? 1;
+			const countB = itemCounts.get(idB) ?? 1;
+			const countFactor = Math.log(1 + Math.sqrt(countA * countB));
+
+			// Per-pair recency: decay relative to this pair's most recent observation
+			const pairDates = obs.map((o) => o.date);
+			const { lambda, mostRecent } = computePairRecency(pairDates);
+
+			for (let i = 0; i < obs.length; i++) {
+				const daysSince =
+					(mostRecent - obs[i].date.getTime()) / (1000 * 60 * 60 * 24);
+				const recency = Math.exp(-lambda * daysSince);
+
+				weighted.push({
+					idA,
+					idB,
+					logRatio: Math.log(obs[i].ratio),
+					weight: countFactor * recency * penalties[i],
+				});
+			}
+		}
+	}
+
+	return weighted;
+};
+
 // --- Public API ---
 
-export const createAdjacencyMatrix = (outfits: Outfit[]): AdjacencyMatrix => {
-	const adjacencyMatrix: Record<string, Record<string, { value: number; date: Date }>> = {};
+export const createAdjacencyMatrix = (outfits: Outfit[]): ObservationMatrix => {
+	const matrix: ObservationMatrix = {};
 
 	for (const outfit of outfits) {
 		const date = new Date(outfit.dateWorn);
 
 		for (const row of outfit.OutfitTemplate.TemplateRows) {
 			for (const currItemData of row.TemplateItems) {
-				const currItem = {
-					id: currItemData.Item.itemId,
-					weight: currItemData.itemWeight,
-				};
+				const currId = currItemData.Item.itemId;
+				const currWeight = currItemData.itemWeight;
 
-				if (!adjacencyMatrix[currItem.id]) {
-					adjacencyMatrix[currItem.id] = {};
-				}
+				if (!matrix[currId]) matrix[currId] = {};
 
 				for (const innerRow of outfit.OutfitTemplate.TemplateRows) {
 					for (const checkItemData of innerRow.TemplateItems) {
-						const checkItem = {
-							id: checkItemData.Item.itemId,
-							weight: checkItemData.itemWeight,
-						};
+						const checkId = checkItemData.Item.itemId;
+						const checkWeight = checkItemData.itemWeight;
 
-						if (currItem.id === checkItem.id) continue;
+						if (currId === checkId) continue;
 
-						const ratio = checkItem.weight / currItem.weight;
+						if (!matrix[currId][checkId]) matrix[currId][checkId] = [];
 
-						if (
-							!adjacencyMatrix[currItem.id][checkItem.id] ||
-							date > adjacencyMatrix[currItem.id][checkItem.id].date
-						) {
-							adjacencyMatrix[currItem.id][checkItem.id] = {
-								value: ratio,
-								date,
-							};
-						}
+						matrix[currId][checkId].push({
+							ratio: checkWeight / currWeight,
+							date,
+						});
 					}
 				}
 			}
 		}
 	}
 
-	// Collapse to scalar ratios (Phase 2 will change this to keep all observations)
-	const result: AdjacencyMatrix = {};
-	for (const idA in adjacencyMatrix) {
-		result[idA] = {};
-		for (const idB in adjacencyMatrix[idA]) {
-			result[idA][idB] = adjacencyMatrix[idA][idB].value;
-		}
-	}
-
-	return result;
+	return matrix;
 };
 
 const getOutfitsRatios = (
-	adjacencyMatrix: AdjacencyMatrix,
+	observationMatrix: ObservationMatrix,
 	outfitRows: TemplateBox[][]
 ): number[][] => {
 	if (outfitRows.length === 0) return [];
 
-	// Flatten adjacency matrix into observations for the solver
-	const observations: Observation[] = [];
-	for (const idA in adjacencyMatrix) {
-		for (const idB in adjacencyMatrix[idA]) {
-			observations.push({
-				idA,
-				idB,
-				logRatio: Math.log(adjacencyMatrix[idA][idB]),
-			});
-		}
-	}
+	const weighted = buildWeightedObservations(observationMatrix);
+	const weightMap = solveGlobalWeights(weighted);
 
-	const weightMap = solveGlobalWeights(observations);
-
-	// Compute scales from global weights
 	let result = outfitRows.map((row) =>
 		row.map((item) => {
 			const logWeight = weightMap.get(item.itemId ?? "");
@@ -267,7 +354,7 @@ const getOutfitsRatios = (
 
 export const updateTemplateWithScales = (
 	templateRows: TemplateBox[][],
-	ratiosMatrix: AdjacencyMatrix,
+	ratiosMatrix: ObservationMatrix,
 	results: { itemId: string; imagePath: string }[][] | TemplateBox[][]
 ): TemplateBox[][] => {
 	const newRows = templateRows.map((row) => [...row]);
